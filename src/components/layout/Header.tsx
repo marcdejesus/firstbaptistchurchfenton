@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Church, Home, CalendarDays, Users, LogIn, UserPlus, DollarSign, UserCircle, LogOut, Menu as MenuIcon } from 'lucide-react';
+import { Home, CalendarDays, Users, LogIn, UserPlus, DollarSign, UserCircle, LogOut, Menu as MenuIcon } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import React from 'react';
@@ -22,6 +22,15 @@ const navLinks = [
   { href: '/events', label: 'Events', icon: CalendarDays },
   { href: '/community', label: 'Community', icon: Users },
 ];
+
+const FBCLogo = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+    <rect x="0" y="0" width="22" height="22" rx="3" fill="#707C87"/> {/* Top-left grey */}
+    <rect x="26" y="0" width="34" height="22" rx="3" fill="#707C87"/> {/* Top-right grey */}
+    <rect x="0" y="26" width="22" height="34" rx="3" fill="#707C87"/> {/* Bottom-left grey */}
+    <rect x="26" y="26" width="34" height="22" rx="3" fill="currentColor"/> {/* Bottom-right orange, inherits from text-accent class */}
+  </svg>
+);
 
 export function Header() {
   const { user, logout } = useUser();
@@ -50,7 +59,7 @@ export function Header() {
     <header className="bg-primary/50 shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2 text-xl font-lora font-semibold text-primary-foreground hover:text-accent transition-colors">
-          <Church className="h-8 w-8 text-accent" />
+          <FBCLogo className="h-8 w-8 text-accent" />
           <span>First Baptist of Fenton</span>
         </Link>
 
