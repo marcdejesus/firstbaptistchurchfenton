@@ -21,7 +21,7 @@ export default function Home() {
         </div>
         <div className="relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl font-lora font-bold text-primary-foreground mb-4">
-            Welcome to FBC Fenton Connect
+            Welcome to First Baptist of Fenton
           </h1>
           <p className="text-lg md:text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
             A community of faith, hope, and love in the heart of Fenton. Join us as we grow together.

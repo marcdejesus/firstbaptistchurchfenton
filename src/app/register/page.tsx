@@ -44,7 +44,7 @@ export default function RegisterPage() {
       email: data.email,
       avatarUrl: `https://placehold.co/100x100.png?text=${data.name.substring(0,1).toUpperCase()}`
     });
-    toast({ title: 'Registration Successful', description: 'Welcome to FBC Fenton Connect!' });
+    toast({ title: 'Registration Successful', description: 'Welcome to First Baptist of Fenton!' });
     router.push('/');
     
     setIsLoading(false);
