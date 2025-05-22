@@ -9,14 +9,13 @@ export default function Home() {
   return (
     <div className="space-y-12">
       {/* Hero Section */}
-      <section className="relative p-20 md:p-40 rounded-lg shadow-lg overflow-hidden"> {/* Removed bg-gradient */}
+      <section className="relative p-20 md:p-40 rounded-lg shadow-lg overflow-hidden">
         <div className="absolute inset-0">
           <Image 
             src="https://images.squarespace-cdn.com/content/v1/5e74e817283f5b7394775296/1584722138113-K93VCHDP0DUDSXLLY6XC/image-asset.jpeg"
             alt="Church sanctuary interior"
             layout="fill"
             objectFit="cover"
-            // Removed opacity-30 class, image is now fully opaque
             data-ai-hint="church interior"
             priority // Good to add for LCP images
           />
@@ -38,6 +37,14 @@ export default function Home() {
             </Button>
           </div>
         </div>
+      </section>
+
+      {/* Call to Action / Mission */}
+      <section className="text-center p-8 bg-primary/10 rounded-lg shadow-md">
+        <h2 className="text-3xl font-lora font-semibold text-primary-foreground mb-4">Our Mission</h2>
+        <p className="text-lg text-primary-foreground/80 max-w-3xl mx-auto">
+          To lead people into a growing relationship with Jesus Christ by creating environments where people are encouraged and equipped to pursue intimacy with God, community with insiders, and influence with outsiders.
+        </p>
       </section>
 
       {/* Core Information Grid */}
@@ -94,14 +101,6 @@ export default function Home() {
             </CardDescription>
           </CardContent>
         </Card>
-      </section>
-
-      {/* Call to Action / Mission */}
-      <section className="text-center p-8 bg-primary/10 rounded-lg shadow-md">
-        <h2 className="text-3xl font-lora font-semibold text-primary-foreground mb-4">Our Mission</h2>
-        <p className="text-lg text-primary-foreground/80 max-w-3xl mx-auto">
-          To lead people into a growing relationship with Jesus Christ by creating environments where people are encouraged and equipped to pursue intimacy with God, community with insiders, and influence with outsiders.
-        </p>
       </section>
     </div>
   );
