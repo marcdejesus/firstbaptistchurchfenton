@@ -1,3 +1,4 @@
+
 export type Event = {
   id: string;
   title: string;
@@ -24,4 +25,14 @@ export type GenerateEventSummaryInput = {
   time: string;
   location: string;
   description: string;
+};
+
+export type Testimonial = {
+  id: string;
+  name: string;
+  avatarUrl: string;
+  rating: number; // 1-5
+  date: string; // e.g., "July 20, 2024"
+  content: string;
+  aiHint?: string; // For avatar placeholder
 };

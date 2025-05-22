@@ -1,9 +1,11 @@
 
+
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
 import Image from "next/image";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { TestimoniesCarousel } from "@/components/home/TestimoniesCarousel";
 
 export default function Home() {
   return (
@@ -102,6 +104,10 @@ export default function Home() {
           </CardContent>
         </Card>
       </section>
+
+      {/* Testimonies Section */}
+      <TestimoniesCarousel />
+
     </div>
   );
 }
