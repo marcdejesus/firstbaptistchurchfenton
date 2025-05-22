@@ -13,7 +13,7 @@ interface TestimonialCardProps {
 
 export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   return (
-    <Card className="w-full max-w-md mx-auto bg-card shadow-lg h-full flex flex-col">
+    <Card className="w-full mx-auto bg-card shadow-lg h-full flex flex-col"> {/* Removed max-w-md */}
       <CardHeader className="flex flex-row items-center space-x-4 pb-2">
         <Avatar className="h-12 w-12">
           <AvatarImage src={testimonial.avatarUrl} alt={testimonial.name} data-ai-hint={testimonial.aiHint || "person"} />

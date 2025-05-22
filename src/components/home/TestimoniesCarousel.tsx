@@ -18,7 +18,7 @@ export function TestimoniesCarousel() {
       handleNext();
     }, CYCLE_INTERVAL);
     return () => clearInterval(timer);
-  }, [currentIndex]);
+  }, [currentIndex]); // Re-run effect if currentIndex changes to reset timer correctly
 
   const handleNext = () => {
     setIsTransitioning(true);
@@ -47,16 +47,7 @@ export function TestimoniesCarousel() {
           Voices of Our Community
         </h2>
         <div className="relative flex items-center justify-center">
-           <Button 
-            variant="outline" 
-            size="icon" 
-            className="absolute left-0 -translate-x-1/2 top-1/2 -translate-y-1/2 z-10 bg-card hover:bg-card/80 text-accent hover:text-accent/90 hidden md:flex"
-            onClick={handlePrev}
-            aria-label="Previous testimonial"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </Button>
-          <div className="w-full max-w-md h-[280px] relative overflow-hidden"> {/* Fixed height for consistent layout */}
+          <div className="w-full max-w-2xl relative overflow-hidden"> {/* Changed max-w-md to max-w-2xl and removed fixed height */}
             <div
               className={`transition-opacity duration-300 ease-in-out ${
                 isTransitioning ? 'opacity-0' : 'opacity-100'
@@ -65,22 +56,14 @@ export function TestimoniesCarousel() {
               <TestimonialCard testimonial={testimonialsData[currentIndex]} />
             </div>
           </div>
-          <Button 
-            variant="outline" 
-            size="icon" 
-            className="absolute right-0 translate-x-1/2 top-1/2 -translate-y-1/2 z-10 bg-card hover:bg-card/80 text-accent hover:text-accent/90 hidden md:flex"
-            onClick={handleNext}
-            aria-label="Next testimonial"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </Button>
         </div>
-        <div className="flex justify-center mt-6 space-x-1 md:hidden">
+        <div className="flex justify-center mt-6 space-x-1"> {/* Kept mobile/fallback buttons */}
             <Button 
               variant="outline" 
               size="sm" 
               className="bg-card hover:bg-card/80 text-accent hover:text-accent/90"
               onClick={handlePrev}
+              aria-label="Previous testimonial"
             >
               <ChevronLeft className="mr-1 h-4 w-4" /> Prev
             </Button>
@@ -89,6 +72,7 @@ export function TestimoniesCarousel() {
               size="sm" 
               className="bg-card hover:bg-card/80 text-accent hover:text-accent/90"
               onClick={handleNext}
+              aria-label="Next testimonial"
             >
               Next <ChevronRight className="ml-1 h-4 w-4" />
             </Button>
