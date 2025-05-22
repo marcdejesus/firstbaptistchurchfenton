@@ -84,9 +84,9 @@ export default function Home() {
             >
               <div className="h-48 w-full rounded-md overflow-hidden group-hover:opacity-80 transition-opacity">
                 <Image 
-                  src="https://storage.googleapis.com/generative-ai-for-developers/image_uploads/images/thumbnail_L3_480x320.png" 
-                  alt="Map to First Baptist of Fenton showing church location pin"
-                  width={600}
+                  src="/mappin.png"
+ alt="Map showing location of First Baptist Church Fenton"
+ width={600}
                   height={300}
                   className="object-cover w-full h-full" // Ensure image covers the div
                 />

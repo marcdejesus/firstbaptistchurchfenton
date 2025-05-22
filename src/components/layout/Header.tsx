@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Home, CalendarDays, Users, LogIn, UserPlus, DollarSign, UserCircle, LogOut, Menu as MenuIcon } from 'lucide-react';
+import { Home, CalendarDays, Users, LogIn, UserPlus, DollarSign, UserCircle, LogOut, Menu as MenuIcon, Church, Book } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import React from 'react';
@@ -21,6 +21,8 @@ const navLinks = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/events', label: 'Events', icon: CalendarDays },
   { href: '/community', label: 'Community', icon: Users },
+ { href: '/ministries', label: 'Ministries', icon: Church},
+ { href: '/sermons', label: 'Sermons', icon: Book },
 ];
 
 const FBCLogo = ({ className }: { className?: string }) => (

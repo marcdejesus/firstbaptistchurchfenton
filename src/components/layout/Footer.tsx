@@ -17,7 +17,10 @@ export function Footer() {
               &copy; {new Date().getFullYear()} First Baptist of Fenton. All Rights Reserved.
             </p>
             <p className="text-xs mt-1">
-              Web Design | De Jesus Digital Solutions
+              Website Created by{" "}
+              <a href="https://dejesusdigitalsolutions.com" className="hover:underline">
+                De Jesus Digital Solutions
+              </a>
             </p>
             <p className="text-xs mt-1">
               First Baptist Church Fenton, Fenton, Michigan.
