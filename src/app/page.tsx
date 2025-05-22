@@ -33,7 +33,7 @@ export default function Home() {
             <Button size="lg" asChild className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-md">
               <Link href="/events">Upcoming Events</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="border-gray-300/70 text-gray-100 hover:bg-white/20 hover:text-white hover:border-white shadow-md">
+            <Button size="lg" variant="outline" asChild className="bg-transparent border-gray-300/70 text-gray-100 hover:bg-white/20 hover:text-white hover:border-white shadow-md">
               <Link href="/community">Join Our Community</Link>
             </Button>
           </div>
