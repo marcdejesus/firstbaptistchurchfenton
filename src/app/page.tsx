@@ -9,17 +9,18 @@ export default function Home() {
   return (
     <div className="space-y-12">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary/30 to-primary/10 p-20 md:p-40 rounded-lg shadow-lg overflow-hidden">
+      <section className="relative p-20 md:p-40 rounded-lg shadow-lg overflow-hidden"> {/* Removed bg-gradient */}
         <div className="absolute inset-0">
           <Image 
             src="https://images.squarespace-cdn.com/content/v1/5e74e817283f5b7394775296/1584722138113-K93VCHDP0DUDSXLLY6XC/image-asset.jpeg"
             alt="Church sanctuary interior"
             layout="fill"
             objectFit="cover"
-            className="opacity-30" // Adjusted opacity for better text readability
+            // Removed opacity-30 class, image is now fully opaque
             data-ai-hint="church interior"
             priority // Good to add for LCP images
           />
+          <div className="absolute inset-0 bg-black/50"></div> {/* Added dark overlay */}
         </div>
         <div className="relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl font-lora font-bold text-white mb-4">
