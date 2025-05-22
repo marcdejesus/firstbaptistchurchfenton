@@ -47,7 +47,8 @@ export function TestimoniesCarousel() {
           Voices of Our Community
         </h2>
         <div className="relative flex items-center justify-center">
-          <div className="w-full max-w-2xl relative overflow-hidden"> {/* Changed max-w-md to max-w-2xl and removed fixed height */}
+          {/* Removed max-w-2xl to allow full width, and removed fixed height */}
+          <div className="w-full relative overflow-hidden"> 
             <div
               className={`transition-opacity duration-300 ease-in-out ${
                 isTransitioning ? 'opacity-0' : 'opacity-100'
@@ -81,3 +82,4 @@ export function TestimoniesCarousel() {
     </section>
   );
 }
+
