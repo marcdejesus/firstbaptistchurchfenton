@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="space-y-12">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary/30 to-primary/10 p-20 md:p-40 rounded-lg shadow-lg overflow-hidden">
+      <section className="relative bg-gradient-to-r from-primary/30 to-primary/10 p-32 md:p-64 rounded-lg shadow-lg overflow-hidden">
         <div className="absolute inset-0">
           <Image 
             src="https://images.squarespace-cdn.com/content/v1/5e74e817283f5b7394775296/1584722138113-K93VCHDP0DUDSXLLY6XC/image-asset.jpeg"
