@@ -75,26 +75,26 @@ export default function Home() {
             </CardTitle>
           </CardHeader>
           <CardContent className="text-card-foreground/80 space-y-2">
-            <p>First Baptist Church Fenton</p>
-            <p>123 Church Street, Fenton, Michigan, 48430</p>
-            <a
+             <a
               href={mapUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="View map of First Baptist Church Fenton (opens in new tab)"
-              className="group block"
+              className="group block mb-4" // Added mb-4 for spacing
             >
-              <div className="mt-4 h-48 w-full rounded-md overflow-hidden group-hover:opacity-80 transition-opacity">
+              <div className="h-48 w-full rounded-md overflow-hidden group-hover:opacity-80 transition-opacity">
                 <Image 
                   src="https://placehold.co/600x300.png" 
                   alt="Map to First Baptist of Fenton"
                   width={600}
                   height={300}
-                  className="object-cover"
+                  className="object-cover w-full h-full" // Ensure image covers the div
                   data-ai-hint="map location"
                 />
               </div>
             </a>
+            <p>First Baptist Church Fenton</p>
+            <p>123 Church Street, Fenton, Michigan, 48430</p>
           </CardContent>
         </Card>
 
