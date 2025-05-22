@@ -11,26 +11,27 @@ export default function Home() {
       <section className="relative bg-gradient-to-r from-primary/30 to-primary/10 p-8 md:p-16 rounded-lg shadow-lg overflow-hidden">
         <div className="absolute inset-0">
           <Image 
-            src="https://placehold.co/1200x400.png" // Placeholder - replace with an actual church image
-            alt="Church building or congregation"
+            src="https://images.squarespace-cdn.com/content/v1/5e74e817283f5b7394775296/1584722138113-K93VCHDP0DUDSXLLY6XC/image-asset.jpeg"
+            alt="Church sanctuary interior"
             layout="fill"
             objectFit="cover"
-            className="opacity-20"
-            data-ai-hint="church community"
+            className="opacity-30" // Adjusted opacity for better text readability
+            data-ai-hint="church interior"
+            priority // Good to add for LCP images
           />
         </div>
         <div className="relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-lora font-bold text-primary-foreground mb-4">
+          <h1 className="text-4xl md:text-5xl font-lora font-bold text-white mb-4">
             Welcome to First Baptist of Fenton
           </h1>
-          <p className="text-lg md:text-xl text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
             A community of faith, hope, and love in the heart of Fenton. Join us as we grow together.
           </p>
           <div className="space-x-4">
             <Button size="lg" asChild className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-md">
               <Link href="/events">Upcoming Events</Link>
             </Button>
-            <Button size="lg" variant="outline" asChild className="border-primary-foreground/50 text-primary-foreground hover:bg-primary/20 hover:text-accent">
+            <Button size="lg" variant="outline" asChild className="border-gray-300/70 text-gray-100 hover:bg-white/20 hover:text-white hover:border-white shadow-md">
               <Link href="/community">Join Our Community</Link>
             </Button>
           </div>
@@ -66,7 +67,7 @@ export default function Home() {
             <div className="mt-4 h-48 w-full rounded-md overflow-hidden">
               <Image 
                 src="https://placehold.co/600x300.png" // Placeholder for a map
-                alt="Map to FBC Fenton"
+                alt="Map to First Baptist of Fenton"
                 width={600}
                 height={300}
                 className="object-cover"
@@ -83,7 +84,7 @@ export default function Home() {
               Contact Us
             </CardTitle>
           </CardHeader>
-          <CardContent className="text-card-foreground/80 space-y-2">
+          <CardContent className="text-card-foreground/80 space-y-2" id="contact-us-section-id">
             <p className="flex items-center"><Mail className="mr-2 h-5 w-5 text-accent/80" /> Email: info@fbcfenton.org</p>
             <p className="flex items-center"><Phone className="mr-2 h-5 w-5 text-accent/80" /> Phone: (810) 555-1234</p>
             <CardDescription className="mt-2 text-sm">
