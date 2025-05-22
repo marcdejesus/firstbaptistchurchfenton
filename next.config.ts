@@ -21,6 +21,12 @@ const nextConfig: NextConfig = {
         hostname: 'images.squarespace-cdn.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
