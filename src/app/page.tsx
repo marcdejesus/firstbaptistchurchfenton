@@ -8,6 +8,8 @@ import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { TestimoniesCarousel } from "@/components/home/TestimoniesCarousel";
 
 export default function Home() {
+  const mapUrl = "https://www.google.com/maps/search/?api=1&query=123%20Church%20Street%2C%20Fenton%2C%20Michigan%2C%2048430";
+
   return (
     <div className="space-y-12">
       {/* Hero Section */}
@@ -75,16 +77,24 @@ export default function Home() {
           <CardContent className="text-card-foreground/80 space-y-2">
             <p>First Baptist Church Fenton</p>
             <p>123 Church Street, Fenton, Michigan, 48430</p>
-            <div className="mt-4 h-48 w-full rounded-md overflow-hidden">
-              <Image 
-                src="https://placehold.co/600x300.png" // Placeholder for a map
-                alt="Map to First Baptist of Fenton"
-                width={600}
-                height={300}
-                className="object-cover"
-                data-ai-hint="map location"
-              />
-            </div>
+            <a
+              href={mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="View map of First Baptist Church Fenton (opens in new tab)"
+              className="group block"
+            >
+              <div className="mt-4 h-48 w-full rounded-md overflow-hidden group-hover:opacity-80 transition-opacity">
+                <Image 
+                  src="https://placehold.co/600x300.png" 
+                  alt="Map to First Baptist of Fenton"
+                  width={600}
+                  height={300}
+                  className="object-cover"
+                  data-ai-hint="map location"
+                />
+              </div>
+            </a>
           </CardContent>
         </Card>
 
