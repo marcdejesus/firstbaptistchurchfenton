@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -41,7 +40,7 @@ export function Header() {
   const commonNavElements = (
     <>
       {navLinks.map((link) => (
-        <Button key={link.label} variant="ghost" asChild className="text-foreground hover:bg-primary/20">
+        <Button key={link.label} variant="ghost" asChild className="text-foreground hover:bg-accent/20 hover:text-accent">
           <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)}>
             <link.icon className="mr-2 h-5 w-5" />
             {link.label}
@@ -99,10 +98,10 @@ export function Header() {
             </DropdownMenu>
           ) : (
             <>
-              <Button variant="ghost" asChild className="text-primary-foreground hover:text-accent">
+              <Button variant="ghost" asChild className="text-primary-foreground">
                 <Link href="/login"><LogIn className="mr-2 h-5 w-5" />Login</Link>
               </Button>
-              <Button variant="outline" asChild className="border-primary-foreground/50 text-primary-foreground hover:bg-primary/20 hover:text-accent">
+              <Button variant="outline" asChild className="border-primary-foreground/50 text-primary-foreground hover:bg-accent/20 hover:text-accent">
                 <Link href="/register"><UserPlus className="mr-2 h-5 w-5" />Register</Link>
               </Button>
             </>

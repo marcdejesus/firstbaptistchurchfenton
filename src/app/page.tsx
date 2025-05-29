@@ -1,5 +1,3 @@
-
-
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
@@ -105,7 +103,7 @@ export default function Home() {
             </CardTitle>
           </CardHeader>
           <CardContent className="text-card-foreground/80 space-y-2" id="contact-us-section-id">
-            <p className="flex items-center"><Mail className="mr-2 h-5 w-5 text-accent/80" /> Email: info@fbcfenton.org</p>
+            <p className="flex items-center"><Mail className="mr-2 h-5 w-5 text-accent/80" /> Email: hello@firstbaptistchurch.org</p>
             <p className="flex items-center"><Phone className="mr-2 h-5 w-5 text-accent/80" /> Phone: (810) 555-1234</p>
             <CardDescription className="mt-2 text-sm">
               We&apos;d love to hear from you. Reach out with any questions or prayer requests.

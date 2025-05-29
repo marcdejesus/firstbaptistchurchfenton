@@ -29,7 +29,7 @@ export default function SermonsPage() {
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span>Sermon Information</span>
-            <Link href={youtubeChannelUrl} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:text-red-700">
+            <Link href={youtubeChannelUrl} target="_blank" rel="noopener noreferrer" className="text-accent hover:text-accent/80 transition-colors">
               <Youtube className="h-8 w-8" />
             </Link>
           </CardTitle>
