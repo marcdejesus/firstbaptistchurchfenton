@@ -106,3 +106,133 @@
     /* Font family will be set by next/font in layout.tsx */
   }
 }
+
+/* Custom styles for react-day-picker calendar */
+.rdp-custom {
+  --rdp-cell-size: 32px;
+  --rdp-accent-color: hsl(var(--accent));
+  --rdp-background-color: hsl(var(--background));
+  --rdp-accent-color-dark: hsl(var(--accent));
+  --rdp-background-color-dark: hsl(var(--background));
+  --rdp-outline: 2px solid hsl(var(--ring));
+  --rdp-outline-selected: 2px solid hsl(var(--ring));
+  margin: 0;
+}
+
+.rdp-custom .rdp-months {
+  display: flex;
+  justify-content: center;
+}
+
+.rdp-custom .rdp-month {
+  margin: 0;
+}
+
+.rdp-custom .rdp-table {
+  margin: 0;
+  max-width: none;
+}
+
+.rdp-custom .rdp-head_cell {
+  width: var(--rdp-cell-size);
+  height: var(--rdp-cell-size);
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: hsl(var(--muted-foreground));
+}
+
+.rdp-custom .rdp-cell {
+  width: var(--rdp-cell-size);
+  height: var(--rdp-cell-size);
+  text-align: center;
+  position: relative;
+}
+
+.rdp-custom .rdp-day {
+  width: var(--rdp-cell-size);
+  height: var(--rdp-cell-size);
+  border: none;
+  background: transparent;
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.rdp-custom .rdp-day:hover {
+  background-color: hsl(var(--accent) / 0.2);
+}
+
+.rdp-custom .rdp-day_selected {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+  font-weight: 500;
+}
+
+.rdp-custom .rdp-day_selected:hover {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+.rdp-custom .rdp-day_today {
+  background-color: hsl(var(--primary) / 0.2);
+  color: hsl(var(--primary-foreground));
+  font-weight: 600;
+}
+
+.rdp-custom .rdp-day_outside {
+  color: hsl(var(--muted-foreground));
+  opacity: 0.5;
+}
+
+.rdp-custom .rdp-day_disabled {
+  color: hsl(var(--muted-foreground));
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rdp-custom .rdp-day_disabled:hover {
+  background: transparent;
+}
+
+/* Navigation buttons */
+.rdp-custom .rdp-nav_button {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: hsl(var(--foreground));
+  opacity: 0.7;
+  transition: all 0.2s ease-in-out;
+}
+
+.rdp-custom .rdp-nav_button:hover {
+  opacity: 1;
+  background-color: hsl(var(--accent) / 0.2);
+}
+
+.rdp-custom .rdp-nav_button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.rdp-custom .rdp-nav_button:disabled:hover {
+  background: transparent;
+}
+
+/* Caption styling */
+.rdp-custom .rdp-caption_label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+}
