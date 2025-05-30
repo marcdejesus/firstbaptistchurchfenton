@@ -8,6 +8,36 @@ export type Event = {
   summary?: string; // AI generated
   rsvps: number;
   isUserRsvped?: boolean; // To track if the current logged-in user has RSVPed
+  // New enhanced fields
+  category?: EventCategory;
+  capacity?: number;
+  attendees?: User[]; // List of people attending (if sharing enabled)
+  tags?: string[];
+  isOutdoor?: boolean;
+  hasWeatherAlert?: boolean;
+  weatherInfo?: string;
+  directions?: string;
+  contactInfo?: string;
+  relatedEvents?: string[]; // IDs of related events
+  forumDiscussionId?: string; // Link to forum discussion
+};
+
+export type EventCategory = {
+  id: string;
+  name: string;
+  color: string;
+  icon: string;
+  description?: string;
+};
+
+export type EventFilter = {
+  category?: string;
+  dateRange?: {
+    start: Date;
+    end: Date;
+  };
+  searchQuery?: string;
+  showOnlyUserRsvped?: boolean;
 };
 
 export type User = {
