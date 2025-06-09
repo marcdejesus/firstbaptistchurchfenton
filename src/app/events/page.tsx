@@ -4,20 +4,12 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { EventCard } from '@/components/events/EventCard';
 import { EventsCalendar } from '@/components/events/EventsCalendar';
 import { EventFilters } from '@/components/events/EventFilters';
-import { CreateEventForm } from '@/components/events/CreateEventForm';
+import { SubscribeToCalendar } from '@/components/events/SubscribeToCalendar';
 import type { Event as EventType, EventCategory, EventFilter } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { PlusCircle, X, Calendar, Grid, LayoutGrid } from 'lucide-react';
+import { X, Calendar, Grid, LayoutGrid } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Enhanced event categories with icons and colors
@@ -233,7 +225,8 @@ const initialEvents: EventType[] = [
 export default function EventsPage() {
   const [events, setEvents] = useState<EventType[]>([]);
   const [isMounted, setIsMounted] = useState(false);
-  const [isCreateEventOpen, setIsCreateEventOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [filters, setFilters] = useState<EventFilter>({});
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -241,15 +234,37 @@ export default function EventsPage() {
   const [activeTab, setActiveTab] = useState('upcoming');
   const { user } = useUser();
 
+  // Fetch events from API
+  const fetchEvents = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      const response = await fetch('/api/church-events');
+      if (!response.ok) {
+        throw new Error('Failed to fetch events');
+      }
+      
+      const data = await response.json();
+      if (data.success) {
+        setEvents(data.events);
+      } else {
+        throw new Error(data.error || 'Failed to load events');
+      }
+    } catch (error) {
+      console.error('Error fetching events:', error);
+      setError(error instanceof Error ? error.message : 'Failed to load events');
+      // Set fallback events on error
+      setEvents(initialEvents);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    setEvents(initialEvents);
+    fetchEvents();
     setIsMounted(true);
   }, []);
-
-  const handleAddEvent = (newEvent: EventType) => {
-    setEvents(prevEvents => [newEvent, ...prevEvents]);
-    setIsCreateEventOpen(false);
-  };
 
   const handleRsvp = (eventId: string) => {
     setEvents(prevEvents =>
@@ -321,22 +336,6 @@ export default function EventsPage() {
     return filtered;
   }, [events, selectedDate, filters, showOnlyMyEvents, activeTab]);
 
-  // Get suggested events (simple algorithm based on categories of RSVPed events)
-  const suggestedEvents = useMemo(() => {
-    if (!user) return [];
-    
-    const userCategories = events
-      .filter(e => e.isUserRsvped)
-      .map(e => e.category?.id)
-      .filter(Boolean);
-    
-    if (userCategories.length === 0) return [];
-    
-    return events
-      .filter(e => !e.isUserRsvped && userCategories.includes(e.category?.id))
-      .slice(0, 3);
-  }, [events, user]);
-
   if (!isMounted) {
     return <div className="text-center py-10">Loading events...</div>;
   }
@@ -350,27 +349,12 @@ export default function EventsPage() {
           <p className="text-muted-foreground mt-2">
             Discover upcoming events and join our vibrant church community
           </p>
+          {error && (
+            <div className="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800">
+              ⚠️ {error} - Showing cached events
+            </div>
+          )}
         </div>
-        
-        {user && (
-          <Dialog open={isCreateEventOpen} onOpenChange={setIsCreateEventOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <PlusCircle className="mr-2 h-5 w-5" />
-                Create Event
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px] bg-card">
-              <DialogHeader>
-                <DialogTitle className="font-lora text-2xl">Create New Event</DialogTitle>
-                <DialogDescription>
-                  Fill in the details for the new event. An AI summary will be generated.
-                </DialogDescription>
-              </DialogHeader>
-              <CreateEventForm onEventCreated={handleAddEvent} />
-            </DialogContent>
-          </Dialog>
-        )}
       </div>
 
       {/* Tabs for event organization */}
@@ -405,57 +389,8 @@ export default function EventsPage() {
                 onDateSelect={handleDateSelect}
               />
 
-              {/* Quick Stats */}
-              <div className="bg-card border rounded-lg p-4 space-y-3">
-                <h3 className="font-semibold text-sm">Quick Stats</h3>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Total Events</span>
-                    <span className="font-medium">{events.length}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">My RSVPs</span>
-                    <span className="font-medium">{events.filter(e => e.isUserRsvped).length}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">This Month</span>
-                    <span className="font-medium">
-                      {events.filter(e => {
-                        const eventDate = new Date(e.date);
-                        const now = new Date();
-                        return eventDate.getMonth() === now.getMonth() && eventDate.getFullYear() === now.getFullYear();
-                      }).length}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Category Quick Filters */}
-              <div className="bg-card border rounded-lg p-4 space-y-3">
-                <h3 className="font-semibold text-sm">Categories</h3>
-                <div className="space-y-2">
-                  {eventCategories.map((category) => {
-                    const categoryCount = events.filter(e => e.category?.id === category.id).length;
-                    return (
-                      <button
-                        key={category.id}
-                        onClick={() => setFilters({ ...filters, category: filters.category === category.id ? undefined : category.id })}
-                        className={`w-full text-left px-2 py-1 rounded text-xs hover:bg-accent/10 transition-colors ${
-                          filters.category === category.id ? 'bg-accent/20' : ''
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="flex items-center gap-2">
-                            <span>{category.icon}</span>
-                            <span>{category.name}</span>
-                          </span>
-                          <span className="text-muted-foreground">{categoryCount}</span>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
+              {/* Subscribe to Church Calendar */}
+              <SubscribeToCalendar />
             </div>
 
             {/* Events Section */}
@@ -489,7 +424,13 @@ export default function EventsPage() {
               )}
 
               {/* Events Grid/List */}
-              {filteredEvents.length === 0 ? (
+              {isLoading ? (
+                <div className="text-center py-16 bg-card border rounded-lg">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto mb-4"></div>
+                  <h3 className="text-lg font-semibold mb-2">Loading Events</h3>
+                  <p className="text-muted-foreground">Fetching the latest church events...</p>
+                </div>
+              ) : filteredEvents.length === 0 ? (
                 <div className="text-center py-16 bg-card border rounded-lg">
                   <Calendar className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">No events found</h3>
@@ -499,9 +440,14 @@ export default function EventsPage() {
                       : "No events match your current filters."
                     }
                   </p>
-                  <Button variant="outline" onClick={() => { clearDateFilter(); setFilters({}); setShowOnlyMyEvents(false); }}>
-                    Clear all filters
-                  </Button>
+                  <div className="space-y-2">
+                    <Button variant="outline" onClick={() => { clearDateFilter(); setFilters({}); setShowOnlyMyEvents(false); }}>
+                      Clear all filters
+                    </Button>
+                    <Button variant="outline" onClick={fetchEvents}>
+                      Refresh Events
+                    </Button>
+                  </div>
                 </div>
               ) : (
                 <div className={
@@ -556,24 +502,6 @@ export default function EventsPage() {
           </div>
         </TabsContent>
       </Tabs>
-
-      {/* Suggested Events */}
-      {user && suggestedEvents.length > 0 && (
-        <div className="bg-gradient-to-r from-accent/10 to-primary/10 border rounded-lg p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="text-lg">✨</span>
-            <h3 className="text-lg font-semibold">Suggested for You</h3>
-          </div>
-          <p className="text-sm text-muted-foreground mb-4">
-            Based on your interests and past RSVPs
-          </p>
-          <div className="grid gap-4 md:grid-cols-3">
-            {suggestedEvents.map(event => (
-              <EventCard key={event.id} event={event} onRsvp={handleRsvp} variant="compact" />
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

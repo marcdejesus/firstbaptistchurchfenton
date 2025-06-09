@@ -25,8 +25,7 @@ import {
   Grid, 
   List,
   X,
-  Heart,
-  Download
+  Heart
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
@@ -96,11 +95,6 @@ export function EventFilters({
     showOnlyMyEvents
   );
 
-  const exportToCalendar = () => {
-    // This would export filtered events to calendar
-    console.log('Exporting events to calendar...');
-  };
-
   return (
     <div className="space-y-4">
       {/* Search and Main Controls */}
@@ -137,12 +131,6 @@ export function EventFilters({
               <List className="h-4 w-4" />
             </Button>
           </div>
-
-          {/* Export Button */}
-          <Button variant="outline" size="sm" onClick={exportToCalendar}>
-            <Download className="h-4 w-4 mr-2" />
-            Export
-          </Button>
         </div>
       </div>
 

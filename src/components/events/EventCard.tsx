@@ -23,7 +23,9 @@ import {
   Navigation,
   Download,
   Heart,
-  Eye
+  Eye,
+  Calendar,
+  Loader2
 } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { useToast } from '@/hooks/use-toast';
@@ -31,7 +33,8 @@ import {
   DropdownMenu, 
   DropdownMenuContent, 
   DropdownMenuItem, 
-  DropdownMenuTrigger 
+  DropdownMenuTrigger,
+  DropdownMenuSeparator 
 } from '@/components/ui/dropdown-menu';
 import Link from 'next/link';
 
@@ -52,6 +55,19 @@ export function EventCard({
   const { toast } = useToast();
   const [isExpanded, setIsExpanded] = useState(false);
   const [timeUntilEvent, setTimeUntilEvent] = useState<string>('');
+  const [isAddingToCalendar, setIsAddingToCalendar] = useState(false);
+  const [isCalendarConnected, setIsCalendarConnected] = useState(false);
+
+  // Check calendar connection status on component mount
+  useEffect(() => {
+    // Check if Google Calendar is connected by looking for the user email cookie
+    const googleUserEmail = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('google_user_email='))
+      ?.split('=')[1];
+    
+    setIsCalendarConnected(!!googleUserEmail);
+  }, []);
 
   // Calculate time until event
   useEffect(() => {
@@ -134,13 +150,83 @@ export function EventCard({
     }
   };
 
-  const handleAddToCalendar = () => {
-    const startDate = new Date(`${event.date}T${convertTo24Hour(event.time)}`);
-    const endDate = new Date(startDate.getTime() + 2 * 60 * 60 * 1000); // Assume 2 hours duration
+  // Enhanced Google Calendar integration
+  const handleAddToCalendar = async () => {
+    setIsAddingToCalendar(true);
     
-    const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startDate.toISOString().replace(/[:-]/g, '').split('.')[0]}Z/${endDate.toISOString().replace(/[:-]/g, '').split('.')[0]}Z&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
-    
-    window.open(googleCalendarUrl, '_blank');
+    try {
+      if (isCalendarConnected) {
+        // Use Google Calendar API to add event directly
+        const response = await fetch('/api/calendar/events', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event,
+            duration: 120, // 2 hours default duration
+          }),
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          toast({
+            title: "Event Added!",
+            description: `Event has been ${data.action} in your Google Calendar.`,
+          });
+          return;
+        } else {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to add to calendar');
+        }
+      } else {
+        // Fallback to Google Calendar URL (existing implementation)
+        const startDate = new Date(`${event.date}T${convertTo24Hour(event.time)}`);
+        const endDate = new Date(startDate.getTime() + 2 * 60 * 60 * 1000);
+        
+        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startDate.toISOString().replace(/[:-]/g, '').split('.')[0]}Z/${endDate.toISOString().replace(/[:-]/g, '').split('.')[0]}Z&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+        
+        window.open(googleCalendarUrl, '_blank');
+        
+        toast({
+          title: "Calendar Opened",
+          description: "Google Calendar opened in a new tab. Connect your calendar for direct sync!",
+        });
+      }
+    } catch (error) {
+      console.error('Failed to add to calendar:', error);
+      toast({
+        title: "Failed to Add Event",
+        description: error instanceof Error ? error.message : "Please try again or use the fallback URL method.",
+        variant: "destructive",
+      });
+      
+      // Fallback to URL method on error
+      const startDate = new Date(`${event.date}T${convertTo24Hour(event.time)}`);
+      const endDate = new Date(startDate.getTime() + 2 * 60 * 60 * 1000);
+      
+      const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startDate.toISOString().replace(/[:-]/g, '').split('.')[0]}Z/${endDate.toISOString().replace(/[:-]/g, '').split('.')[0]}Z&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+      
+      window.open(googleCalendarUrl, '_blank');
+    } finally {
+      setIsAddingToCalendar(false);
+    }
+  };
+
+  // Connect Google Calendar
+  const handleConnectCalendar = async () => {
+    try {
+      const response = await fetch('/api/calendar/auth');
+      const { authUrl } = await response.json();
+      
+      // Open Google OAuth in current window
+      window.location.href = authUrl;
+    } catch (error) {
+      console.error('Failed to connect calendar:', error);
+      toast({
+        title: "Connection Failed",
+        description: "Failed to connect to Google Calendar. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleDirections = () => {
@@ -240,10 +326,27 @@ export function EventCard({
                 <Share2 className="w-4 h-4 mr-2" />
                 Share Event
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={handleAddToCalendar}>
-                <Download className="w-4 h-4 mr-2" />
-                Add to Calendar
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleAddToCalendar} disabled={isAddingToCalendar}>
+                {isAddingToCalendar ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Adding to Calendar...
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-4 h-4 mr-2" />
+                    {isCalendarConnected ? 'Add to Calendar' : 'Open in Calendar'}
+                  </>
+                )}
               </DropdownMenuItem>
+              {!isCalendarConnected && (
+                <DropdownMenuItem onClick={handleConnectCalendar}>
+                  <Calendar className="w-4 h-4 mr-2" />
+                  Connect Google Calendar
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleDirections}>
                 <Navigation className="w-4 h-4 mr-2" />
                 Get Directions
