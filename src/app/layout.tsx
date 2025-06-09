@@ -19,7 +19,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'First Baptist of Fenton',
+  title: 'First Baptist Church of Fenton',
   description: 'First Baptist Church Fenton - Connect with our community.',
 };
 

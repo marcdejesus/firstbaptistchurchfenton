@@ -21,7 +21,7 @@ export function Footer() {
           <div className="space-y-4 text-center md:text-left">
             <Link href="/" className="flex items-center justify-center md:justify-start space-x-2 text-xl font-lora font-semibold text-primary-foreground hover:text-accent transition-colors">
               <FBCLogo className="h-8 w-8 text-accent" />
-              <span>First Baptist of Fenton</span>
+              <span>First Baptist Church of Fenton</span>
             </Link>
             <p className="text-sm text-primary-foreground/80 max-w-xs">
               A community of faith, hope, and love in the heart of Fenton.
@@ -87,7 +87,7 @@ export function Footer() {
           <div className="space-y-3 text-center md:text-left">
             <div className="space-y-2">
               <p className="text-sm">
-                &copy; {new Date().getFullYear()} First Baptist of Fenton
+                &copy; {new Date().getFullYear()} First Baptist Church of Fenton
               </p>
               <p className="text-sm">All Rights Reserved.</p>
               <p className="text-xs mt-3 text-primary-foreground/70">

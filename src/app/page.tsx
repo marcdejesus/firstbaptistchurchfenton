@@ -25,7 +25,7 @@ export default function Home() {
         </div>
         <div className="relative z-10 text-center">
           <h1 className="text-4xl md:text-5xl font-lora font-bold text-white mb-4">
-            Welcome to First Baptist of Fenton
+            Welcome to First Baptist Church of Fenton
           </h1>
           <div className="space-y-4">
             <p className="text-xl text-primary-foreground/80 leading-relaxed">
