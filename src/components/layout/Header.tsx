@@ -11,17 +11,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Home, CalendarDays, Users, LogIn, UserPlus, DollarSign, UserCircle, LogOut, Menu as MenuIcon, Church, Book } from 'lucide-react';
+import { Home, CalendarDays, Users, DollarSign, UserCircle, LogOut, Menu as MenuIcon, Church, Book, Calendar, BookOpen, Heart } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import React from 'react';
 
-const navLinks = [
-  { href: '/', label: 'Home', icon: Home },
-  { href: '/events', label: 'Events', icon: CalendarDays },
-  { href: '/community', label: 'Community', icon: Users },
- { href: '/ministries', label: 'Ministries', icon: Church},
- { href: '/sermons', label: 'Sermons', icon: Book },
+const navItems = [
+  { href: '/events', label: 'Events', icon: Calendar },
+  { href: '/sermons', label: 'Sermons', icon: BookOpen },
+  { href: '/ministries', label: 'Ministries', icon: Heart },
+  { href: '/donate', label: 'Donate', icon: DollarSign }
 ];
 
 const FBCLogo = ({ className }: { className?: string }) => (
@@ -39,7 +38,7 @@ export function Header() {
 
   const commonNavElements = (
     <>
-      {navLinks.map((link) => (
+      {navItems.map((link) => (
         <Button key={link.label} variant="ghost" asChild className="text-foreground hover:bg-accent/20 hover:text-accent">
           <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)}>
             <link.icon className="mr-2 h-5 w-5" />
@@ -47,12 +46,6 @@ export function Header() {
           </Link>
         </Button>
       ))}
-      <Button variant="default" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-md" asChild>
-        <Link href="/donate" onClick={() => setIsMobileMenuOpen(false)}>
-          <DollarSign className="mr-2 h-5 w-5" />
-          Donate
-        </Link>
-      </Button>
     </>
   );
 
@@ -67,7 +60,7 @@ export function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-2">
           {commonNavElements}
-          {user ? (
+          {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
@@ -96,15 +89,6 @@ export function Header() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          ) : (
-            <>
-              <Button variant="ghost" asChild className="text-primary-foreground">
-                <Link href="/login"><LogIn className="mr-2 h-5 w-5" />Login</Link>
-              </Button>
-              <Button variant="outline" asChild className="border-primary-foreground/50 text-primary-foreground hover:bg-accent/20 hover:text-accent">
-                <Link href="/register"><UserPlus className="mr-2 h-5 w-5" />Register</Link>
-              </Button>
-            </>
           )}
         </nav>
 
@@ -121,22 +105,13 @@ export function Header() {
               <nav className="flex flex-col space-y-3">
                 {commonNavElements}
                 <hr className="my-3 border-border" />
-                {user ? (
+                {user && (
                   <>
                     <Button variant="ghost" asChild className="justify-start text-foreground">
                       <Link href="/profile" onClick={() => setIsMobileMenuOpen(false)}><UserCircle className="mr-2 h-5 w-5" />Profile</Link>
                     </Button>
                     <Button variant="ghost" onClick={() => { logout(); setIsMobileMenuOpen(false); }} className="justify-start text-foreground">
                       <LogOut className="mr-2 h-5 w-5" />Log out
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button variant="ghost" asChild className="justify-start text-foreground">
-                      <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}><LogIn className="mr-2 h-5 w-5" />Login</Link>
-                    </Button>
-                    <Button variant="outline" asChild className="justify-start text-foreground">
-                      <Link href="/register" onClick={() => setIsMobileMenuOpen(false)}><UserPlus className="mr-2 h-5 w-5" />Register</Link>
                     </Button>
                   </>
                 )}

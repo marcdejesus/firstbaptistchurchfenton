@@ -25,7 +25,8 @@ import {
   Heart,
   Eye,
   Calendar,
-  Loader2
+  Loader2,
+  MoreHorizontal
 } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { useToast } from '@/hooks/use-toast';
@@ -351,14 +352,6 @@ export function EventCard({
                 <Navigation className="w-4 h-4 mr-2" />
                 Get Directions
               </DropdownMenuItem>
-              {event.forumDiscussionId && (
-                <DropdownMenuItem asChild>
-                  <Link href={`/community/posts/${event.forumDiscussionId}`}>
-                    <MessageSquare className="w-4 h-4 mr-2" />
-                    Discuss in Forum
-                  </Link>
-                </DropdownMenuItem>
-              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -476,16 +469,6 @@ export function EventCard({
                 {event.capacity ? ' spots' : ' RSVPs'}
               </span>
             </div>
-            
-            {event.forumDiscussionId && (
-              <Link 
-                href={`/community/posts/${event.forumDiscussionId}`}
-                className="flex items-center hover:text-accent transition-colors"
-              >
-                <MessageSquare className="w-4 h-4 mr-1" />
-                <span>Discuss</span>
-              </Link>
-            )}
           </div>
           
           <Button 

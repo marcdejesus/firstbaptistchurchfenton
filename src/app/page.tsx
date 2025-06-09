@@ -27,16 +27,15 @@ export default function Home() {
           <h1 className="text-4xl md:text-5xl font-lora font-bold text-white mb-4">
             Welcome to First Baptist of Fenton
           </h1>
-          <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
-            A community of faith, hope, and love in the heart of Fenton. Join us as we grow together.
-          </p>
-          <div className="space-x-4">
-            <Button size="lg" asChild className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-md">
-              <Link href="/events">Upcoming Events</Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild className="bg-transparent border-gray-300/70 text-gray-100 hover:bg-white/20 hover:text-white hover:border-white shadow-md">
-              <Link href="/community">Join Our Community</Link>
-            </Button>
+          <div className="space-y-4">
+            <p className="text-xl text-primary-foreground/80 leading-relaxed">
+              A community of faith, hope, and love in the heart of Fenton. Join us as we grow together.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg">
+                <Link href="/events">View Events</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
