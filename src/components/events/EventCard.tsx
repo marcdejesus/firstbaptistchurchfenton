@@ -16,8 +16,6 @@ import {
   Share2,
   MessageSquare,
   ExternalLink,
-  ChevronDown,
-  ChevronUp,
   Timer,
   Cloud,
   Navigation,
@@ -54,7 +52,6 @@ export function EventCard({
 }: EventCardProps) {
   const { user } = useUser();
   const { toast } = useToast();
-  const [isExpanded, setIsExpanded] = useState(false);
   const [timeUntilEvent, setTimeUntilEvent] = useState<string>('');
   const [isAddingToCalendar, setIsAddingToCalendar] = useState(false);
   const [isCalendarConnected, setIsCalendarConnected] = useState(false);
@@ -411,27 +408,6 @@ export function EventCard({
         <p className="text-sm text-muted-foreground line-clamp-3 mb-4">
           {event.description}
         </p>
-
-        {/* Expandable AI Summary */}
-        {event.summary && (
-          <div className="space-y-2">
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="h-auto p-2 w-full justify-between"
-              onClick={() => setIsExpanded(!isExpanded)}
-            >
-              <span className="text-xs font-medium">AI Summary</span>
-              {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-            </Button>
-            
-            {isExpanded && (
-              <div className="p-3 bg-primary/5 rounded-md border">
-                <p className="text-xs text-muted-foreground">{event.summary}</p>
-              </div>
-            )}
-          </div>
-        )}
 
         {/* Attendees Preview */}
         {showAttendees && event.attendees && event.attendees.length > 0 && (
