@@ -6,6 +6,8 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { 
   CalendarDays, 
   MapPin, 
@@ -24,7 +26,9 @@ import {
   Eye,
   Calendar,
   Loader2,
-  MoreHorizontal
+  MoreHorizontal,
+  UserPlus,
+  X
 } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { useToast } from '@/hooks/use-toast';
@@ -35,11 +39,19 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator 
 } from '@/components/ui/dropdown-menu';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import Link from 'next/link';
 
 interface EventCardProps {
   event: Event;
-  onRsvp: (eventId: string) => void;
+  onRsvp: (eventId: string, attendeeName?: string, action?: 'add' | 'remove') => void;
   variant?: 'default' | 'compact' | 'detailed';
   showAttendees?: boolean;
 }
@@ -55,6 +67,20 @@ export function EventCard({
   const [timeUntilEvent, setTimeUntilEvent] = useState<string>('');
   const [isAddingToCalendar, setIsAddingToCalendar] = useState(false);
   const [isCalendarConnected, setIsCalendarConnected] = useState(false);
+  const [isRsvpDialogOpen, setIsRsvpDialogOpen] = useState(false);
+  const [isAttendeesDialogOpen, setIsAttendeesDialogOpen] = useState(false);
+  const [rsvpName, setRsvpName] = useState('');
+  const [userRsvpName, setUserRsvpName] = useState<string | null>(null);
+
+  // Check if current user has RSVPed (stored in localStorage)
+  useEffect(() => {
+    const storedRsvps = localStorage.getItem('event_rsvps');
+    if (storedRsvps) {
+      const rsvps = JSON.parse(storedRsvps);
+      const userRsvp = rsvps[event.id];
+      setUserRsvpName(userRsvp || null);
+    }
+  }, [event.id]);
 
   // Check calendar connection status on component mount
   useEffect(() => {
@@ -109,21 +135,63 @@ export function EventCard({
   };
 
   const handleRsvpClick = () => {
-    if (!user) {
+    if (userRsvpName) {
+      // User has already RSVPed, allow them to cancel
+      handleCancelRsvp();
+    } else {
+      // User hasn't RSVPed, open name dialog
+      setIsRsvpDialogOpen(true);
+    }
+  };
+
+  const handleSubmitRsvp = () => {
+    if (!rsvpName.trim()) {
       toast({
-        title: "Login Required",
-        description: "Please log in to RSVP for events.",
+        title: "Name Required",
+        description: "Please enter your name and last initial to RSVP.",
         variant: "destructive",
       });
       return;
     }
-    
-    onRsvp(event.id);
+
+    // Store RSVP in localStorage
+    const storedRsvps = localStorage.getItem('event_rsvps') || '{}';
+    const rsvps = JSON.parse(storedRsvps);
+    rsvps[event.id] = rsvpName.trim();
+    localStorage.setItem('event_rsvps', JSON.stringify(rsvps));
+
+    setUserRsvpName(rsvpName.trim());
+    onRsvp(event.id, rsvpName.trim(), 'add');
     
     toast({
-      title: "RSVP Updated!",
-      description: `You have ${event.isUserRsvped ? "cancelled your RSVP for" : "RSVPed for"} "${event.title}".`,
+      title: "RSVP Successful!",
+      description: `Thank you ${rsvpName.trim()}, you've RSVPed for "${event.title}".`,
     });
+
+    setRsvpName('');
+    setIsRsvpDialogOpen(false);
+  };
+
+  const handleCancelRsvp = () => {
+    if (!userRsvpName) return;
+
+    // Remove RSVP from localStorage
+    const storedRsvps = localStorage.getItem('event_rsvps') || '{}';
+    const rsvps = JSON.parse(storedRsvps);
+    delete rsvps[event.id];
+    localStorage.setItem('event_rsvps', JSON.stringify(rsvps));
+
+    onRsvp(event.id, userRsvpName, 'remove');
+    setUserRsvpName(null);
+    
+    toast({
+      title: "RSVP Cancelled",
+      description: `Your RSVP for "${event.title}" has been cancelled.`,
+    });
+  };
+
+  const handleViewAttendees = () => {
+    setIsAttendeesDialogOpen(true);
   };
 
   const handleShare = async () => {
@@ -276,8 +344,8 @@ export function EventCard({
               <span className="text-xs text-muted-foreground">
                 {event.rsvps}{event.capacity ? `/${event.capacity}` : ''}
               </span>
-              <Button size="sm" variant={event.isUserRsvped ? "outline" : "default"} onClick={handleRsvpClick}>
-                {event.isUserRsvped ? 'RSVPed' : 'RSVP'}
+              <Button size="sm" variant={userRsvpName ? "outline" : "default"} onClick={handleRsvpClick}>
+                {userRsvpName ? 'RSVPed' : 'RSVP'}
               </Button>
             </div>
           </div>
@@ -438,27 +506,30 @@ export function EventCard({
       <CardFooter className="pt-4 border-t">
         <div className="flex justify-between items-center w-full">
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center">
+            <button 
+              onClick={handleViewAttendees}
+              className="flex items-center hover:text-foreground transition-colors cursor-pointer"
+            >
               <Users className="w-4 h-4 mr-1 text-accent" />
               <span className={getCapacityColor()}>
                 {event.rsvps}{event.capacity ? `/${event.capacity}` : ''} 
                 {event.capacity ? ' spots' : ' RSVPs'}
               </span>
-            </div>
+            </button>
           </div>
           
           <Button 
             onClick={handleRsvpClick} 
-            variant={event.isUserRsvped ? "outline" : "default"}
+            variant={userRsvpName ? "outline" : "default"}
             size="default"
             className={`${
-              event.isUserRsvped 
+              userRsvpName 
                 ? "border-accent text-accent hover:bg-accent/10" 
                 : "bg-accent text-accent-foreground hover:bg-accent/90"
             } font-semibold px-6`}
-            disabled={!user || Boolean(event.capacity && event.rsvps >= event.capacity && !event.isUserRsvped)}
+            disabled={Boolean(event.capacity && event.rsvps >= event.capacity && !userRsvpName)}
           >
-            {event.isUserRsvped ? (
+            {userRsvpName ? (
               <>
                 <CheckCircle className="w-4 h-4 mr-2" />
                 RSVPed
@@ -472,6 +543,79 @@ export function EventCard({
           </Button>
         </div>
       </CardFooter>
+
+      {/* RSVP Name Dialog */}
+      <Dialog open={isRsvpDialogOpen} onOpenChange={setIsRsvpDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>RSVP for {event.title}</DialogTitle>
+            <DialogDescription>
+              Enter your name and last initial to reserve your spot (e.g. "John D.").
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="rsvp-name">Name (Last Initial)</Label>
+              <Input
+                id="rsvp-name"
+                value={rsvpName}
+                onChange={(e) => setRsvpName(e.target.value)}
+                placeholder="e.g. John D."
+                onKeyPress={(e) => e.key === 'Enter' && handleSubmitRsvp()}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsRsvpDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleSubmitRsvp}>
+              RSVP
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Attendees List Dialog */}
+      <Dialog open={isAttendeesDialogOpen} onOpenChange={setIsAttendeesDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Event Attendees</DialogTitle>
+            <DialogDescription>
+              {event.rsvps} {event.rsvps === 1 ? 'person has' : 'people have'} RSVPed for {event.title}
+              {event.capacity && ` (${event.capacity - event.rsvps} spots remaining)`}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            {event.attendees && event.attendees.length > 0 ? (
+              <div className="space-y-2 max-h-60 overflow-y-auto">
+                {event.attendees.map((attendee, index) => (
+                  <div key={index} className="flex items-center space-x-3 p-2 rounded-md bg-muted/50">
+                    <Avatar className="w-8 h-8">
+                      <AvatarImage src={attendee.avatarUrl} />
+                      <AvatarFallback className="text-xs">
+                        {attendee.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm font-medium">{attendee.name}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-muted-foreground">
+                <UserPlus className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                <p>No attendees yet.</p>
+                <p className="text-xs">Be the first to RSVP!</p>
+              </div>
+            )}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsAttendeesDialogOpen(false)}>
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

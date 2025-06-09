@@ -266,13 +266,35 @@ export default function EventsPage() {
     setIsMounted(true);
   }, []);
 
-  const handleRsvp = (eventId: string) => {
+  const handleRsvp = (eventId: string, attendeeName?: string, action?: 'add' | 'remove') => {
     setEvents(prevEvents =>
-      prevEvents.map(event =>
-        event.id === eventId
-          ? { ...event, rsvps: event.isUserRsvped ? event.rsvps - 1 : event.rsvps + 1, isUserRsvped: !event.isUserRsvped }
-          : event
-      )
+      prevEvents.map(event => {
+        if (event.id === eventId) {
+          if (action === 'add' && attendeeName) {
+            // Add new attendee
+            const newAttendee = {
+              id: Date.now().toString(),
+              name: attendeeName,
+              email: `${attendeeName.toLowerCase().replace(/\s+/g, '.')}@example.com`,
+              avatarUrl: `https://placehold.co/100x100.png?text=${attendeeName.charAt(0).toUpperCase()}`
+            };
+            
+            return {
+              ...event,
+              rsvps: event.rsvps + 1,
+              attendees: [...(event.attendees || []), newAttendee]
+            };
+          } else if (action === 'remove' && attendeeName) {
+            // Remove attendee by name
+            return {
+              ...event,
+              rsvps: Math.max(0, event.rsvps - 1),
+              attendees: (event.attendees || []).filter(attendee => attendee.name !== attendeeName)
+            };
+          }
+        }
+        return event;
+      })
     );
   };
 
@@ -359,9 +381,8 @@ export default function EventsPage() {
 
       {/* Tabs for event organization */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="upcoming">Upcoming Events</TabsTrigger>
-          <TabsTrigger value="my-events" disabled={!user}>My Events</TabsTrigger>
           <TabsTrigger value="past">Past Events</TabsTrigger>
         </TabsList>
 
@@ -467,28 +488,6 @@ export default function EventsPage() {
                 </div>
               )}
             </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="my-events" className="space-y-6">
-          <div className="text-center py-16">
-            <h3 className="text-lg font-semibold mb-2">My Events</h3>
-            <p className="text-muted-foreground mb-4">
-              Events you've RSVPed for will appear here
-            </p>
-            {user && (
-              <div className="space-y-4">
-                {events.filter(e => e.isUserRsvped).length === 0 ? (
-                  <p className="text-sm text-muted-foreground">You haven't RSVPed for any events yet.</p>
-                ) : (
-                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    {events.filter(e => e.isUserRsvped).map(event => (
-                      <EventCard key={event.id} event={event} onRsvp={handleRsvp} />
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </TabsContent>
 
