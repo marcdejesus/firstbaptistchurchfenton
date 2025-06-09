@@ -11,30 +11,32 @@ export default function Home() {
   return (
     <div className="space-y-12">
       {/* Hero Section */}
-      <section className="relative p-20 md:p-40 rounded-lg shadow-lg overflow-hidden">
+      <section className="relative min-h-[60vh] md:min-h-[70vh] rounded-lg shadow-lg overflow-hidden">
         <div className="absolute inset-0">
           <Image 
             src="https://images.squarespace-cdn.com/content/v1/5e74e817283f5b7394775296/1584722138113-K93VCHDP0DUDSXLLY6XC/image-asset.jpeg"
             alt="Church sanctuary interior"
-            layout="fill"
-            objectFit="cover"
+            fill
+            style={{ objectFit: 'cover' }}
             data-ai-hint="church interior"
-            priority // Good to add for LCP images
+            priority
           />
-          <div className="absolute inset-0 bg-black/50"></div> {/* Added dark overlay */}
+          <div className="absolute inset-0 bg-black/50"></div>
         </div>
-        <div className="relative z-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-lora font-bold text-white mb-4">
-            Welcome to First Baptist Church of Fenton
-          </h1>
-          <div className="space-y-4">
-            <p className="text-xl text-primary-foreground/80 leading-relaxed">
+        <div className="relative z-10 flex items-center justify-center min-h-[60vh] md:min-h-[70vh] px-4 py-12 md:py-20">
+          <div className="text-center max-w-4xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-lora font-bold text-white mb-6 leading-tight">
+              Welcome to First Baptist Church of Fenton
+            </h1>
+            <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto leading-relaxed">
               A community of faith, hope, and love in the heart of Fenton. Join us as we grow together.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg">
-                <Link href="/events">View Events</Link>
-              </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/events">
+                <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg px-8 py-3 text-lg font-semibold">
+                  View Events
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
