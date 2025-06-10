@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div className="space-y-16">
       {/* Hero Section - Enhanced */}
-      <section className="relative min-h-[70vh] md:min-h-[80vh] rounded-lg shadow-lg overflow-hidden">
+      <section className="relative min-h-[60vh] md:min-h-[40vh] rounded-lg shadow-lg overflow-hidden">
         <div className="absolute inset-0">
           <Image 
             src="https://images.squarespace-cdn.com/content/v1/5e74e817283f5b7394775296/1584722138113-K93VCHDP0DUDSXLLY6XC/image-asset.jpeg"
@@ -53,7 +53,7 @@ export default function Home() {
           />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
-        <div className="relative z-10 flex items-center justify-center min-h-[70vh] md:min-h-[80vh] px-4 py-12 md:py-20">
+        <div className="relative z-10 flex items-center justify-center min-h-[60vh] md:min-h-[40vh] px-4 py-12 md:py-20">
           <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-lora font-bold text-white mb-6 leading-tight">
               Welcome to First Baptist Church of Fenton
@@ -77,6 +77,14 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Mission Statement - Enhanced */}
+      <section className="text-center p-8 md:p-12 bg-primary/10 rounded-2xl shadow-md">
+        <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-6">Our Mission</h2>
+        <p className="text-xl text-primary-foreground/80 max-w-4xl mx-auto leading-relaxed">
+          To lead people into a growing relationship with Jesus Christ by creating environments where people are encouraged and equipped to pursue intimacy with God, community with insiders, and influence with outsiders.
+        </p>
       </section>
 
       {/* What's Happening Section - NEW */}
@@ -127,122 +135,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* New Here Section - NEW */}
-      <section id="new-here" className="bg-gradient-to-r from-accent/10 to-accent/5 rounded-2xl p-8 md:p-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-6">
-            New Here? We'd Love to Meet You!
-          </h2>
-          <p className="text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
-            Whether you're exploring faith for the first time or looking for a new church home, 
-            you're welcome here. Come as you are - we're excited to meet you!
-          </p>
-          
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Coffee className="h-8 w-8 text-accent" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Sunday Welcome</h3>
-              <p className="text-sm text-muted-foreground">
-                Grab coffee and donuts before service. We'll help you find a seat and answer any questions.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-accent" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Connect Groups</h3>
-              <p className="text-sm text-muted-foreground">
-                Small groups that meet throughout the week for fellowship, study, and friendship.
-              </p>
-            </div>
-            
-            <div className="text-center">
-              <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="h-8 w-8 text-accent" />
-              </div>
-              <h3 className="font-semibold text-lg mb-2">Get Involved</h3>
-              <p className="text-sm text-muted-foreground">
-                Discover ways to serve and use your gifts to make a difference in our community.
-              </p>
-            </div>
-          </div>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="#contact-us-section-id">
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
-                Contact Us
-              </Button>
-            </Link>
-            <Link href="/ministries">
-              <Button variant="outline" size="lg" className="px-8">
-                Learn About Ministries
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Latest Sermon Preview - NEW */}
-      <section className="space-y-6">
-        <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-3">
-            Latest Message
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Catch up on our most recent Sunday message
-          </p>
-        </div>
-        
-        <Card className="max-w-4xl mx-auto shadow-lg">
-          <CardContent className="p-8">
-            <div className="flex flex-col md:flex-row items-center gap-8">
-              <div className="relative w-full md:w-1/2 aspect-video rounded-lg overflow-hidden bg-muted">
-                {/* Replace with actual latest sermon thumbnail */}
-                <div className="flex items-center justify-center h-full bg-gradient-to-br from-accent/20 to-accent/10">
-                  <Play className="h-16 w-16 text-accent" />
-                </div>
-              </div>
-              
-              <div className="w-full md:w-1/2 text-center md:text-left">
-                <Badge className="mb-3">Latest Sermon</Badge>
-                <h3 className="text-2xl font-bold mb-3">Finding Hope in Difficult Times</h3>
-                <p className="text-muted-foreground mb-4">
-                  Pastor Johnson shares insights from Psalms about maintaining faith and hope 
-                  when life feels overwhelming.
-                </p>
-                <p className="text-sm text-muted-foreground mb-6">
-                  January 7, 2025 • 35 minutes
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Link href="/sermons">
-                    <Button className="w-full sm:w-auto">
-                      <Play className="mr-2 h-4 w-4" />
-                      Watch Sermon
-                    </Button>
-                  </Link>
-                  <Link href="/sermons">
-                    <Button variant="outline" className="w-full sm:w-auto">
-                      <BookOpen className="mr-2 h-4 w-4" />
-                      View All Sermons
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Mission Statement - Enhanced */}
-      <section className="text-center p-8 md:p-12 bg-primary/10 rounded-2xl shadow-md">
-        <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-6">Our Mission</h2>
-        <p className="text-xl text-primary-foreground/80 max-w-4xl mx-auto leading-relaxed">
-          To lead people into a growing relationship with Jesus Christ by creating environments where people are encouraged and equipped to pursue intimacy with God, community with insiders, and influence with outsiders.
-        </p>
-      </section>
+      {/* Testimonies Section */}
+      <TestimoniesCarousel />
 
       {/* Core Information Grid - Enhanced */}
       <section className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -339,8 +233,63 @@ export default function Home() {
         </Card>
       </section>
 
-      {/* Testimonies Section */}
-      <TestimoniesCarousel />
+      {/* New Here Section - NEW */}
+      <section id="new-here" className="bg-gradient-to-r from-accent/10 to-accent/5 rounded-2xl p-8 md:p-12">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-6">
+            New Here? We'd Love to Meet You!
+          </h2>
+          <p className="text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+            Whether you're exploring faith for the first time or looking for a new church home, 
+            you're welcome here. Come as you are - we're excited to meet you!
+          </p>
+          
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Coffee className="h-8 w-8 text-accent" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Sunday Welcome</h3>
+              <p className="text-sm text-muted-foreground">
+                Grab coffee and donuts before service. We'll help you find a seat and answer any questions.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-accent" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Connect Groups</h3>
+              <p className="text-sm text-muted-foreground">
+                Small groups that meet throughout the week for fellowship, study, and friendship.
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="h-8 w-8 text-accent" />
+              </div>
+              <h3 className="font-semibold text-lg mb-2">Get Involved</h3>
+              <p className="text-sm text-muted-foreground">
+                Discover ways to serve and use your gifts to make a difference in our community.
+              </p>
+            </div>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="#contact-us-section-id">
+              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
+                Contact Us
+              </Button>
+            </Link>
+            <Link href="/ministries">
+              <Button variant="outline" size="lg" className="px-8">
+                Learn About Ministries
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
