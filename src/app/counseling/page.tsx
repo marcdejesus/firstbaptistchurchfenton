@@ -26,7 +26,7 @@ export default function CounselingPage() {
       </section>
 
       {/* Introduction & Approach Combined Section */}
-      <section className="bg-gradient-to-br from-accent/5 via-primary/5 to-accent/10 rounded-3xl p-8 md:p-12 lg:p-16">
+      <section className="bg-accent/10 rounded-3xl p-8 md:p-12 lg:p-16">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             
@@ -142,7 +142,7 @@ export default function CounselingPage() {
 
       {/* Sarah Halsey Section - Enhanced */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 rounded-3xl"></div>
+        <div className="absolute inset-0 bg-accent/10 rounded-3xl"></div>
         <div className="relative z-10 p-8 md:p-12 lg:p-16">
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-5 gap-12 lg:gap-16 items-center">
@@ -228,7 +228,7 @@ export default function CounselingPage() {
           </Button>
         </div>
         
-        <Card className="mt-12 p-8 bg-gradient-to-r from-accent/10 to-primary/10 border-0 shadow-lg">
+        <Card className="mt-12 p-8 bg-accent/10 border-0 shadow-lg">
           <CardContent className="p-0">
             <div className="flex items-center justify-center space-x-3 mb-4">
               <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">
