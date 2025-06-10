@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Home, CalendarDays, Users, DollarSign, UserCircle, LogOut, Menu as MenuIcon, Church, Book, Calendar, BookOpen, Heart } from 'lucide-react';
+import { Home, CalendarDays, Users, DollarSign, UserCircle, LogOut, Menu as MenuIcon, Church, Book, Calendar, BookOpen, Heart, Mail } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import React from 'react';
@@ -21,6 +21,7 @@ const navItems = [
   { href: '/sermons', label: 'Sermons', icon: BookOpen },
   { href: '/ministries', label: 'Ministries', icon: Heart },
   { href: '/counseling', label: 'Counseling', icon: Users },
+  { href: '/contact', label: 'Contact', icon: Mail },
   { href: '/donate', label: 'Donate', icon: DollarSign }
 ];
 

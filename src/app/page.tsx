@@ -9,7 +9,7 @@ import { MapPin, Phone, Mail, Clock, Calendar, Users, Heart, ArrowRight, Play, C
 import { TestimoniesCarousel } from "@/components/home/TestimoniesCarousel";
 
 export default function Home() {
-  const mapUrl = "https://www.google.com/maps/search/?api=1&query=123%20Church%20Street%2C%20Fenton%2C%20Michigan%2C%2048430";
+  const mapUrl = "https://www.google.com/maps/search/?api=1&query=860%20N%20Leroy%20St%2C%20Fenton%2C%20MI%2048430";
 
   // This would typically come from your API
   const upcomingEvents = [
@@ -190,8 +190,8 @@ export default function Home() {
             </a>
             <div className="text-center">
               <p className="font-semibold">First Baptist Church Fenton</p>
-              <p className="text-muted-foreground">123 Church Street</p>
-              <p className="text-muted-foreground">Fenton, Michigan 48430</p>
+              <p className="text-muted-foreground">860 N Leroy St.</p>
+              <p className="text-muted-foreground">Fenton, MI 48430</p>
               <Button 
                 variant="outline" 
                 size="sm" 
@@ -215,20 +215,22 @@ export default function Home() {
             <div className="space-y-3">
               <p className="flex items-center">
                 <Mail className="mr-3 h-5 w-5 text-accent" /> 
-                <span>hello@firstbaptistchurch.org</span>
+                <span>Pastorjbell206@gmail.com</span>
               </p>
               <p className="flex items-center">
                 <Phone className="mr-3 h-5 w-5 text-accent" /> 
-                <span>(810) 555-1234</span>
+                <span>(810) 629-9427</span>
               </p>
             </div>
             <CardDescription className="text-sm">
               We'd love to hear from you. Reach out with any questions or prayer requests.
             </CardDescription>
-            <Button className="w-full mt-4">
-              <Mail className="mr-2 h-4 w-4" />
-              Send Message
-            </Button>
+            <Link href="/contact">
+              <Button className="w-full mt-4">
+                <Mail className="mr-2 h-4 w-4" />
+                Send Message
+              </Button>
+            </Link>
           </CardContent>
         </Card>
       </section>
@@ -277,7 +279,7 @@ export default function Home() {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="#contact-us-section-id">
+            <Link href="/contact">
               <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
                 Contact Us
               </Button>
