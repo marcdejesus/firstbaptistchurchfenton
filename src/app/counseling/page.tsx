@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { Heart, BookOpen, Users, Mail, Calendar, Check } from "lucide-react";
+import Link from "next/link";
 
 export default function CounselingPage() {
   return (
@@ -18,10 +19,12 @@ export default function CounselingPage() {
           A ministry of First Baptist Church of Fenton, offering hope and healing through God's Word
         </p>
         <div className="pt-6">
-          <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg px-8 py-4 text-lg font-semibold">
-            <Calendar className="mr-2 h-5 w-5" />
-            Book an Appointment
-          </Button>
+          <Link href="/book-appointment">
+            <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg px-8 py-4 text-lg font-semibold">
+              <Calendar className="mr-2 h-5 w-5" />
+              Book an Appointment
+            </Button>
+          </Link>
         </div>
       </section>
 
@@ -56,10 +59,12 @@ export default function CounselingPage() {
                     Take the first step towards healing and growth. Our confidential counseling sessions provide a safe space for you to share and receive biblical guidance.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <Button className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90">
-                      <Calendar className="mr-2 h-4 w-4" />
-                      Schedule Now
-                    </Button>
+                    <Link href="/book-appointment">
+                      <Button className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90">
+                        <Calendar className="mr-2 h-4 w-4" />
+                        Schedule Now
+                      </Button>
+                    </Link>
                     <Button variant="outline" className="flex-1">
                       <Mail className="mr-2 h-4 w-4" />
                       Contact Us
@@ -218,10 +223,12 @@ export default function CounselingPage() {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
-          <Button size="lg" className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-4 text-lg font-semibold shadow-lg">
-            <Calendar className="mr-2 h-5 w-5" />
-            Book an Appointment
-          </Button>
+          <Link href="/book-appointment">
+            <Button size="lg" className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-4 text-lg font-semibold shadow-lg">
+              <Calendar className="mr-2 h-5 w-5" />
+              Book an Appointment
+            </Button>
+          </Link>
           <Button variant="outline" size="lg" className="flex-1 px-8 py-4 text-lg font-semibold border-2">
             <Mail className="mr-2 h-5 w-5" />
             Contact Us
