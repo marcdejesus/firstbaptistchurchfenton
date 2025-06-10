@@ -14,12 +14,12 @@ export default function CounselingPage() {
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-lora font-bold text-primary-foreground leading-tight">
           Fenton Biblical Counseling
         </h1>
-        <p className="text-xl md:text-2xl lg:text-3xl text-primary-foreground/90 max-w-4xl mx-auto leading-relaxed">
+        <p className="text-xl text-primary-foreground/90 max-w-4xl mx-auto leading-relaxed">
           A ministry of First Baptist Church of Fenton, offering hope and healing through God's Word
         </p>
         <div className="pt-6">
-          <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg px-10 py-5 text-xl font-semibold">
-            <Calendar className="mr-3 h-6 w-6" />
+          <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg px-8 py-4 text-lg font-semibold">
+            <Calendar className="mr-2 h-5 w-5" />
             Book an Appointment
           </Button>
         </div>
@@ -37,13 +37,13 @@ export default function CounselingPage() {
                   <Heart className="h-4 w-4 mr-2" />
                   Compassionate Support
                 </Badge>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-lora font-bold text-primary-foreground leading-tight">
+                <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground leading-tight">
                   Everyone Needs Help Sometimes
                 </h2>
-                <p className="text-lg md:text-xl text-primary-foreground/80 leading-relaxed">
+                <p className="text-lg text-primary-foreground/80 leading-relaxed">
                   We understand that everyone needs help at some point in their lives. Whether you are doing well in some areas but struggling in others, we are here to lend a hand.
                 </p>
-                <p className="text-lg md:text-xl text-primary-foreground/80 leading-relaxed">
+                <p className="text-lg text-primary-foreground/80 leading-relaxed">
                   Our trained counselors are available to provide encouragement and guidance rooted in the Bible, helping you navigate life's challenges with hope and practical wisdom.
                 </p>
               </div>
@@ -52,7 +52,7 @@ export default function CounselingPage() {
               <Card className="shadow-lg border-0 bg-white/90 backdrop-blur-sm">
                 <CardContent className="p-8">
                   <h3 className="text-xl font-semibold mb-4 text-primary-foreground">Ready to Get Started?</h3>
-                  <p className="text-muted-foreground mb-6">
+                  <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                     Take the first step towards healing and growth. Our confidential counseling sessions provide a safe space for you to share and receive biblical guidance.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
@@ -76,10 +76,10 @@ export default function CounselingPage() {
                   <BookOpen className="h-4 w-4 mr-2" />
                   Biblical Foundation
                 </Badge>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-lora font-bold text-primary-foreground leading-tight">
+                <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground leading-tight">
                   Our Biblical Counseling Approach
                 </h2>
-                <p className="text-lg md:text-xl text-primary-foreground/80 leading-relaxed">
+                <p className="text-lg text-primary-foreground/80 leading-relaxed">
                   Our counseling ministry is built on three foundational pillars that guide every session and interaction.
                 </p>
               </div>
@@ -94,7 +94,7 @@ export default function CounselingPage() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-lg mb-2">Scripture-Based</h3>
-                        <p className="text-muted-foreground">
+                        <p className="text-sm text-muted-foreground">
                           All our counseling is grounded in the practical application of God's inerrant Word, providing timeless wisdom for modern challenges.
                         </p>
                       </div>
@@ -110,7 +110,7 @@ export default function CounselingPage() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-lg mb-2">Compassionate Care</h3>
-                        <p className="text-muted-foreground">
+                        <p className="text-sm text-muted-foreground">
                           We provide encouragement and support with understanding hearts and listening ears, creating a safe space for healing.
                         </p>
                       </div>
@@ -126,7 +126,7 @@ export default function CounselingPage() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-lg mb-2">Trained Counselors</h3>
-                        <p className="text-muted-foreground">
+                        <p className="text-sm text-muted-foreground">
                           Our counselors are equipped with both professional training and biblical wisdom to guide you through life's difficulties.
                         </p>
                       </div>
@@ -154,7 +154,7 @@ export default function CounselingPage() {
                     <div className="w-40 h-40 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full flex items-center justify-center mx-auto mb-8">
                       <Users className="h-20 w-20 text-accent" />
                     </div>
-                    <h3 className="text-3xl font-lora font-bold mb-2">Sarah Halsey</h3>
+                    <h3 className="text-2xl font-lora font-bold mb-2">Sarah Halsey</h3>
                     <p className="text-accent text-lg font-semibold mb-6">
                       Counseling Ministry Leader
                     </p>
@@ -183,12 +183,12 @@ export default function CounselingPage() {
                     <Heart className="h-4 w-4 mr-2" />
                     Ministry Leader
                   </Badge>
-                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-lora font-bold text-primary-foreground mb-8 leading-tight">
+                  <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-8 leading-tight">
                     Meet Sarah Halsey
                   </h2>
                 </div>
                 
-                <div className="space-y-6 text-lg md:text-xl text-primary-foreground/80 leading-relaxed">
+                <div className="space-y-6 text-lg text-primary-foreground/80 leading-relaxed">
                   <p>
                     Sarah Halsey leads our counseling ministry and has over 20 years of experience in various counseling ministries. She was introduced to biblical counseling when seeking help for her own family's life struggles.
                   </p>
@@ -209,21 +209,21 @@ export default function CounselingPage() {
       {/* Call to Action Section - Enhanced */}
       <section className="text-center space-y-8 max-w-5xl mx-auto">
         <div className="space-y-6">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-lora font-bold text-primary-foreground leading-tight">
+          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground leading-tight">
             Ready to Take the Next Step?
           </h2>
-          <p className="text-lg md:text-xl text-primary-foreground/80 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg text-primary-foreground/80 max-w-3xl mx-auto leading-relaxed">
             If you need encouragement or support, don't hesitate to reach out to our counseling ministry led by Sarah Halsey at First Baptist Church.
           </p>
         </div>
         
         <div className="flex flex-col sm:flex-row gap-6 justify-center max-w-2xl mx-auto">
-          <Button size="lg" className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-6 text-xl font-semibold shadow-lg">
-            <Calendar className="mr-3 h-6 w-6" />
+          <Button size="lg" className="flex-1 bg-accent text-accent-foreground hover:bg-accent/90 px-8 py-4 text-lg font-semibold shadow-lg">
+            <Calendar className="mr-2 h-5 w-5" />
             Book an Appointment
           </Button>
-          <Button variant="outline" size="lg" className="flex-1 px-8 py-6 text-xl font-semibold border-2">
-            <Mail className="mr-3 h-6 w-6" />
+          <Button variant="outline" size="lg" className="flex-1 px-8 py-4 text-lg font-semibold border-2">
+            <Mail className="mr-2 h-5 w-5" />
             Contact Us
           </Button>
         </div>
@@ -236,7 +236,7 @@ export default function CounselingPage() {
               </div>
               <h3 className="text-lg font-semibold">Confidential and Safe</h3>
             </div>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed">
               All counseling sessions are conducted in a safe, confidential environment where you can share openly without judgment. Your privacy and comfort are our top priorities.
             </p>
           </CardContent>
