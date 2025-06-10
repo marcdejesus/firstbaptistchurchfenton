@@ -41,7 +41,7 @@ export default function SermonsPage() {
         </CardContent>
       </Card>
 
-      <h2 className="text-2xl font-bold mt-8 mb-4">Latest Sermons</h2>
+      <h2 className="text-2xl font-bold mt-8 mb-4">Popular Sermons</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
  {sermonVideoIds.map((videoId) => (
  <div key={videoId} className="rounded-md overflow-hidden shadow-md flex flex-col"> {/* Added flex-col for vertical stacking if needed later, currently not strictly necessary for iframe */}
