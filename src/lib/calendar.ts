@@ -112,8 +112,25 @@ export const convertGoogleEventToEvent = (googleEvent: any): Event => {
   const endDateTime = googleEvent.end?.dateTime || googleEvent.end?.date;
   
   // Parse date and time
-  const eventDate = new Date(startDateTime);
   const isAllDay = !googleEvent.start?.dateTime;
+  
+  let localDateString: string;
+  let eventDate: Date;
+  
+  if (isAllDay) {
+    // For all-day events, parse the date string directly to avoid timezone conversion
+    // startDateTime will be in format "YYYY-MM-DD"
+    localDateString = startDateTime; // Use the date string directly
+    // Create date object for time formatting, but add time to avoid UTC conversion issues
+    eventDate = new Date(startDateTime + 'T12:00:00'); // Add noon time to avoid timezone edge cases
+  } else {
+    // For timed events, create date object and format locally
+    eventDate = new Date(startDateTime);
+    const localYear = eventDate.getFullYear();
+    const localMonth = String(eventDate.getMonth() + 1).padStart(2, '0');
+    const localDay = String(eventDate.getDate()).padStart(2, '0');
+    localDateString = `${localYear}-${localMonth}-${localDay}`;
+  }
   
   const category = mapColorToCategory(googleEvent.colorId);
   const capacity = extractCapacity(googleEvent.description);
@@ -131,7 +148,7 @@ export const convertGoogleEventToEvent = (googleEvent: any): Event => {
   return {
     id: googleEvent.id || Math.random().toString(36).substr(2, 9),
     title: googleEvent.summary || 'Untitled Event',
-    date: eventDate.toISOString().split('T')[0], // YYYY-MM-DD format
+    date: localDateString, // Use the properly formatted date string
     time: isAllDay ? 'All Day' : eventDate.toLocaleTimeString('en-US', { 
       hour: 'numeric', 
       minute: '2-digit',
