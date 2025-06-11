@@ -268,6 +268,16 @@ Sermons are embedded from YouTube:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 📖 Documentation
+
+For detailed guides and references:
+
+- 🚀 [Deployment Guide](docs/DEPLOYMENT.md) - Production deployment instructions
+- 🎨 [Customization Guide](docs/CUSTOMIZATION.md) - Adapt the site for your church
+- 📚 [API Reference](docs/API_REFERENCE.md) - Complete API endpoint documentation
+- 🚨 [Error Handling](docs/ERROR_HANDLING.md) - Comprehensive error page system
+- 📋 [Environment Variables](env.example) - Configuration reference
+
 ## 🆘 Support
 
 - **Documentation**: Check the `docs/` directory for detailed guides
