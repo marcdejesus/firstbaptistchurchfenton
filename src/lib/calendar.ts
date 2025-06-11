@@ -168,7 +168,7 @@ export const convertGoogleEventToEvent = (googleEvent: any): Event => {
     tags,
     contactInfo,
     // Additional fields that might be in extended properties
-    forumDiscussionId: googleEvent.extendedProperties?.private?.forumDiscussionId,
+
   };
 };
 
@@ -235,7 +235,7 @@ export const convertToGoogleEvent = (event: Event, duration: number = 120) => {
 
   return {
     summary: event.title,
-    description: `${event.description}\n\n📍 Location: ${event.location}\n👥 RSVPs: ${event.rsvps}${event.capacity ? `/${event.capacity}` : ''}\n\n${event.contactInfo ? `📞 Contact: ${event.contactInfo}\n\n` : ''}🏛️ First Baptist Church of Fenton Event\n\n${event.forumDiscussionId ? `💬 Join the discussion: ${process.env.NEXTAUTH_URL || 'http://localhost:9002'}/community/posts/${event.forumDiscussionId}` : ''}`,
+    description: `${event.description}\n\n📍 Location: ${event.location}\n👥 RSVPs: ${event.rsvps}${event.capacity ? `/${event.capacity}` : ''}\n\n${event.contactInfo ? `📞 Contact: ${event.contactInfo}\n\n` : ''}🏛️ First Baptist Church of Fenton Event`,
     location: event.location,
     start: {
       dateTime: startDateTime.toISOString(),

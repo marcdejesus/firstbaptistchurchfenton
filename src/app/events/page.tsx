@@ -42,7 +42,7 @@ const initialEvents: EventType[] = [
     tags: ['food', 'games', 'outdoor', 'family-friendly'],
     directions: 'Fenton Community Park, 123 Park Drive, Fenton, MI',
     contactInfo: 'Contact Sarah at events@fbcfenton.org',
-    forumDiscussionId: 'forum-post-1'
+
   },
   {
     id: '2',
@@ -72,7 +72,7 @@ const initialEvents: EventType[] = [
     category: eventCategories.find(c => c.id === 'worship'),
     capacity: 200,
     tags: ['worship', 'music', 'prayer'],
-    forumDiscussionId: 'forum-post-3'
+
   },
   {
     id: '4',
@@ -146,7 +146,7 @@ const initialEvents: EventType[] = [
     capacity: 80,
     isOutdoor: true,
     tags: ['service', 'community', 'volunteering', 'outreach'],
-    forumDiscussionId: 'forum-post-8'
+
   },
   {
     id: '9',

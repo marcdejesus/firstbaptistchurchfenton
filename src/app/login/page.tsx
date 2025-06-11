@@ -73,7 +73,7 @@ export default function LoginPage() {
               <div className="space-y-2">
                 <h3 className="font-semibold text-blue-900">Demo Login</h3>
                 <p className="text-sm text-blue-800">
-                  Test the Community Forum with these demo credentials:
+                  Test member features with these demo credentials:
                 </p>
                 <div className="bg-blue-100 rounded p-2 text-sm font-mono text-blue-900">
                   <div><strong>Email:</strong> member@example.com</div>
@@ -97,7 +97,7 @@ export default function LoginPage() {
           <CardHeader className="text-center">
             <CardTitle className="text-3xl font-lora text-card-foreground">Welcome Back!</CardTitle>
             <CardDescription className="text-card-foreground/80">
-              Log in to access member features and the Community Forum.
+              Log in to access member features and church events.
             </CardDescription>
           </CardHeader>
           <CardContent>
