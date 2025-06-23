@@ -9,8 +9,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           
           {/* Church Logo and Name */}
-          <div className="space-y-4 text-center md:text-left">
-            <Link href="/" className="flex items-center justify-center md:justify-start space-x-3 text-primary-foreground hover:text-accent transition-colors">
+          <div className="space-y-4 text-center">
+            <Link href="/" className="flex items-center justify-center space-x-3 text-primary-foreground hover:text-accent transition-colors">
               <Image
                 src="/logo.svg"
                 alt="First Baptist Church of Fenton Logo"
@@ -23,12 +23,12 @@ export function Footer() {
                 <span className="text-sm font-normal">Church of Fenton</span>
               </div>
             </Link>
-            <p className="text-sm text-primary-foreground/80 max-w-xs">
+            <p className="text-sm text-primary-foreground/80">
               A community of faith, hope, and love in the heart of Fenton.
             </p>
             
             {/* Social Media Links */}
-            <div className="flex justify-center md:justify-start space-x-4">
+            <div className="flex justify-center space-x-4">
               <Link 
                 href="https://www.facebook.com/pg/FBCfenton" 
                 target="_blank" 
@@ -51,18 +51,18 @@ export function Footer() {
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-3 text-center md:text-left">
+          <div className="space-y-3 text-center">
             <h3 className="text-md font-semibold mb-3">Contact Information</h3>
             <div className="space-y-2">
-              <p className="text-sm flex items-center justify-center md:justify-start">
+              <p className="text-sm flex items-center justify-center">
                 <MapPin className="mr-2 h-4 w-4 text-accent/80" />
                 860 N. Leroy St., Fenton, MI 48430
               </p>
-              <p className="text-sm flex items-center justify-center md:justify-start">
+              <p className="text-sm flex items-center justify-center">
                 <Phone className="mr-2 h-4 w-4 text-accent/80" />
                 810.629.9427
               </p>
-              <p className="text-sm flex items-center justify-center md:justify-start">
+              <p className="text-sm flex items-center justify-center">
                 <Mail className="mr-2 h-4 w-4 text-accent/80" />
                 hello@firstbaptistchurch.org
               </p>
@@ -70,8 +70,8 @@ export function Footer() {
           </div>
 
           {/* Office Schedule */}
-          <div className="space-y-3 text-center md:text-left">
-            <h3 className="text-md font-semibold mb-3 flex items-center justify-center md:justify-start">
+          <div className="space-y-3 text-center">
+            <h3 className="text-md font-semibold mb-3 flex items-center justify-center">
               <Clock className="mr-2 h-4 w-4 text-accent" />
               Office Schedule
             </h3>
@@ -84,7 +84,7 @@ export function Footer() {
           </div>
 
           {/* Copyright and Credits */}
-          <div className="space-y-3 text-center md:text-left">
+          <div className="space-y-3 text-center">
             <div className="space-y-2">
               <p className="text-sm">
                 &copy; {new Date().getFullYear()} First Baptist Church of Fenton
