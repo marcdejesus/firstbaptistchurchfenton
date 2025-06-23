@@ -16,7 +16,7 @@ import {
 const carouselItems = [
   {
     id: 1,
-    image: "https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?q=80&w=2070&auto=format&fit=crop",
+    image: "/outside-art.png",
     title: "WELCOME TO FIRST BAPTIST",
     subtitle: "Your journey of faith is important. We provide a community to grow and belong.",
     buttonText: "PLAN YOUR VISIT",
@@ -32,7 +32,7 @@ const carouselItems = [
   },
   {
     id: 3,
-    image: "https://images.unsplash.com/photo-1516975080664-62f4a9b44138?q=80&w=2070&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1426024120108-99cc76989c71?q=80&w=2070&auto=format&fit=crop",
     title: "JOIN US FOR WORSHIP",
     subtitle: "Experience uplifting music, inspiring messages, and a welcoming atmosphere.",
     buttonText: "VIEW SERVICE TIMES",
@@ -74,11 +74,12 @@ export function HeroCarousel() {
       >
         <CarouselContent>
           {carouselItems.map((item) => (
-            <CarouselItem key={item.id} className="relative w-full h-full">
+            <CarouselItem key={item.id} className="relative w-full h-[600px]">
               <Image
                 src={item.image}
                 alt={item.title}
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover"
                 priority={item.id === 1}
               />
