@@ -1,15 +1,6 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Facebook, Youtube, Mail, Phone, MapPin, Clock } from 'lucide-react';
-
-// FBC Logo component (copied from Header.tsx)
-const FBCLogo = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <rect x="0" y="0" width="22" height="22" rx="3" fill="#707C87"/> {/* Top-left grey */}
-    <rect x="26" y="0" width="34" height="22" rx="3" fill="#707C87"/> {/* Top-right grey */}
-    <rect x="0" y="26" width="22" height="34" rx="3" fill="#707C87"/> {/* Bottom-left grey */}
-    <rect x="26" y="26" width="34" height="22" rx="3" fill="currentColor"/> {/* Bottom-right orange, inherits from text-accent class */}
-  </svg>
-);
 
 export function Footer() {
   return (
@@ -19,9 +10,18 @@ export function Footer() {
           
           {/* Church Logo and Name */}
           <div className="space-y-4 text-center md:text-left">
-            <Link href="/" className="flex items-center justify-center md:justify-start space-x-2 text-xl font-lora font-semibold text-primary-foreground hover:text-accent transition-colors">
-              <FBCLogo className="h-8 w-8 text-accent" />
-              <span>First Baptist Church of Fenton</span>
+            <Link href="/" className="flex items-center justify-center md:justify-start space-x-3 text-primary-foreground hover:text-accent transition-colors">
+              <Image
+                src="/logo.svg"
+                alt="First Baptist Church of Fenton Logo"
+                width={56}
+                height={56}
+                className="h-14 w-14 text-accent"
+              />
+              <div className="flex flex-col font-lora leading-none">
+                <span className="text-xl font-semibold">First Baptist</span>
+                <span className="text-sm font-normal">Church of Fenton</span>
+              </div>
             </Link>
             <p className="text-sm text-primary-foreground/80 max-w-xs">
               A community of faith, hope, and love in the heart of Fenton.
