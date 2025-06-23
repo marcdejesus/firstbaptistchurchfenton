@@ -64,11 +64,18 @@ export default function Home() {
                 <p className="text-lg text-muted-foreground mb-6">
                   Your journey of faith is important. We provide a community to grow and belong.
                 </p>
-                <Link href="/contact#new-here">
-                  <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
-                    PLAN YOUR VISIT
-                  </Button>
-                </Link>
+                <div className="flex flex-wrap gap-4">
+                  <Link href="/contact#new-here">
+                    <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
+                      PLAN YOUR VISIT
+                    </Button>
+                  </Link>
+                  <Link href="/welcome">
+                    <Button size="lg" variant="outline" className="px-8">
+                      New Here?
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
             {/* Right Carousel */}
