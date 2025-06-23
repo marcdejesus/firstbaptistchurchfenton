@@ -52,30 +52,30 @@ export default function Home() {
   return (
     <div className="space-y-16">
       {/* --- New Hero Section --- */}
-      <section className="relative min-h-[600px] flex items-center">
+      <section className="relative h-[600px]">
         <div className="absolute inset-0">
           <HeroCarousel />
         </div>
-        <div className="relative container mx-auto px-4">
-          <div className="max-w-md bg-background/80 backdrop-blur-sm p-8 md:p-12 rounded-lg shadow-2xl">
+        <div className="relative container mx-auto px-4 md:px-12 h-full flex flex-col">
+          <div className="mt-12 md:mt-24 max-w-xl bg-background/80 backdrop-blur-sm p-8 md:p-12 rounded-lg shadow-2xl">
               <h1 className="text-4xl md:text-5xl font-bold font-lora text-primary-foreground mb-4 leading-tight">
-                WELCOME TO <br/> FIRST BAPTIST
+                WELCOME TO FIRST BAPTIST
               </h1>
               <p className="text-lg text-muted-foreground mb-6">
                 Your journey of faith is important. We provide a community to grow and belong.
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Link href="/visit">
-                  <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
-                    PLAN YOUR VISIT
-                  </Button>
-                </Link>
-                <Link href="/welcome">
-                  <Button size="lg" variant="outline" className="px-8 border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground/10">
-                    New Here?
-                  </Button>
-                </Link>
-              </div>
+          </div>
+          <div className="mt-auto self-end flex gap-4 mb-8 md:mb-12">
+            <Link href="/visit">
+              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
+                PLAN YOUR VISIT
+              </Button>
+            </Link>
+            <Link href="/welcome">
+              <Button size="lg" variant="outline" className="px-8 border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground/10">
+                New Here?
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
