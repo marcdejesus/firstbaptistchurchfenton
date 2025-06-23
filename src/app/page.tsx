@@ -65,7 +65,7 @@ export default function Home() {
                   Your journey of faith is important. We provide a community to grow and belong.
                 </p>
                 <div className="flex flex-wrap gap-4">
-                  <Link href="/contact#new-here">
+                  <Link href="/visit">
                     <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
                       PLAN YOUR VISIT
                     </Button>
