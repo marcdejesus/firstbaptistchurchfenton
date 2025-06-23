@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -25,15 +26,6 @@ const navItems = [
   { href: '/donate', label: 'Donate', icon: DollarSign }
 ];
 
-const FBCLogo = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <rect x="0" y="0" width="22" height="22" rx="3" fill="#707C87"/> {/* Top-left grey */}
-    <rect x="26" y="0" width="34" height="22" rx="3" fill="#707C87"/> {/* Top-right grey */}
-    <rect x="0" y="26" width="22" height="34" rx="3" fill="#707C87"/> {/* Bottom-left grey */}
-    <rect x="26" y="26" width="34" height="22" rx="3" fill="currentColor"/> {/* Bottom-right orange, inherits from text-accent class */}
-  </svg>
-);
-
 export function Header() {
   const { user, logout } = useUser();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -55,7 +47,13 @@ export function Header() {
     <header className="bg-primary/50 shadow-md sticky top-0 z-50">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-3 text-primary-foreground hover:text-accent transition-colors">
-          <FBCLogo className="h-10 w-10 text-accent" />
+          <Image
+            src="/logo.svg"
+            alt="First Baptist Church of Fenton Logo"
+            width={56}
+            height={56}
+            className="h-14 w-14 text-accent"
+          />
           <div className="flex flex-col font-lora leading-none">
             <span className="text-xl font-semibold">First Baptist</span>
             <span className="text-sm font-normal">Church of Fenton</span>
