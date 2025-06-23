@@ -52,36 +52,30 @@ export default function Home() {
   return (
     <div className="space-y-16">
       {/* --- New Hero Section --- */}
-      <section className="bg-primary/20">
-        <div className="container mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[600px]">
-            {/* Left Content Box */}
-            <div className="bg-background p-8 md:p-12 shadow-xl relative z-10">
-              <div className="relative">
-                <h1 className="text-4xl md:text-5xl font-bold font-lora text-primary-foreground mb-4 leading-tight">
-                  WELCOME TO <br/> FIRST BAPTIST
-                </h1>
-                <p className="text-lg text-muted-foreground mb-6">
-                  Your journey of faith is important. We provide a community to grow and belong.
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <Link href="/visit">
-                    <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
-                      PLAN YOUR VISIT
-                    </Button>
-                  </Link>
-                  <Link href="/welcome">
-                    <Button size="lg" variant="outline" className="px-8">
-                      New Here?
-                    </Button>
-                  </Link>
-                </div>
+      <section className="relative min-h-[600px] flex items-center">
+        <div className="absolute inset-0">
+          <HeroCarousel />
+        </div>
+        <div className="relative container mx-auto px-4">
+          <div className="max-w-md bg-background/80 backdrop-blur-sm p-8 md:p-12 rounded-lg shadow-2xl">
+              <h1 className="text-4xl md:text-5xl font-bold font-lora text-primary-foreground mb-4 leading-tight">
+                WELCOME TO <br/> FIRST BAPTIST
+              </h1>
+              <p className="text-lg text-muted-foreground mb-6">
+                Your journey of faith is important. We provide a community to grow and belong.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link href="/visit">
+                  <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
+                    PLAN YOUR VISIT
+                  </Button>
+                </Link>
+                <Link href="/welcome">
+                  <Button size="lg" variant="outline" className="px-8 border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground/10">
+                    New Here?
+                  </Button>
+                </Link>
               </div>
-            </div>
-            {/* Right Carousel */}
-            <div className="relative h-full w-full">
-              <HeroCarousel />
-            </div>
           </div>
         </div>
       </section>
