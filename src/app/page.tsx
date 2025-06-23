@@ -8,6 +8,7 @@ import Image from "next/image";
 import { MapPin, Phone, Mail, Clock, Calendar, Users, Heart, ArrowRight, Play, Coffee, BookOpen } from "lucide-react";
 import { TestimoniesCarousel } from "@/components/home/TestimoniesCarousel";
 import React from "react";
+import { HeroCarousel } from "@/components/home/HeroCarousel";
 
 export default function Home() {
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=860%20N%20Leroy%20St%2C%20Fenton%2C%20MI%2048430";
@@ -52,14 +53,10 @@ export default function Home() {
     <div className="space-y-16">
       {/* --- New Hero Section --- */}
       <section className="bg-primary/20">
-        <div className="relative container mx-auto">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
+        <div className="container mx-auto">
+          <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[600px]">
             {/* Left Content Box */}
-            <div className="bg-background p-8 md:p-12 shadow-xl relative z-10 my-8">
-              <div 
-                className="absolute top-0 right-0 h-full w-16 bg-background" 
-                style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }}
-              ></div>
+            <div className="bg-background p-8 md:p-12 shadow-xl relative z-10">
               <div className="relative">
                 <h1 className="text-4xl md:text-5xl font-bold font-lora text-primary-foreground mb-4 leading-tight">
                   WELCOME TO <br/> FIRST BAPTIST
@@ -74,33 +71,11 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            {/* Right Image */}
-            <div className="relative h-64 lg:h-full lg:absolute lg:top-0 lg:right-0 lg:w-1/2">
-              <Image
-                src="https://images.squarespace-cdn.com/content/v1/5e74e817283f5b7394775296/1584722138113-K93VCHDP0DUDSXLLY6XC/image-asset.jpeg"
-                alt="Church community"
-                fill
-                className="object-cover"
-                priority
-              />
+            {/* Right Carousel */}
+            <div className="relative h-full w-full">
+              <HeroCarousel />
             </div>
           </div>
-        </div>
-        <div className="bg-primary/80">
-            <div className="container mx-auto px-4 py-3">
-                <div className="flex items-center justify-center md:justify-between flex-wrap gap-4">
-                    {quickLinks.map((link, index) => (
-                        <React.Fragment key={link.href}>
-                            <Link href={link.href} className="text-sm font-medium text-primary-foreground/90 hover:text-accent transition-colors">
-                                {link.label.toUpperCase()}
-                            </Link>
-                            {index < quickLinks.length - 1 && (
-                                <span className="text-primary-foreground/50 hidden md:inline">|</span>
-                            )}
-                        </React.Fragment>
-                    ))}
-                </div>
-            </div>
         </div>
       </section>
 
