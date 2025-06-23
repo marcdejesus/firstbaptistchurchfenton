@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Image from "next/image";
 import { MapPin, Phone, Mail, Clock, Calendar, Users, Heart, ArrowRight, Play, Coffee, BookOpen } from "lucide-react";
 import { TestimoniesCarousel } from "@/components/home/TestimoniesCarousel";
+import React from "react";
 
 export default function Home() {
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=860%20N%20Leroy%20St%2C%20Fenton%2C%20MI%2048430";
@@ -39,43 +40,67 @@ export default function Home() {
     }
   ];
 
+  const quickLinks = [
+    { href: '/sermons', label: 'Sermons' },
+    { href: '/events', label: 'Events' },
+    { href: '/ministries', label: 'Ministries' },
+    { href: '/contact', label: 'Contact Us' },
+    { href: '/donate', label: 'Donate' },
+  ];
+
   return (
     <div className="space-y-16">
-      {/* Hero Section - Enhanced */}
-      <section className="relative min-h-[60vh] md:min-h-[40vh] rounded-lg shadow-lg overflow-hidden">
-        <div className="absolute inset-0">
-          <Image 
-            src="https://images.squarespace-cdn.com/content/v1/5e74e817283f5b7394775296/1584722138113-K93VCHDP0DUDSXLLY6XC/image-asset.jpeg"
-            alt="Church sanctuary interior"
-            fill
-            style={{ objectFit: 'cover' }}
-            priority
-          />
-          <div className="absolute inset-0 bg-black/50"></div>
-        </div>
-        <div className="relative z-10 flex items-center justify-center min-h-[60vh] md:min-h-[40vh] px-4 py-12 md:py-20">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-lora font-bold text-white mb-6 leading-tight">
-              Welcome to First Baptist Church of Fenton
-            </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-              A community of faith, hope, and love in the heart of Fenton. Join us as we grow together in Christ.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/events">
-                <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-lg px-8 py-4 text-lg font-semibold">
-                  <Calendar className="mr-2 h-5 w-5" />
-                  View Events
-                </Button>
-              </Link>
-              <Link href="#new-here">
-                <Button variant="outline" size="lg" className="border-2 border-white text-white hover:bg-white/10 hover:text-white bg-transparent shadow-lg px-8 py-4 text-lg font-semibold">
-                  <Heart className="mr-2 h-5 w-5" />
-                  New Here?
-                </Button>
-              </Link>
+      {/* --- New Hero Section --- */}
+      <section className="bg-primary/20">
+        <div className="relative container mx-auto">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
+            {/* Left Content Box */}
+            <div className="bg-background p-8 md:p-12 shadow-xl relative z-10 my-8">
+              <div 
+                className="absolute top-0 right-0 h-full w-16 bg-background" 
+                style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }}
+              ></div>
+              <div className="relative">
+                <h1 className="text-4xl md:text-5xl font-bold font-lora text-primary-foreground mb-4 leading-tight">
+                  WELCOME TO <br/> FIRST BAPTIST
+                </h1>
+                <p className="text-lg text-muted-foreground mb-6">
+                  Your journey of faith is important. We provide a community to grow and belong.
+                </p>
+                <Link href="/contact#new-here">
+                  <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
+                    PLAN YOUR VISIT
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            {/* Right Image */}
+            <div className="relative h-64 lg:h-full lg:absolute lg:top-0 lg:right-0 lg:w-1/2">
+              <Image
+                src="https://images.squarespace-cdn.com/content/v1/5e74e817283f5b7394775296/1584722138113-K93VCHDP0DUDSXLLY6XC/image-asset.jpeg"
+                alt="Church community"
+                fill
+                className="object-cover"
+                priority
+              />
             </div>
           </div>
+        </div>
+        <div className="bg-primary/80">
+            <div className="container mx-auto px-4 py-3">
+                <div className="flex items-center justify-center md:justify-between flex-wrap gap-4">
+                    {quickLinks.map((link, index) => (
+                        <React.Fragment key={link.href}>
+                            <Link href={link.href} className="text-sm font-medium text-primary-foreground/90 hover:text-accent transition-colors">
+                                {link.label.toUpperCase()}
+                            </Link>
+                            {index < quickLinks.length - 1 && (
+                                <span className="text-primary-foreground/50 hidden md:inline">|</span>
+                            )}
+                        </React.Fragment>
+                    ))}
+                </div>
+            </div>
         </div>
       </section>
 
