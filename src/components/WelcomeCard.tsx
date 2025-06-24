@@ -21,9 +21,12 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
     <Card className="w-full rounded-xl shadow-lg mx-auto my-16">
       <CardContent className="p-6">
         <div className="flex justify-between items-start mb-4">
-          <h1 className={`text-4xl font-semibold ${lora.className}`}>
-            Welcome!
-          </h1>
+          <Image
+            src="/welcome.png"
+            alt="Welcome!"
+            width={200}
+            height={50}
+          />
           <div className="flex items-center space-x-3">
             <div className="flex space-x-2">
               <a href="https://www.facebook.com/FBCFentonMO" target="_blank" rel="noopener noreferrer">

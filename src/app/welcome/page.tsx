@@ -4,14 +4,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
 import { Users, Heart, Coffee, BookOpen } from "lucide-react";
+import Image from 'next/image';
 
 export default function WelcomePage() {
   return (
     <div className="bg-background text-foreground">
       <header className="bg-primary text-primary-foreground py-20 text-center">
         <div className="container mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold font-lora">Welcome to First Baptist Church</h1>
-          <p className="mt-4 text-xl text-primary-foreground/80">We're so glad you're here.</p>
+          <Image
+            src="/welcome.png"
+            alt="Welcome to First Baptist Church"
+            width={500}
+            height={200}
+            className="mx-auto"
+          />
         </div>
       </header>
 
