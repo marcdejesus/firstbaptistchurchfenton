@@ -23,6 +23,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const aboutItems = [
     { href: '/about/beliefs', title: 'Our Beliefs', icon: Landmark },
@@ -221,53 +222,55 @@ export function Header() {
                 <span className="sr-only">Toggle menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[280px] bg-background p-6">
+            <SheetContent side="right" className="w-[280px] bg-background p-6 flex flex-col">
               <SheetHeader>
                 <SheetTitle><VisuallyHidden>Mobile Navigation</VisuallyHidden></SheetTitle>
               </SheetHeader>
-              <nav className="flex flex-col space-y-3">
-                {mobileNavItems.map((item) => (
-                    <React.Fragment key={item.title}>
-                        {'href' in item && item.href ? (
-                            <Button asChild variant="ghost" className="justify-start text-foreground">
-                                <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
-                                    {item.icon && <item.icon className="mr-2 h-5 w-5" />}
-                                    {item.title}
-                                </Link>
-                            </Button>
-                        ) : (
-                            <>
-                                <h4 className="text-sm font-semibold text-foreground/70 px-4 mt-4">{item.title}</h4>
-                                <div className="flex flex-col space-y-2">
-                                    {'items' in item && item.items?.map((link) => (
-                                        <Button key={link.href} asChild variant="ghost" className="justify-start text-foreground pl-8">
-                                            <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)}>
-                                                {link.icon && <link.icon className="mr-2 h-5 w-5" />}
-                                                {link.title}
-                                            </Link>
-                                        </Button>
-                                    ))}
-                                </div>
-                            </>
-                        )}
-                    </React.Fragment>
-                ))}
-                <hr className="my-3 border-border" />
-                {user ? (
-                  <>
-                    <Button variant="ghost" asChild className="justify-start text-foreground">
-                      <Link href="/profile" onClick={() => setIsMobileMenuOpen(false)}><UserCircle className="mr-2 h-5 w-5" />Profile</Link>
-                    </Button>
-                    <Button variant="ghost" onClick={() => { logout(); setIsMobileMenuOpen(false); }} className="justify-start text-foreground">
-                      <LogOut className="mr-2 h-5 w-5" />Log out
-                    </Button>
-                  </>
-                ) : (
-                    <Button asChild className="w-full">
-                        <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
-                    </Button>
-                )}
-              </nav>
+              <ScrollArea className="flex-grow">
+                <nav className="flex flex-col space-y-3 pr-4">
+                  {mobileNavItems.map((item) => (
+                      <React.Fragment key={item.title}>
+                          {'href' in item && item.href ? (
+                              <Button asChild variant="ghost" className="justify-start text-foreground">
+                                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+                                      {item.icon && <item.icon className="mr-2 h-5 w-5" />}
+                                      {item.title}
+                                  </Link>
+                              </Button>
+                          ) : (
+                              <>
+                                  <h4 className="text-sm font-semibold text-foreground/70 px-4 mt-4">{item.title}</h4>
+                                  <div className="flex flex-col space-y-2">
+                                      {'items' in item && item.items?.map((link) => (
+                                          <Button key={link.href} asChild variant="ghost" className="justify-start text-foreground pl-8">
+                                              <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)}>
+                                                  {link.icon && <link.icon className="mr-2 h-5 w-5" />}
+                                                  {link.title}
+                                              </Link>
+                                          </Button>
+                                      ))}
+                                  </div>
+                              </>
+                          )}
+                      </React.Fragment>
+                  ))}
+                  <hr className="my-3 border-border" />
+                  {user ? (
+                    <>
+                      <Button variant="ghost" asChild className="justify-start text-foreground">
+                        <Link href="/profile" onClick={() => setIsMobileMenuOpen(false)}><UserCircle className="mr-2 h-5 w-5" />Profile</Link>
+                      </Button>
+                      <Button variant="ghost" onClick={() => { logout(); setIsMobileMenuOpen(false); }} className="justify-start text-foreground">
+                        <LogOut className="mr-2 h-5 w-5" />Log out
+                      </Button>
+                    </>
+                  ) : (
+                      <Button asChild className="w-full">
+                          <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
+                      </Button>
+                  )}
+                </nav>
+              </ScrollArea>
             </SheetContent>
           </Sheet>
         </div>
