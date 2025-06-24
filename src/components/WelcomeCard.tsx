@@ -5,6 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Clock, Facebook, Youtube } from "lucide-react";
 import { Event } from "../types/event";
 import Link from "next/link";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import React from "react";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -17,6 +24,10 @@ interface WelcomeCardProps {
 }
 
 export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
+  const plugin = React.useRef(
+    Autoplay({ delay: 5000, stopOnInteraction: true })
+  )
+
   return (
     <Card className="w-full rounded-xl shadow-lg mx-auto my-16">
       <CardContent className="p-6">
@@ -99,13 +110,32 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
             </div>
           </div>
           <div className="md:col-span-2">
-            <Image
-              src="/outside-art.png"
-              alt="Outside of First Baptist Church of Fenton"
-              width={700}
-              height={300}
-              className="rounded-lg object-cover w-full h-auto"
-            />
+            <Carousel
+              plugins={[plugin.current]}
+              onMouseEnter={plugin.current.stop}
+              onMouseLeave={plugin.current.reset}
+            >
+              <CarouselContent>
+                <CarouselItem>
+                  <Image
+                    src="/front-art.png"
+                    alt="Front of First Baptist Church of Fenton"
+                    width={700}
+                    height={300}
+                    className="rounded-lg object-cover w-full h-auto"
+                  />
+                </CarouselItem>
+                <CarouselItem>
+                  <Image
+                    src="/outside-art.png"
+                    alt="Outside of First Baptist Church of Fenton"
+                    width={700}
+                    height={300}
+                    className="rounded-lg object-cover w-full h-auto"
+                  />
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel>
             <div className="mt-4 p-4 bg-blue-100 text-blue-800 rounded-lg text-center">
               <p className="text-sm">
                 This area will be used for announcements, if there are no
