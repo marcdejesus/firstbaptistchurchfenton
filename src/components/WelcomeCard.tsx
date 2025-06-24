@@ -9,6 +9,7 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import React from "react";
@@ -25,8 +26,24 @@ interface WelcomeCardProps {
 
 export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
   const plugin = React.useRef(
-    Autoplay({ delay: 5000, stopOnInteraction: true })
-  )
+    Autoplay({ delay: 5000, stopOnInteraction: false })
+  );
+  const [api, setApi] = React.useState<CarouselApi>();
+  const [current, setCurrent] = React.useState(0);
+  const [count, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
 
   return (
     <Card className="w-full rounded-xl shadow-lg mx-auto my-16">
@@ -112,8 +129,7 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
           <div className="md:col-span-2">
             <Carousel
               plugins={[plugin.current]}
-              onMouseEnter={plugin.current.stop}
-              onMouseLeave={plugin.current.reset}
+              setApi={setApi}
             >
               <CarouselContent>
                 <CarouselItem>
@@ -136,6 +152,17 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
                 </CarouselItem>
               </CarouselContent>
             </Carousel>
+            <div className="flex justify-center mt-2">
+              {Array.from({ length: count }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => api?.scrollTo(index)}
+                  className={`h-2 w-2 rounded-full mx-1 ${
+                    index === current - 1 ? "bg-gray-800" : "bg-gray-400"
+                  }`}
+                />
+              ))}
+            </div>
             <div className="mt-4 p-4 bg-blue-100 text-blue-800 rounded-lg text-center">
               <p className="text-sm">
                 This area will be used for announcements, if there are no
