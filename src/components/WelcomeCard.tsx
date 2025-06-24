@@ -96,7 +96,7 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
             size="icon"
             className="text-gray-600 hover:text-blue-600 w-8 h-8 sm:w-9 sm:h-9"
           >
-            <Facebook className="w-6 h-6" />
+            <Facebook className="w-7 h-7" />
           </Button>
         </a>
         <a
@@ -109,7 +109,7 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
             size="icon"
             className="text-gray-600 hover:text-red-600 w-8 h-8 sm:w-9 sm:h-9"
           >
-            <Youtube className="w-6 h-6" />
+            <Youtube className="w-7 h-7" />
           </Button>
         </a>
       </div>
@@ -172,7 +172,7 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
       <CardContent className="p-4 sm:p-6">
         {/* Mobile Layout */}
         <div className="md:hidden">
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-between items-center mb-4">
             <Link href="/welcome">
               <Image
                 src="/welcome.png"
@@ -181,7 +181,9 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
                 height={50}
               />
             </Link>
+            {socialAndLogo}
           </div>
+
           {carouselComponent}
           <div className="space-y-4 mt-4">
             <p className="text-sm text-gray-600">
@@ -206,7 +208,6 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
             </div>
             {infoBoxes}
             {announcementBox}
-            <div className="flex justify-center pt-4">{socialAndLogo}</div>
           </div>
         </div>
 
