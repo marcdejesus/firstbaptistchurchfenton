@@ -68,7 +68,7 @@ export default function Home() {
   return (
     <div className="space-y-16">
       {/* --- Hero Section --- */}
-      <WelcomeCard />
+      <WelcomeCard todaysHours={todaysHours} nextEvent={nextEvent} />
 
       {/* Mission Statement - Enhanced */}
       <section className="text-center p-8 md:p-12">

@@ -3,13 +3,19 @@ import { Lora } from "next/font/google";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock } from "lucide-react";
+import { Event } from "@/types/event";
 
 const lora = Lora({
   subsets: ["latin"],
   weight: ["400", "600"],
 });
 
-export function WelcomeCard() {
+interface WelcomeCardProps {
+  todaysHours: string;
+  nextEvent: Event | null;
+}
+
+export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
   return (
     <Card className="w-full rounded-xl shadow-lg mx-auto my-16">
       <CardContent className="p-6">
@@ -18,7 +24,12 @@ export function WelcomeCard() {
             Welcome!
           </h1>
           <div className="flex items-center space-x-3">
-            <Image src="/logo.svg" alt="First Baptist Church of Fenton Logo" width={60} height={57} />
+            <Image
+              src="/logo.svg"
+              alt="First Baptist Church of Fenton Logo"
+              width={60}
+              height={57}
+            />
             <div className={`text-right ${lora.className}`}>
               <p className="text-2xl">First Baptist</p>
               <p className="text-base">Church of Fenton</p>
@@ -28,7 +39,10 @@ export function WelcomeCard() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <div className="md:col-span-1 space-y-4">
-            <Button  size="lg" className="w-full bg-[#788993] text-white hover:bg-[#667680]">
+            <Button
+              size="lg"
+              className="w-full bg-[#788993] text-white hover:bg-[#667680]"
+            >
               New Here?
             </Button>
             <Button size="lg" className="w-full">
@@ -37,10 +51,21 @@ export function WelcomeCard() {
             <div className="bg-gray-200/50 p-4 rounded-lg flex flex-col justify-center items-center text-center">
               <Calendar className="w-8 h-8 mb-2" />
               <p className="font-medium">Next Event</p>
+              {nextEvent ? (
+                <>
+                  <p className="text-sm font-semibold">{nextEvent.title}</p>
+                  <p className="text-xs text-gray-600">
+                    {new Date(nextEvent.date).toLocaleDateString()}
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm">No upcoming events</p>
+              )}
             </div>
             <div className="bg-gray-200/50 p-4 rounded-lg flex flex-col justify-center items-center text-center">
               <Clock className="w-8 h-8 mb-2" />
-              <p className="font-medium">Office Hours</p>
+              <p className="font-medium">Today's Hours</p>
+              <p className="text-sm">{todaysHours}</p>
             </div>
           </div>
           <div className="md:col-span-2">
