@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${lora.variable} ${inter.variable}`}>
-      <body className="flex flex-col min-h-screen font-inter antialiased">
+      <body className="flex flex-col min-h-screen font-inter antialiased grid-background">
         <UserProvider>
           <Header />
           <main className="flex-grow container mx-auto px-4 py-8">
