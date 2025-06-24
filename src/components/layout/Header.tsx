@@ -5,25 +5,45 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+    DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
-import { Home, CalendarDays, Users, DollarSign, UserCircle, LogOut, Menu as MenuIcon, Church, Book, Calendar, BookOpen, Heart, Mail } from 'lucide-react';
+import { 
+    Home, CalendarDays, Users, DollarSign, UserCircle, LogOut, Menu as MenuIcon, 
+    Church, Book, Calendar, BookOpen, Heart, Mail, Landmark, Users2, History, 
+    Rss, MonitorPlay, HandCoins, StepForward, PersonStanding 
+} from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import React from 'react';
+import { cn } from '@/lib/utils';
+
+const aboutItems = [
+    { href: '/about/beliefs', title: 'Our Beliefs', icon: Landmark },
+    { href: '/about/history', title: 'Our History', icon: History },
+    { href: '/about/staff', title: 'Pastors & Staff', icon: Users2 },
+]
+
+const connectItems = [
+    { href: '/community', title: 'Community', icon: Users },
+    { href: '/ministries', title: 'Ministries', icon: Heart },
+    { href: '/events', title: 'Events', icon: Calendar },
+]
+
+const watchListenItems = [
+    { href: '/sermons', title: 'Sermons', icon: MonitorPlay },
+    { href: '/blog', title: 'Blog', icon: Rss },
+]
 
 const navItems = [
-  { href: '/events', label: 'Events', icon: Calendar },
-  { href: '/sermons', label: 'Sermons', icon: BookOpen },
-  { href: '/ministries', label: 'Ministries', icon: Heart },
-  { href: '/blog', label: 'Blog', icon: Book },
-  { href: '/contact', label: 'Contact', icon: Mail },
-  { href: '/donate', label: 'Donate', icon: DollarSign }
+  { href: '/donate', label: 'Give', icon: HandCoins },
+  { href: '/next-steps', label: 'Next Steps', icon: StepForward },
+  { href: '/visit', label: 'Visit', icon: PersonStanding }
 ];
 
 export function Header() {
@@ -32,12 +52,61 @@ export function Header() {
 
   const commonNavElements = (
     <>
+      {/* About Dropdown */}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost">About</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {aboutItems.map((item) => (
+            <DropdownMenuItem key={item.title} asChild>
+              <Link href={item.href}>
+                <item.icon className="mr-2 h-4 w-4" />
+                {item.title}
+              </Link>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Connect Dropdown */}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost">Connect</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {connectItems.map((item) => (
+            <DropdownMenuItem key={item.title} asChild>
+              <Link href={item.href}>
+                <item.icon className="mr-2 h-4 w-4" />
+                {item.title}
+              </Link>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Watch/Listen Dropdown */}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost">Watch/Listen</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          {watchListenItems.map((item) => (
+            <DropdownMenuItem key={item.title} asChild>
+              <Link href={item.href}>
+                <item.icon className="mr-2 h-4 w-4" />
+                {item.title}
+              </Link>
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Other Nav Items */}
       {navItems.map((link) => (
-        <Button key={link.label} variant="ghost" asChild className="text-foreground hover:bg-accent/20 hover:text-accent">
-          <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)}>
-            <link.icon className="mr-2 h-5 w-5" />
-            {link.label}
-          </Link>
+        <Button key={link.label} variant="ghost" asChild>
+          <Link href={link.href}>{link.label}</Link>
         </Button>
       ))}
     </>
@@ -63,7 +132,7 @@ export function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-2">
           {commonNavElements}
-          {user && (
+          {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
@@ -83,15 +152,21 @@ export function Header() {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/profile"><UserCircle className="mr-2 h-4 w-4" />Profile</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={logout}>
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Log out
-                </DropdownMenuItem>
+                <DropdownMenuGroup>
+                    <DropdownMenuItem asChild>
+                    <Link href="/profile"><UserCircle className="mr-2 h-4 w-4" />Profile</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={logout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Log out
+                    </DropdownMenuItem>
+                </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
+          ) : (
+            <Button asChild>
+                <Link href="/login">Login</Link>
+            </Button>
           )}
         </nav>
 
@@ -106,9 +181,17 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side="right" className="w-[280px] bg-background p-6">
               <nav className="flex flex-col space-y-3">
-                {commonNavElements}
+                {/* TODO: Refactor mobile nav to use dropdowns */}
+                {navItems.map((link) => (
+                    <Button key={link.label} variant="ghost" asChild className="justify-start text-foreground">
+                        <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)}>
+                            <link.icon className="mr-2 h-5 w-5" />
+                            {link.label}
+                        </Link>
+                    </Button>
+                ))}
                 <hr className="my-3 border-border" />
-                {user && (
+                {user ? (
                   <>
                     <Button variant="ghost" asChild className="justify-start text-foreground">
                       <Link href="/profile" onClick={() => setIsMobileMenuOpen(false)}><UserCircle className="mr-2 h-5 w-5" />Profile</Link>
@@ -117,6 +200,10 @@ export function Header() {
                       <LogOut className="mr-2 h-5 w-5" />Log out
                     </Button>
                   </>
+                ) : (
+                    <Button asChild className="w-full">
+                        <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
+                    </Button>
                 )}
               </nav>
             </SheetContent>
@@ -126,3 +213,32 @@ export function Header() {
     </header>
   );
 }
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a"> & { icon: React.ElementType }
+>(({ className, title, icon: Icon, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="flex items-center space-x-2">
+            <Icon className="h-5 w-5" />
+            <div className="text-sm font-medium leading-none">{title}</div>
+          </div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+})
+ListItem.displayName = "ListItem"
