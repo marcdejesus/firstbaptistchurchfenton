@@ -16,7 +16,7 @@ import {
 import { 
     Home, CalendarDays, Users, DollarSign, UserCircle, LogOut, Menu as MenuIcon, 
     Church, Book, Calendar, BookOpen, Heart, Mail, Landmark, Users2, History, 
-    Rss, MonitorPlay, HandCoins, StepForward, PersonStanding, HelpCircle, HandHelping, MessageSquare
+    Rss, MonitorPlay, HandCoins, StepForward, PersonStanding, HelpCircle, HandHelping, MessageSquare, Globe, Images
 } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -34,14 +34,18 @@ const connectItems = [
     { href: '/community', title: 'Community', icon: Users },
     { href: '/ministries', title: 'Ministries', icon: Heart },
     { href: '/events', title: 'Events', icon: Calendar },
+    { href: '/calendar', title: 'Calendar', icon: Calendar },
     { href: '/volunteer', title: 'Volunteer', icon: HandHelping },
     { href: '/prayer', title: 'Prayer', icon: MessageSquare },
     { href: '/contact', title: 'Contact', icon: Mail },
+    { href: '/missions', title: 'Missions', icon: Globe },
 ]
 
-const watchListenItems = [
-    { href: '/sermons', title: 'Sermons', icon: MonitorPlay },
+const resourcesItems = [
     { href: '/blog', title: 'Blog', icon: Rss },
+    { href: '/resources', title: 'Resources', icon: BookOpen },
+    { href: '/gallery', title: 'Gallery', icon: Images },
+    { href: '/sermons', title: 'Sermons', icon: MonitorPlay },
 ]
 
 const navItems = [
@@ -90,13 +94,13 @@ export function Header() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Watch/Listen Dropdown */}
+      {/* Resources Dropdown */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost">Watch/Listen</Button>
+          <Button variant="ghost">Resources</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          {watchListenItems.map((item) => (
+          {resourcesItems.map((item) => (
             <DropdownMenuItem key={item.title} asChild>
               <Link href={item.href}>
                 <item.icon className="mr-2 h-4 w-4" />
