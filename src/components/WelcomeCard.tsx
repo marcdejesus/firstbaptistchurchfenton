@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, Facebook, Youtube } from "lucide-react";
 import { Event } from "../types/event";
+import Link from "next/link";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -60,10 +61,10 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
               size="lg"
               className="w-full bg-[#788993] text-white hover:bg-[#667680]"
             >
-              New Here?
+              <Link href="/welcome">New Here?</Link>
             </Button>
-            <Button size="lg" className="w-full">
-              Visit Us
+            <Button size="lg" className="w-full bg-accent text-accent-foreground hover:bg-accent/90" asChild>
+              <Link href="/visit">Visit Us</Link>
             </Button>
             <div className="bg-gray-200/50 p-4 rounded-lg flex flex-col justify-center items-center text-center">
               <Calendar className="w-8 h-8 mb-2" />
