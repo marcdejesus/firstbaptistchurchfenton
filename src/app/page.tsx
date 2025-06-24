@@ -9,9 +9,12 @@ import { MapPin, Phone, Mail, Clock, Calendar, Users, Heart, ArrowRight, Play, C
 import { TestimoniesCarousel } from "@/components/home/TestimoniesCarousel";
 import React from "react";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
+import { useNextEvent } from "@/hooks/useNextEvent";
+import { WelcomeCard } from "@/components/WelcomeCard";
 
 export default function Home() {
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=860%20N%20Leroy%20St%2C%20Fenton%2C%20MI%2048430";
+  const { nextEvent, isLoading: eventLoading } = useNextEvent();
 
   // This would typically come from your API
   const upcomingEvents = [
@@ -41,6 +44,19 @@ export default function Home() {
     }
   ];
 
+  const officeHours = {
+    monday: "9:00 AM - 5:00 PM",
+    tuesday: "9:00 AM - 5:00 PM",
+    wednesday: "9:00 AM - 8:00 PM",
+    thursday: "9:00 AM - 5:00 PM",
+    friday: "9:00 AM - 1:00 PM",
+    saturday: "Closed",
+    sunday: "Closed"
+  };
+
+  const today = new Date().toLocaleString('en-us', {  weekday: 'long' }).toLowerCase();
+  const todaysHours = officeHours[today as keyof typeof officeHours];
+
   const quickLinks = [
     { href: '/sermons', label: 'Sermons' },
     { href: '/events', label: 'Events' },
@@ -51,37 +67,11 @@ export default function Home() {
 
   return (
     <div className="space-y-16">
-      {/* --- New Hero Section --- */}
-      <section className="relative h-[600px]">
-        <div className="absolute inset-0">
-          <HeroCarousel />
-        </div>
-        <div className="relative container mx-auto px-4 md:px-12 h-full flex flex-col">
-          <div className="mt-12 md:mt-24 max-w-xl bg-background/80 backdrop-blur-sm p-8 md:p-12 rounded-lg shadow-2xl">
-              <h1 className="text-4xl md:text-5xl font-bold font-lora text-primary-foreground mb-4 leading-tight">
-                WELCOME TO FIRST BAPTIST
-              </h1>
-              <p className="text-lg text-muted-foreground mb-6">
-                Your journey of faith is important. We provide a community to grow and belong.
-              </p>
-          </div>
-          <div className="mt-auto self-end flex gap-4 mb-8 md:mb-12">
-            <Link href="/visit">
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90 px-8">
-                PLAN YOUR VISIT
-              </Button>
-            </Link>
-            <Link href="/welcome">
-              <Button size="lg" variant="outline" className="px-8 border-primary-foreground/50 text-primary-foreground hover:bg-primary-foreground/10">
-                New Here?
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* --- Hero Section --- */}
+      <WelcomeCard />
 
       {/* Mission Statement - Enhanced */}
-      <section className="text-center p-8 md:p-12 bg-primary/10 rounded-2xl shadow-md">
+      <section className="text-center p-8 md:p-12">
         <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-6">Our Mission</h2>
         <p className="text-xl text-primary-foreground/80 max-w-4xl mx-auto leading-relaxed">
           To lead people into a growing relationship with Jesus Christ by creating environments where people are encouraged and equipped to pursue intimacy with God, community with insiders, and influence with outsiders.

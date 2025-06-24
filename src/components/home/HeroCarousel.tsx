@@ -12,6 +12,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay"
 
 const carouselItems = [
   {
@@ -43,6 +44,9 @@ const carouselItems = [
 export function HeroCarousel() {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
+  const plugin = React.useRef(
+    Autoplay({ delay: 10000, stopOnInteraction: true })
+  )
 
   React.useEffect(() => {
     if (!api) {
@@ -67,10 +71,13 @@ export function HeroCarousel() {
       <Carousel
         setApi={setApi}
         className="w-full h-full"
+        plugins={[plugin.current]}
         opts={{
           align: "start",
           loop: true,
         }}
+        onMouseEnter={plugin.current.stop}
+        onMouseLeave={plugin.current.reset}
       >
         <CarouselContent>
           {carouselItems.map((item) => (
