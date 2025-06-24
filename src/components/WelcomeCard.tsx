@@ -26,17 +26,7 @@ export function WelcomeCard() {
           </div>
         </div>
 
-        <div className="mb-6">
-          <Image
-            src="/outside-art.png"
-            alt="Outside of First Baptist Church of Fenton"
-            width={800}
-            height={350}
-            className="rounded-lg object-cover w-full"
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <div className="md:col-span-1 space-y-4">
             <Button  size="lg" className="w-full bg-[#788993] text-white hover:bg-[#667680]">
               New Here?
@@ -44,9 +34,6 @@ export function WelcomeCard() {
             <Button size="lg" className="w-full">
               Visit Us
             </Button>
-          </div>
-
-          <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-gray-200/50 p-4 rounded-lg flex flex-col justify-center items-center text-center">
               <Calendar className="w-8 h-8 mb-2" />
               <p className="font-medium">Next Event</p>
@@ -55,6 +42,15 @@ export function WelcomeCard() {
               <Clock className="w-8 h-8 mb-2" />
               <p className="font-medium">Office Hours</p>
             </div>
+          </div>
+          <div className="md:col-span-2">
+            <Image
+              src="/outside-art.png"
+              alt="Outside of First Baptist Church of Fenton"
+              width={800}
+              height={350}
+              className="rounded-lg object-cover w-full h-full"
+            />
           </div>
         </div>
       </CardContent>
