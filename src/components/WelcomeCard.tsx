@@ -2,8 +2,8 @@ import Image from "next/image";
 import { Lora } from "next/font/google";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock } from "lucide-react";
-import { Event } from "@/types/event";
+import { Calendar, Clock, Facebook, Youtube } from "lucide-react";
+import { Event } from "../types/event";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -24,6 +24,18 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
             Welcome!
           </h1>
           <div className="flex items-center space-x-3">
+            <div className="flex space-x-2">
+              <a href="https://www.facebook.com/FBCFentonMO" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-blue-600">
+                  <Facebook className="w-7 h-7" />
+                </Button>
+              </a>
+              <a href="https://www.youtube.com/@fbcfentonmo" target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="icon" className="text-gray-600 hover:text-red-600">
+                  <Youtube className="w-7 h-7" />
+                </Button>
+              </a>
+            </div>
             <Image
               src="/logo.svg"
               alt="First Baptist Church of Fenton Logo"
@@ -39,6 +51,11 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
           <div className="md:col-span-1 space-y-4">
+            <p className="text-sm text-gray-600 mb-4">
+              Welcome to First Baptist Church of Fenton! We're a community
+              dedicated to growing in faith and sharing God's love. We're so
+              glad you're here.
+            </p>
             <Button
               size="lg"
               className="w-full bg-[#788993] text-white hover:bg-[#667680]"
@@ -64,6 +81,13 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
             </div>
             <div className="bg-gray-200/50 p-4 rounded-lg flex flex-col justify-center items-center text-center">
               <Clock className="w-8 h-8 mb-2" />
+              <p className="font-medium">Service Times</p>
+              <p className="text-sm">Sunday Worship: 11:00 AM</p>
+              <p className="text-sm">Sunday School: 9:45 AM</p>
+              <p className="text-sm">Wednesday Prayer/Bible Study: 6:00 PM</p>
+            </div>
+            <div className="bg-gray-200/50 p-4 rounded-lg flex flex-col justify-center items-center text-center">
+              <Clock className="w-8 h-8 mb-2" />
               <p className="font-medium">Today's Hours</p>
               <p className="text-sm">{todaysHours}</p>
             </div>
@@ -72,10 +96,16 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
             <Image
               src="/outside-art.png"
               alt="Outside of First Baptist Church of Fenton"
-              width={800}
-              height={350}
-              className="rounded-lg object-cover w-full h-full"
+              width={700}
+              height={300}
+              className="rounded-lg object-cover w-full h-auto"
             />
+            <div className="mt-4 p-4 bg-blue-100 text-blue-800 rounded-lg text-center">
+              <p className="text-sm">
+                This area will be used for announcements, if there are no
+                announcements, it will display a random bible quote.
+              </p>
+            </div>
           </div>
         </div>
       </CardContent>
