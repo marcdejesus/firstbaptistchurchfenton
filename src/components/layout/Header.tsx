@@ -19,9 +19,10 @@ import {
     Rss, MonitorPlay, HandCoins, StepForward, PersonStanding, HelpCircle, HandHelping, MessageSquare, Globe, Images
 } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import React from 'react';
 import { cn } from '@/lib/utils';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 const aboutItems = [
     { href: '/about/beliefs', title: 'Our Beliefs', icon: Landmark },
@@ -36,7 +37,7 @@ const connectItems = [
     { href: '/events', title: 'Events', icon: Calendar },
     { href: '/calendar', title: 'Calendar', icon: Calendar },
     { href: '/volunteer', title: 'Volunteer', icon: HandHelping },
-    { href: '/prayer', title: 'Prayer', icon: MessageSquare },
+    { href: 'mailto:fentonbaptist@gmail.com', title: 'Prayer', icon: MessageSquare },
     { href: '/contact', title: 'Contact', icon: Mail },
     { href: '/missions', title: 'Missions', icon: Globe },
 ]
@@ -49,10 +50,26 @@ const resourcesItems = [
 ]
 
 const navItems = [
-  { href: '/donate', label: 'Give', icon: HandCoins },
-  { href: '/next-steps', label: 'Next Steps', icon: StepForward },
-  { href: '/visit', label: 'Visit', icon: PersonStanding }
+    { href: '/donate', label: 'Give', icon: HandCoins },
+    { href: '/next-steps', label: 'Next Steps', icon: StepForward },
+    { href: '/visit', label: 'Visit', icon: PersonStanding }
 ];
+
+const mobileNavItems = [
+    {
+        title: 'About',
+        items: aboutItems,
+    },
+    {
+        title: 'Connect',
+        items: connectItems,
+    },
+    {
+        title: 'Resources',
+        items: resourcesItems,
+    },
+    ...navItems.map(item => ({ title: item.label, href: item.href, icon: item.icon })),
+]
 
 export function Header() {
   const { user, logout } = useUser();
@@ -205,15 +222,35 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[280px] bg-background p-6">
+              <SheetHeader>
+                <SheetTitle><VisuallyHidden>Mobile Navigation</VisuallyHidden></SheetTitle>
+              </SheetHeader>
               <nav className="flex flex-col space-y-3">
-                {/* TODO: Refactor mobile nav to use dropdowns */}
-                {navItems.map((link) => (
-                    <Button key={link.label} variant="ghost" asChild className="justify-start text-foreground">
-                        <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)}>
-                            <link.icon className="mr-2 h-5 w-5" />
-                            {link.label}
-                        </Link>
-                    </Button>
+                {mobileNavItems.map((item) => (
+                    <React.Fragment key={item.title}>
+                        {'href' in item && item.href ? (
+                            <Button asChild variant="ghost" className="justify-start text-foreground">
+                                <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+                                    {item.icon && <item.icon className="mr-2 h-5 w-5" />}
+                                    {item.title}
+                                </Link>
+                            </Button>
+                        ) : (
+                            <>
+                                <h4 className="text-sm font-semibold text-foreground/70 px-4 mt-4">{item.title}</h4>
+                                <div className="flex flex-col space-y-2">
+                                    {'items' in item && item.items?.map((link) => (
+                                        <Button key={link.href} asChild variant="ghost" className="justify-start text-foreground pl-8">
+                                            <Link href={link.href} onClick={() => setIsMobileMenuOpen(false)}>
+                                                {link.icon && <link.icon className="mr-2 h-5 w-5" />}
+                                                {link.title}
+                                            </Link>
+                                        </Button>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </React.Fragment>
                 ))}
                 <hr className="my-3 border-border" />
                 {user ? (
