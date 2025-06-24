@@ -57,6 +57,20 @@ const navItems = [
 export function Header() {
   const { user, logout } = useUser();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Set initial state
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const commonNavElements = (
     <>
@@ -121,7 +135,10 @@ export function Header() {
   );
 
   return (
-    <header className="bg-primary/50 shadow-md sticky top-0 z-50">
+    <header className={cn(
+      "sticky top-0 z-50 transition-all duration-300 ease-in-out",
+      isScrolled ? "bg-primary/50 shadow-md" : "bg-white"
+    )}>
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-3 text-primary-foreground hover:text-accent transition-colors">
           <Image
