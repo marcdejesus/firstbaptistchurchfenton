@@ -16,7 +16,7 @@ import {
 import { 
     Home, CalendarDays, Users, DollarSign, UserCircle, LogOut, Menu as MenuIcon, 
     Church, Book, Calendar, BookOpen, Heart, Mail, Landmark, Users2, History, 
-    Rss, MonitorPlay, HandCoins, StepForward, PersonStanding 
+    Rss, MonitorPlay, HandCoins, StepForward, PersonStanding, HelpCircle, HandHelping, MessageSquare
 } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
@@ -27,12 +27,16 @@ const aboutItems = [
     { href: '/about/beliefs', title: 'Our Beliefs', icon: Landmark },
     { href: '/about/history', title: 'Our History', icon: History },
     { href: '/about/staff', title: 'Pastors & Staff', icon: Users2 },
+    { href: '/faq', title: 'FAQ', icon: HelpCircle },
 ]
 
 const connectItems = [
     { href: '/community', title: 'Community', icon: Users },
     { href: '/ministries', title: 'Ministries', icon: Heart },
     { href: '/events', title: 'Events', icon: Calendar },
+    { href: '/volunteer', title: 'Volunteer', icon: HandHelping },
+    { href: '/prayer', title: 'Prayer', icon: MessageSquare },
+    { href: '/contact', title: 'Contact', icon: Mail },
 ]
 
 const watchListenItems = [
@@ -213,32 +217,3 @@ export function Header() {
     </header>
   );
 }
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a"> & { icon: React.ElementType }
->(({ className, title, icon: Icon, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="flex items-center space-x-2">
-            <Icon className="h-5 w-5" />
-            <div className="text-sm font-medium leading-none">{title}</div>
-          </div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
