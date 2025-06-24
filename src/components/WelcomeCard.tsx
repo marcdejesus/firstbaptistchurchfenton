@@ -11,7 +11,7 @@ const lora = Lora({
 
 export function WelcomeCard() {
   return (
-    <Card className="w-full max-w-4xl rounded-xl shadow-lg mx-auto my-16">
+    <Card className="w-full rounded-xl shadow-lg mx-auto my-16">
       <CardContent className="p-6">
         <div className="flex justify-between items-start mb-4">
           <h1 className={`text-4xl font-semibold ${lora.className}`}>
