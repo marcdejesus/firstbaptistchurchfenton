@@ -21,7 +21,7 @@ const navItems = [
   { href: '/events', label: 'Events', icon: Calendar },
   { href: '/sermons', label: 'Sermons', icon: BookOpen },
   { href: '/ministries', label: 'Ministries', icon: Heart },
-  { href: '/counseling', label: 'Counseling', icon: Users },
+  { href: '/blog', label: 'Blog', icon: Book },
   { href: '/contact', label: 'Contact', icon: Mail },
   { href: '/donate', label: 'Donate', icon: DollarSign }
 ];
