@@ -36,7 +36,6 @@ const connectItems = [
     { href: '/community', title: 'Community', icon: Users },
     { href: '/ministries', title: 'Ministries', icon: Heart },
     { href: '/events', title: 'Events', icon: Calendar },
-    { href: '/calendar', title: 'Calendar', icon: Calendar },
     { href: '/volunteer', title: 'Volunteer', icon: HandHelping },
     { href: 'mailto:fentonbaptist@gmail.com', title: 'Prayer', icon: MessageSquare },
     { href: '/contact', title: 'Contact', icon: Mail },
