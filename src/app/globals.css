@@ -243,3 +243,32 @@
   font-weight: 500;
   color: hsl(var(--foreground));
 }
+
+/* Custom prose styles for blog content */
+.prose p.lead {
+  @apply text-xl text-muted-foreground;
+}
+
+.prose h2 {
+  @apply text-2xl font-bold mt-8 mb-4 pb-2 border-b;
+}
+
+.prose p {
+  @apply mb-4 leading-relaxed;
+}
+
+.prose a {
+  @apply text-primary hover:underline;
+}
+
+.prose blockquote {
+  @apply pl-4 italic border-l-4;
+}
+
+.prose ul {
+  @apply list-disc list-inside mb-4;
+}
+
+.prose ol {
+  @apply list-decimal list-inside mb-4;
+}
