@@ -45,6 +45,7 @@ export type User = {
   email: string;
   avatarUrl?: string;
   role?: 'member' | 'admin';
+  isApprovedMember?: boolean;
 };
 
 // For AI event summary generation
