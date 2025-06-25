@@ -1,9 +1,11 @@
+"use client";
+
 import Image from "next/image";
-import { Lora } from "next/font/google";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, Facebook, Youtube } from "lucide-react";
-import { Event } from "../types/event";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, Clock, Facebook, Youtube, ArrowRight, Play, MapPin } from "lucide-react";
+import { Event } from "../types";
 import Link from "next/link";
 import {
   Carousel,
@@ -13,11 +15,6 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import React from "react";
-
-const lora = Lora({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-});
 
 interface WelcomeCardProps {
   todaysHours: string;
@@ -45,216 +42,201 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
     });
   }, [api]);
 
-  const carouselComponent = (
-    <div>
-      <Carousel plugins={[plugin.current]} setApi={setApi}>
-        <CarouselContent>
-          <CarouselItem>
-            <Image
-              src="/front-art.png"
-              alt="Front of First Baptist Church of Fenton"
-              width={700}
-              height={300}
-              className="rounded-lg object-cover w-full h-auto"
-            />
-          </CarouselItem>
-          <CarouselItem>
-            <Image
-              src="/outside-art.png"
-              alt="Outside of First Baptist Church of Fenton"
-              width={700}
-              height={300}
-              className="rounded-lg object-cover w-full h-auto"
-            />
-          </CarouselItem>
-        </CarouselContent>
-      </Carousel>
-      <div className="flex justify-center mt-2">
-        {Array.from({ length: count }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => api?.scrollTo(index)}
-            className={`h-2 w-2 rounded-full mx-1 ${
-              index === current - 1 ? "bg-gray-800" : "bg-gray-400"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-
-  const socialAndLogo = (
-    <div className="flex items-center space-x-2 sm:space-x-3 self-center sm:self-auto">
-      <div className="flex space-x-1 sm:space-x-2">
-        <a
-          href="https://www.facebook.com/FBCFentonMO"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-gray-600 hover:text-blue-600 w-8 h-8 sm:w-9 sm:h-9"
-          >
-            <Facebook className="w-7 h-7" />
-          </Button>
-        </a>
-        <a
-          href="https://www.youtube.com/@fbcfentonmo"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-gray-600 hover:text-red-600 w-8 h-8 sm:w-9 sm:h-9"
-          >
-            <Youtube className="w-7 h-7" />
-          </Button>
-        </a>
-      </div>
-      <Image
-        src="/logo.svg"
-        alt="First Baptist Church of Fenton Logo"
-        width={50}
-        height={50}
-        className="w-12 h-12 sm:w-[60px] sm:h-[57px]"
-      />
-      <div className={`text-right ${lora.className} hidden sm:block`}>
-        <p className="text-xl sm:text-2xl">First Baptist</p>
-        <p className="text-sm sm:text-base">Church of Fenton</p>
-      </div>
-    </div>
-  );
-
-  const infoBoxes = (
-    <div className="flex md:flex-col overflow-x-auto md:overflow-visible gap-3 py-2 md:py-0">
-      <div className="bg-gray-200/50 p-4 rounded-lg flex-shrink-0 w-4/5 sm:w-1/2 md:w-full flex flex-col justify-center items-center text-center">
-        <Calendar className="w-8 h-8 mb-2" />
-        <p className="font-medium">Next Event</p>
-        {nextEvent ? (
-          <>
-            <p className="text-sm font-semibold">{nextEvent.title}</p>
-            <p className="text-xs text-gray-600">
-              {new Date(nextEvent.date).toLocaleDateString()}
-            </p>
-          </>
-        ) : (
-          <p className="text-sm">No upcoming events</p>
-        )}
-      </div>
-      <div className="bg-gray-200/50 p-4 rounded-lg flex-shrink-0 w-4/5 sm:w-1/2 md:w-full flex flex-col justify-center items-center text-center">
-        <Clock className="w-8 h-8 mb-2" />
-        <p className="font-medium">Service Times</p>
-        <p className="text-sm">Sunday Worship: 11:00 AM</p>
-        <p className="text-sm">Sunday School: 9:45 AM</p>
-        <p className="text-sm">Wednesday: 6:00 PM</p>
-      </div>
-      <div className="bg-gray-200/50 p-4 rounded-lg flex-shrink-0 w-4/5 sm:w-1/2 md:w-full flex flex-col justify-center items-center text-center">
-        <Clock className="w-8 h-8 mb-2" />
-        <p className="font-medium">Today's Hours</p>
-        <p className="text-sm">{todaysHours}</p>
-      </div>
-    </div>
-  );
-
-  const announcementBox = (
-    <div className="mt-4 p-4 bg-blue-100 text-blue-800 rounded-lg text-center">
-      <p className="text-sm">
-        This area will be used for announcements, if there are no
-        announcements, it will display a random bible quote.
-      </p>
-    </div>
-  );
-
   return (
-    <Card className="w-full rounded-xl shadow-lg mx-auto my-16">
-      <CardContent className="p-4 sm:p-6">
-        {/* Mobile Layout */}
-        <div className="md:hidden">
-          <div className="flex justify-between items-center mb-4">
-            <Link href="/welcome">
-              <Image
-                src="/welcome.png"
-                alt="Welcome!"
-                width={200}
-                height={50}
-              />
-            </Link>
-            {socialAndLogo}
-          </div>
+    <section className="relative overflow-hidden bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl p-8 md:p-12 my-8">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:20px_20px]"></div>
+      </div>
+      
+      <div className="relative">
+        {/* Header Section */}
+        <div className="text-center mb-8">
+          <Badge variant="secondary" className="text-accent-foreground bg-accent/10 mb-4">
+            Welcome Home
+          </Badge>
+          <h1 className="text-4xl md:text-5xl font-lora font-bold text-primary-foreground mb-4">
+            Welcome to FBC Fenton
+          </h1>
+          <p className="text-xl text-primary-foreground/80 mb-6 max-w-2xl mx-auto">
+            Growing in Faith, Sharing God's Love
+          </p>
+        </div>
 
-          {carouselComponent}
-          <div className="space-y-4 mt-4">
-            <p className="text-sm text-gray-600">
-              Welcome to First Baptist Church of Fenton! We're a community
-              dedicated to growing in faith and sharing God's love. We're so
-              glad you're here.
+        {/* Main Content Grid */}
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
+          {/* Left Column - Content & Actions */}
+          <div className="space-y-6">
+            <p className="text-lg text-primary-foreground/80 leading-relaxed">
+              We're a community dedicated to growing in faith and sharing God's love. 
+              Whether you're exploring faith for the first time or looking for a church home, 
+              you're welcome here.
             </p>
-            <div className="flex flex-col gap-3">
-              <Button
-                size="lg"
-                className="w-full bg-[#788993] text-white hover:bg-[#667680]"
-              >
-                <Link href="/welcome">New Here?</Link>
+            
+            {/* Quick Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="bg-accent hover:bg-accent-600 text-accent-foreground" asChild>
+                <Link href="/visit">
+                  Plan Your Visit
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
-              <Button
-                size="lg"
-                className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
-                asChild
-              >
-                <Link href="/visit">Visit Us</Link>
+              <Button variant="outline" size="lg" className="border-2 border-primary/20 hover:bg-primary/10" asChild>
+                <Link href="/sermons/live">
+                  <Play className="mr-2 h-5 w-5" />
+                  Watch Online
+                </Link>
               </Button>
             </div>
-            {infoBoxes}
-            {announcementBox}
+
+            {/* Info Cards */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              {/* Next Event Card */}
+              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+                <CardContent className="p-4 text-center">
+                  <Calendar className="w-8 h-8 mb-2 mx-auto text-accent" />
+                  <h3 className="font-semibold mb-1">Next Event</h3>
+                  {nextEvent ? (
+                    <>
+                      <p className="text-sm font-medium text-primary-foreground">{nextEvent.title}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {new Date(nextEvent.date).toLocaleDateString('en-US', { 
+                          weekday: 'short', 
+                          month: 'short', 
+                          day: 'numeric' 
+                        })}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">Check back soon</p>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Service Times Card */}
+              <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+                <CardContent className="p-4 text-center">
+                  <Clock className="w-8 h-8 mb-2 mx-auto text-accent" />
+                  <h3 className="font-semibold mb-1">Service Times</h3>
+                  <p className="text-sm">Sunday: 10:30 AM</p>
+                  <p className="text-sm">Wednesday: 7:00 PM</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Social Media & Contact */}
+            <div className="flex items-center justify-between pt-4">
+              <div className="flex items-center space-x-3">
+                <div className="flex space-x-2">
+                  <a
+                    href="https://www.facebook.com/FBCFentonMO"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full bg-white/80 hover:bg-white transition-colors"
+                  >
+                    <Facebook className="w-5 h-5 text-blue-600" />
+                  </a>
+                  <a
+                    href="https://www.youtube.com/@fbcfentonmo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2 rounded-full bg-white/80 hover:bg-white transition-colors"
+                  >
+                    <Youtube className="w-5 h-5 text-red-600" />
+                  </a>
+                </div>
+                <div className="text-sm text-primary-foreground/70">
+                  <p>Follow us for updates</p>
+                </div>
+              </div>
+              
+              <div className="text-right text-sm text-primary-foreground/70">
+                <p className="font-medium">Office Hours</p>
+                <p>{todaysHours}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Image Carousel */}
+          <div className="relative">
+            <Carousel plugins={[plugin.current]} setApi={setApi} className="w-full">
+              <CarouselContent>
+                <CarouselItem>
+                  <div className="relative h-80 md:h-96 rounded-xl overflow-hidden shadow-2xl">
+                    <Image
+                      src="/front-art.png"
+                      alt="Front of First Baptist Church of Fenton"
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="relative h-80 md:h-96 rounded-xl overflow-hidden shadow-2xl">
+                    <Image
+                      src="/outside-art.png"
+                      alt="Outside of First Baptist Church of Fenton"
+                      fill
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+            </Carousel>
+            
+            {/* Carousel Indicators */}
+            <div className="flex justify-center mt-4 space-x-2">
+              {Array.from({ length: count }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => api?.scrollTo(index)}
+                  className={`h-2 w-2 rounded-full transition-all duration-200 ${
+                    index === current - 1 
+                      ? "bg-accent w-6" 
+                      : "bg-white/60 hover:bg-white/80"
+                  }`}
+                />
+              ))}
+            </div>
+            
+            {/* Location Badge */}
+            <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+              <div className="flex items-center space-x-2 text-sm">
+                <MapPin className="h-4 w-4 text-accent" />
+                <div>
+                  <p className="font-medium">860 N Leroy St</p>
+                  <p className="text-muted-foreground">Fenton, MI 48430</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Desktop Layout */}
-        <div className="hidden md:block">
-          <div className="flex justify-between items-start mb-4">
-            <Link href="/welcome">
-              <Image
-                src="/welcome.png"
-                alt="Welcome!"
-                width={200}
-                height={50}
-              />
-            </Link>
-            {socialAndLogo}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <div className="md:col-span-1 space-y-4">
-              <p className="text-sm text-gray-600 mb-4 px-2 sm:px-0">
-                Welcome to First Baptist Church of Fenton! We're a community
-                dedicated to growing in faith and sharing God's love. We're so
-                glad you're here.
-              </p>
-              <div className="flex flex-col sm:flex-row md:flex-col gap-3 px-2 sm:px-0">
-                <Button
-                  size="lg"
-                  className="w-full bg-[#788993] text-white hover:bg-[#667680]"
-                >
-                  <Link href="/welcome">New Here?</Link>
-                </Button>
-                <Button
-                  size="lg"
-                  className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
-                  asChild
-                >
-                  <Link href="/visit">Visit Us</Link>
-                </Button>
-              </div>
-              {infoBoxes}
+        {/* Quick Stats */}
+        <div className="mt-8 pt-8 border-t border-white/20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <p className="text-2xl font-bold text-accent">50+</p>
+              <p className="text-sm text-primary-foreground/70">Years Serving</p>
             </div>
-            <div className="md:col-span-2">
-              {carouselComponent}
-              {announcementBox}
+            <div>
+              <p className="text-2xl font-bold text-accent">200+</p>
+              <p className="text-sm text-primary-foreground/70">Church Family</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-accent">15+</p>
+              <p className="text-sm text-primary-foreground/70">Ministries</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-accent">100%</p>
+              <p className="text-sm text-primary-foreground/70">Welcome</p>
             </div>
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </section>
   );
 } 
