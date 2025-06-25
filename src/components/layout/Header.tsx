@@ -44,7 +44,6 @@ const connectItems = [
 
 const resourcesItems = [
     { href: '/blog', title: 'Blog', icon: Rss },
-    { href: '/resources', title: 'Resources', icon: BookOpen },
     { href: '/gallery', title: 'Gallery', icon: Images },
     { href: '/sermons', title: 'Sermons', icon: MonitorPlay },
 ]
