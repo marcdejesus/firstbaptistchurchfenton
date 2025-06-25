@@ -364,19 +364,31 @@ export default function EventsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-4xl font-lora font-bold text-primary-foreground">Church Events</h1>
-          <p className="text-muted-foreground mt-2">
-            Discover upcoming events and join our vibrant church community
-          </p>
-          {error && (
-            <div className="mt-2 p-2 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800">
-              ⚠️ {error} - Showing cached events
-            </div>
-          )}
+      {/* Enhanced Header with Design System Styling */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl p-8 md:p-12 mb-8">
+        <div className="relative z-10">
+          <div className="text-center max-w-3xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-lora font-bold text-primary-foreground mb-4">
+              Church Events
+            </h1>
+            <p className="text-xl text-primary-foreground/80 mb-6">
+              Discover upcoming events and join our vibrant church community. 
+              From worship services to fellowship gatherings, there's something for everyone.
+            </p>
+            {error && (
+              <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800 max-w-md mx-auto">
+                <div className="flex items-center">
+                  <span className="mr-2">⚠️</span>
+                  <span>{error} - Showing cached events</span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
+        
+        {/* Background decoration */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full -translate-y-16 translate-x-16"></div>
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/10 rounded-full translate-y-12 -translate-x-12"></div>
       </div>
 
       {/* Tabs for event organization */}

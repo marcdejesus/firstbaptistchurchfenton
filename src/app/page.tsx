@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
@@ -85,54 +85,68 @@ export default function Home() {
       {/* 3. This Week at FBC - NEW */}
       <ThisWeekAtFBC />
 
-      {/* 4. Upcoming Events - Enhanced */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-3">
-            Upcoming Events
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Join us for upcoming activities and connect with our church community
-          </p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {upcomingEvents.map((event) => (
-            <Card key={event.id} className="shadow-md hover:shadow-lg transition-all duration-300 group border-0 bg-white/80 backdrop-blur-sm">
-              <CardContent className="p-6">
-                <div className="flex justify-between items-start mb-3">
-                  <Badge variant="secondary" className="bg-accent/10 text-accent-foreground">
-                    {event.category}
-                  </Badge>
-                  <span className="text-sm text-muted-foreground font-medium">
-                    {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                  </span>
-                </div>
-                <h3 className="font-semibold text-lg mb-3 group-hover:text-accent transition-colors leading-tight">
-                  {event.title}
-                </h3>
-                <div className="flex items-center justify-between text-sm text-muted-foreground">
-                  <div className="flex items-center">
-                    <Clock className="h-4 w-4 mr-1" />
-                    <span>{event.time}</span>
+      {/* 4. Upcoming Events - Enhanced with Design System */}
+      <section className="py-16 bg-gradient-to-b from-transparent to-primary-50/30">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-3">
+              Upcoming Events
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Join us for upcoming activities and connect with our vibrant church community
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {upcomingEvents.map((event) => (
+              <Card key={event.id} className="group overflow-hidden hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
+                <CardHeader className="pb-4">
+                  <div className="flex justify-between items-start mb-3">
+                    <Badge className="bg-accent/10 text-accent border-accent/20">
+                      {event.category}
+                    </Badge>
+                    <span className="text-sm text-muted-foreground font-medium">
+                      {new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                    </span>
                   </div>
-                  <div className="flex items-center">
-                    <Users className="h-4 w-4 mr-1" />
-                    <span>{event.rsvps} attending</span>
+                  <h3 className="text-xl font-lora font-semibold text-primary-foreground group-hover:text-accent transition-colors leading-tight">
+                    {event.title}
+                  </h3>
+                </CardHeader>
+                
+                <CardContent className="pb-6">
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center">
+                      <Clock className="h-4 w-4 mr-3 text-accent" />
+                      <span className="font-medium">{event.time}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Users className="h-4 w-4 mr-3 text-accent" />
+                      <span>{event.rsvps} attending</span>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        
-        <div className="text-center mt-12">
-          <Button size="lg" className="bg-accent hover:bg-accent-600" asChild>
-            <Link href="/events">
-              View All Events
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
-          </Button>
+                </CardContent>
+                
+                <CardFooter>
+                  <Button size="sm" className="w-full bg-accent hover:bg-accent-600" asChild>
+                    <Link href="/events">
+                      Learn More
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent/10" asChild>
+              <Link href="/events">
+                View All Events
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
 
