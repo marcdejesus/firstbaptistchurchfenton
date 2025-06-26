@@ -12,7 +12,7 @@ export default function Home() {
     <div className="overflow-hidden flex-col justify-start items-start inline-flex">
       
       {/* Hero Section */}
-      <section className="self-stretch px-16 py-28 bg-scheme-1-background overflow-hidden justify-center items-start gap-20 inline-flex">
+      <section className="self-stretch px-16 py-12 bg-scheme-1-background overflow-hidden justify-center items-start gap-20 inline-flex">
         <div className="flex-1 max-w-7xl flex-col justify-start items-start gap-20 inline-flex">
           <div className="self-stretch justify-start items-center gap-20 inline-flex">
             <div className="flex-1 flex-col justify-start items-start gap-8 inline-flex">
