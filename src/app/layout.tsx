@@ -101,7 +101,7 @@ export default function RootLayout({
       <head>
         <ChurchStructuredData />
       </head>
-      <body className="flex flex-col min-h-screen font-inter antialiased grid-background">
+      <body className="flex flex-col min-h-screen font-inter antialiased">
         <SkipLink />
         <MobilePerformanceProvider>
           <UserProvider>
