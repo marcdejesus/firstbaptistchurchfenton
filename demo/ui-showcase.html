@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI Showcase - Square Corner Styling - First Baptist Church Fenton</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family+Proza+Libre:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../design-system/css/variables.css">
+    <link rel="stylesheet" href="../design-system/css/reset.css">
+    <link rel="stylesheet" href="../design-system/css/typography.css">
+    <link rel="stylesheet" href="../design-system/css/components.css">
+    <link rel="stylesheet" href="../design-system/css/utilities.css">
+    <style>
+        body {
+            font-family: var(--font-family-body);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .showcase {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: var(--border-radius-medium);
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        
+        .component-demo {
+            padding: 24px;
+            background: #f8f9fa;
+            border-radius: var(--border-radius-medium);
+            border: 1px solid #e9ecef;
+        }
+        
+        .component-demo h4 {
+            margin: 0 0 16px 0;
+            font-size: 16px;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        
+        .form-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .button-demo {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .comparison-note {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: var(--border-radius-small);
+            padding: 16px;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #2e7d32;
+        }
+        
+        .comparison-note strong {
+            color: #1b5e20;
+        }
+        
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        
+        .example-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius-medium);
+            padding: 20px;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase">
+        <header style="text-align: center; margin-bottom: 60px;">
+            <h1 style="font-family: var(--font-family-heading); font-size: 48px; margin: 0 0 16px 0; color: var(--color-primary);">
+                UI Showcase
+            </h1>
+            <p style="font-size: 20px; color: #6c757d; margin: 0;">
+                Updated square corner styling matching your design reference
+            </p>
+        </header>
+
+        <div class="comparison-note">
+            <strong>🎯 Design Update:</strong> All UI components now feature minimal corner radius (2-6px) for a more square, rectangular appearance that matches your design reference images. This creates a cleaner, more modern look while maintaining accessibility and usability.
+        </div>
+
+        <!-- Buttons Section -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Buttons with Square Corners
+            </h2>
+            <div class="component-grid">
+                <div class="component-demo">
+                    <h4>Primary Buttons</h4>
+                    <div class="button-demo">
+                        <button class="btn btn-primary">Get Started</button>
+                        <button class="btn btn-primary">
+                            <svg class="icon" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            With Icon
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="component-demo">
+                    <h4>Secondary & Outline</h4>
+                    <div class="button-demo">
+                        <button class="btn btn-secondary">Secondary</button>
+                        <button class="btn btn-outline">Outline</button>
+                        <button class="btn btn-ghost">Ghost</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Inputs Section -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Form Inputs with Square Styling
+            </h2>
+            <div class="component-grid">
+                <div class="component-demo">
+                    <h4>Text Inputs</h4>
+                    <div class="form-demo">
+                        <input type="text" class="input" placeholder="Standard text input">
+                        <input type="text" class="input input-search" placeholder="Search input with icon">
+                        <div class="input-group">
+                            <input type="text" class="input input-icon-right" placeholder="Input with help icon">
+                            <div class="icon-right">
+                                <svg class="icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-demo">
+                    <h4>Special Inputs</h4>
+                    <div class="form-demo">
+                        <select class="input select">
+                            <option>Currency: USD</option>
+                            <option>Currency: EUR</option>
+                            <option>Currency: GBP</option>
+                        </select>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" class="input" placeholder="http://" style="width: 80px; flex-shrink: 0;">
+                            <input type="text" class="input" placeholder="www.example.com" style="flex: 1;">
+                        </div>
+                        <textarea class="input textarea" placeholder="Multi-line text area" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cards Section -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Cards with Square Corners
+            </h2>
+            <div class="component-grid">
+                <div class="component-demo">
+                    <h4>Basic Cards</h4>
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Card Title</h3>
+                            <p class="card-subtitle">Card subtitle with additional information</p>
+                        </div>
+                        <div class="card-content">
+                            <p>This is the main content of the card. Notice the square corners that match your design reference.</p>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-primary btn-small">Action</button>
+                            <button class="btn btn-outline btn-small">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="component-demo">
+                    <h4>Elevated Card</h4>
+                    <div class="card card-elevated">
+                        <div class="card-header">
+                            <h3 class="card-title">Elevated Style</h3>
+                        </div>
+                        <div class="card-content">
+                            <p>This card has enhanced shadows but maintains the same square corner styling.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Elements -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Interactive Elements
+            </h2>
+            <div class="component-grid">
+                <div class="component-demo">
+                    <h4>Checkboxes & Radios</h4>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <label class="checkbox">
+                            <input type="checkbox" checked>
+                            <span>Checkbox option</span>
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            <span>Another checkbox</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="demo" checked>
+                            <span>Radio option</span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="demo">
+                            <span>Another radio</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="component-demo">
+                    <h4>Tags & Badges</h4>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span class="tag tag-primary">Primary Tag</span>
+                        <span class="tag">Default Tag</span>
+                        <span class="tag tag-removable">
+                            Removable
+                            <span>×</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Layout Example -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Complete Form Example
+            </h2>
+            <div class="example-card">
+                <h3 style="margin: 0 0 20px 0; font-family: var(--font-family-heading);">Contact Form</h3>
+                <form style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div>
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="input" placeholder="Enter first name">
+                        </div>
+                        <div>
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="input" placeholder="Enter last name">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="input" placeholder="your.email@example.com">
+                    </div>
+                    
+                    <div>
+                        <label class="form-label">Message</label>
+                        <textarea class="input textarea" placeholder="Enter your message..." rows="4"></textarea>
+                    </div>
+                    
+                    <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                        <button type="button" class="btn btn-ghost">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Design Specifications -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Updated Design Specifications
+            </h2>
+            <div class="example-card">
+                <h3 style="margin: 0 0 16px 0;">Border Radius Values</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <div>
+                        <strong>Small:</strong> 2px<br>
+                        <small style="color: #6c757d;">Used for small elements like tags, badges</small>
+                    </div>
+                    <div>
+                        <strong>Medium:</strong> 4px<br>
+                        <small style="color: #6c757d;">Used for buttons, inputs, cards</small>
+                    </div>
+                    <div>
+                        <strong>Large:</strong> 6px<br>
+                        <small style="color: #6c757d;">Used for large containers, modals</small>
+                    </div>
+                </div>
+                
+                <h3 style="margin: 24px 0 16px 0;">Key Changes</h3>
+                <ul style="color: #6c757d; line-height: 1.6;">
+                    <li><strong>Reduced corner radius</strong> from 4px/8px/12px to 2px/4px/6px</li>
+                    <li><strong>More rectangular appearance</strong> matching your design reference</li>
+                    <li><strong>Consistent styling</strong> across all components (buttons, inputs, cards)</li>
+                    <li><strong>Maintains accessibility</strong> and usability standards</li>
+                    <li><strong>Modern, clean aesthetic</strong> suitable for a church website</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid #e9ecef;">
+            <p style="color: #6c757d; margin: 0;">
+                First Baptist Church Fenton Design System • Square Corner UI Components v2.0
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Add some basic interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make cards interactive
+            const cards = document.querySelectorAll('.card:not(.card-elevated)');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.boxShadow = 'var(--shadow-md)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                });
+            });
+            
+            // Log form interactions
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    console.log('Form submitted (demo only)');
+                    alert('Form submitted successfully! (This is a demo)');
+                });
+            }
+        });
+    </script>
+</body>
+</html> 

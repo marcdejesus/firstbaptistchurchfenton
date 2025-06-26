@@ -245,9 +245,9 @@
     "xxxl": { "value": "64px" }
   },
   "borderRadius": {
-    "small": { "value": "4px", "description": "Small radius for smaller elements" },
-    "medium": { "value": "8px", "description": "Medium radius for cards and buttons" },
-    "large": { "value": "12px", "description": "Large radius for containers" }
+    "small": { "value": "2px", "description": "Small radius for smaller elements" },
+    "medium": { "value": "4px", "description": "Medium radius for cards and buttons" },
+    "large": { "value": "6px", "description": "Large radius for containers" }
   },
   "shadows": {
     "xs": {
