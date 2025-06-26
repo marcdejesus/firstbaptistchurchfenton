@@ -103,20 +103,22 @@ body, p, .text-regular {
   align-items: center;
   justify-content: center;
   gap: var(--spacing-sm);
-  border: none;
+  border: 2px solid transparent;
   border-radius: var(--border-radius-medium);
   cursor: pointer;
   font-family: var(--font-family-body);
   font-size: var(--font-size-text-medium);
   font-weight: var(--font-weight-medium);
   text-decoration: none;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 12px 24px;
   min-height: 44px;
   position: relative;
   outline: none;
   user-select: none;
   white-space: nowrap;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
 }
 
 .btn:focus-visible {
@@ -128,73 +130,76 @@ body, p, .text-regular {
   opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1) !important;
 }
 
 .btn:disabled:hover {
-  transform: none;
-  box-shadow: none;
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Primary Button - Orange Peel */
 .btn-primary {
   background-color: var(--color-primary);
   color: var(--color-neutral-white);
-  border: 2px solid var(--color-primary);
+  border: 2px solid var(--color-orange-peel-dark);
+  box-shadow: 0 4px 0 var(--color-orange-peel-dark);
 }
 
 .btn-primary:hover:not(:disabled) {
   background-color: var(--color-orange-peel-dark);
-  border-color: var(--color-orange-peel-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--color-orange-peel-darker);
 }
 
 .btn-primary:active:not(:disabled) {
   background-color: var(--color-orange-peel-darker);
-  border-color: var(--color-orange-peel-darker);
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--color-orange-peel-darker);
 }
 
 /* Secondary Button - Copper Rust */
 .btn-secondary {
   background-color: var(--color-secondary);
   color: var(--color-neutral-white);
-  border: 2px solid var(--color-secondary);
+  border: 2px solid var(--color-copper-rust-dark);
+  box-shadow: 0 4px 0 var(--color-copper-rust-dark);
 }
 
 .btn-secondary:hover:not(:disabled) {
   background-color: var(--color-copper-rust-dark);
-  border-color: var(--color-copper-rust-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--color-copper-rust-darker);
 }
 
 .btn-secondary:active:not(:disabled) {
   background-color: var(--color-copper-rust-darker);
-  border-color: var(--color-copper-rust-darker);
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm);
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--color-copper-rust-darker);
 }
 
 /* Outline Button */
 .btn-outline {
   background-color: transparent;
   color: var(--color-text-primary);
-  border: 2px solid var(--color-border-medium);
+  border: 2px solid var(--color-text-primary);
   padding: 10px 22px;
+  box-shadow: 0 4px 0 var(--color-border-medium);
 }
 
 .btn-outline:hover:not(:disabled) {
-  background-color: var(--color-neutral-lightest);
-  border-color: var(--color-text-primary);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  background-color: var(--color-text-primary);
+  color: var(--color-neutral-white);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--color-neutral-dark);
 }
 
 .btn-outline:active:not(:disabled) {
-  background-color: var(--color-neutral-lighter);
-  transform: translateY(0);
+  background-color: var(--color-neutral-dark);
+  color: var(--color-neutral-white);
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--color-neutral-dark);
 }
 
 /* Ghost Button */
@@ -202,17 +207,20 @@ body, p, .text-regular {
   background-color: transparent;
   color: var(--color-text-primary);
   border: 2px solid transparent;
+  box-shadow: 0 4px 0 transparent;
 }
 
 .btn-ghost:hover:not(:disabled) {
   background-color: var(--color-neutral-lightest);
   border-color: var(--color-border-light);
-  transform: translateY(-1px);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 var(--color-border-light);
 }
 
 .btn-ghost:active:not(:disabled) {
   background-color: var(--color-neutral-lighter);
-  transform: translateY(0);
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--color-border-light);
 }
 
 /* Link Button */
@@ -237,20 +245,20 @@ body, p, .text-regular {
 .btn-destructive {
   background-color: #DC2626;
   color: var(--color-neutral-white);
-  border: 2px solid #DC2626;
+  border: 2px solid #B91C1C;
+  box-shadow: 0 4px 0 #B91C1C;
 }
 
 .btn-destructive:hover:not(:disabled) {
   background-color: #B91C1C;
-  border-color: #B91C1C;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #991B1B;
 }
 
 .btn-destructive:active:not(:disabled) {
   background-color: #991B1B;
-  border-color: #991B1B;
-  transform: translateY(0);
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #991B1B;
 }
 
 /* Button Sizes */

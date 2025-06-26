@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Showcase - First Baptist Church Fenton Design System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Proza+Libre:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../design-system/css/variables.css">
+    <link rel="stylesheet" href="../design-system/css/reset.css">
+    <link rel="stylesheet" href="../design-system/css/typography.css">
+    <link rel="stylesheet" href="../design-system/css/components.css">
+    <link rel="stylesheet" href="../design-system/css/utilities.css">
+    <style>
+        body {
+            font-family: var(--font-family-body);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .showcase {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+        
+        .button-demo {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .button-demo h4 {
+            margin: 0 0 16px 0;
+            font-size: 14px;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .size-demo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .icon-demo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+        
+        .code-example {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 16px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            color: #495057;
+            margin-top: 16px;
+            overflow-x: auto;
+        }
+        
+        .interaction-guide {
+            background: #e3f2fd;
+            border: 1px solid #2196f3;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+        
+        .interaction-guide h3 {
+            margin: 0 0 12px 0;
+            color: #1976d2;
+        }
+        
+        .interaction-guide p {
+            margin: 0;
+            color: #1565c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase">
+        <header style="text-align: center; margin-bottom: 60px;">
+            <h1 style="font-family: var(--font-family-heading); font-size: 48px; margin: 0 0 16px 0; color: var(--color-primary);">
+                Button Showcase
+            </h1>
+            <p style="font-size: 20px; color: #6c757d; margin: 0;">
+                Updated button styles with pressed-down hover animation
+            </p>
+        </header>
+
+        <div class="interaction-guide">
+            <h3>🎯 New Button Interaction</h3>
+            <p>Hover over any button to see the new "pressed down" animation effect. The buttons now have a 3D appearance and respond to user interaction by moving down when hovered or clicked.</p>
+        </div>
+
+        <!-- Primary Buttons -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Primary Buttons (Orange Peel)
+            </h2>
+            <div class="button-grid">
+                <div class="button-demo">
+                    <h4>Default</h4>
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+                <div class="button-demo">
+                    <h4>With Icon</h4>
+                    <button class="btn btn-primary">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        Join Us
+                    </button>
+                </div>
+                <div class="button-demo">
+                    <h4>Disabled</h4>
+                    <button class="btn btn-primary" disabled>Disabled</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Secondary Buttons -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Secondary Buttons (Copper Rust)
+            </h2>
+            <div class="button-grid">
+                <div class="button-demo">
+                    <h4>Default</h4>
+                    <button class="btn btn-secondary">Learn More</button>
+                </div>
+                <div class="button-demo">
+                    <h4>With Icon</h4>
+                    <button class="btn btn-secondary">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        Confirm
+                    </button>
+                </div>
+                <div class="button-demo">
+                    <h4>Disabled</h4>
+                    <button class="btn btn-secondary" disabled>Disabled</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Outline Buttons -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Outline Buttons
+            </h2>
+            <div class="button-grid">
+                <div class="button-demo">
+                    <h4>Default</h4>
+                    <button class="btn btn-outline">Contact Us</button>
+                </div>
+                <div class="button-demo">
+                    <h4>With Icon</h4>
+                    <button class="btn btn-outline">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                        </svg>
+                        Email
+                    </button>
+                </div>
+                <div class="button-demo">
+                    <h4>Disabled</h4>
+                    <button class="btn btn-outline" disabled>Disabled</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ghost Buttons -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Ghost Buttons
+            </h2>
+            <div class="button-grid">
+                <div class="button-demo">
+                    <h4>Default</h4>
+                    <button class="btn btn-ghost">Cancel</button>
+                </div>
+                <div class="button-demo">
+                    <h4>With Icon</h4>
+                    <button class="btn btn-ghost">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                        </svg>
+                        Add Item
+                    </button>
+                </div>
+                <div class="button-demo">
+                    <h4>Disabled</h4>
+                    <button class="btn btn-ghost" disabled>Disabled</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Button Sizes -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Button Sizes
+            </h2>
+            <div class="size-demo">
+                <button class="btn btn-primary btn-small">Small</button>
+                <button class="btn btn-primary btn-medium">Medium (Default)</button>
+                <button class="btn btn-primary btn-large">Large</button>
+            </div>
+        </section>
+
+        <!-- Icon Buttons -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Icon Buttons
+            </h2>
+            <div class="icon-demo">
+                <button class="btn btn-primary btn-icon btn-small">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </button>
+                <button class="btn btn-primary btn-icon">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                </button>
+                <button class="btn btn-primary btn-icon btn-large">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- Destructive Button -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                Destructive Actions
+            </h2>
+            <div class="button-grid">
+                <div class="button-demo">
+                    <h4>Delete/Remove</h4>
+                    <button class="btn btn-destructive">Delete Item</button>
+                </div>
+                <div class="button-demo">
+                    <h4>With Icon</h4>
+                    <button class="btn btn-destructive">
+                        <svg class="icon" viewBox="0 0 24 24">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                        </svg>
+                        Remove
+                    </button>
+                </div>
+                <div class="button-demo">
+                    <h4>Disabled</h4>
+                    <button class="btn btn-destructive" disabled>Disabled</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Examples -->
+        <section class="section">
+            <h2 style="font-family: var(--font-family-heading); color: var(--color-text-primary); margin-bottom: 24px;">
+                HTML Usage Examples
+            </h2>
+            
+            <div class="code-example">
+                <strong>Primary Button:</strong><br>
+                &lt;button class="btn btn-primary"&gt;Get Started&lt;/button&gt;
+            </div>
+            
+            <div class="code-example">
+                <strong>Button with Icon:</strong><br>
+                &lt;button class="btn btn-primary"&gt;<br>
+                &nbsp;&nbsp;&lt;svg class="icon"&gt;...&lt;/svg&gt;<br>
+                &nbsp;&nbsp;Button Text<br>
+                &lt;/button&gt;
+            </div>
+            
+            <div class="code-example">
+                <strong>Large Outline Button:</strong><br>
+                &lt;button class="btn btn-outline btn-large"&gt;Contact Us&lt;/button&gt;
+            </div>
+            
+            <div class="code-example">
+                <strong>Small Icon Button:</strong><br>
+                &lt;button class="btn btn-primary btn-icon btn-small"&gt;<br>
+                &nbsp;&nbsp;&lt;svg class="icon"&gt;...&lt;/svg&gt;<br>
+                &lt;/button&gt;
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid #e9ecef;">
+            <p style="color: #6c757d; margin: 0;">
+                First Baptist Church Fenton Design System • Button Components v2.0
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Add some interactivity to demonstrate the button effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn:not(:disabled)');
+            
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', function() {
+                    console.log('Button hovered:', this.textContent.trim());
+                });
+                
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Button clicked:', this.textContent.trim());
+                    
+                    // Add a temporary click effect
+                    this.style.transform = 'translateY(4px)';
+                    this.style.boxShadow = '0 0 0 ' + getComputedStyle(this).boxShadow.split(' ').slice(-1)[0];
+                    
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }, 150);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

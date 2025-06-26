@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail, Clock, CheckCircle, Send } from "lucide-react";
-import Image from "next/image";
 
 interface ContactFormData {
   firstName: string;
@@ -208,23 +207,20 @@ export default function ContactPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <a
-                href={mapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block"
-              >
-                <div className="h-48 w-full rounded-md overflow-hidden group-hover:opacity-80 transition-opacity">
-                  <Image 
-                    src="/mappin.png"
-                    alt="Map showing location of First Baptist Church Fenton"
-                    width={600}
-                    height={300}
-                    className="object-cover w-full h-full"
-                  />
-                </div>
-              </a>
+              <div className="w-full overflow-hidden rounded-lg">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2927.2205508499014!2d-83.70634412386768!3d42.80482517115491!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8823645ed2255039%3A0xe107428aa8c41294!2sFirst%20Baptist%20Church%20of%20Fenton!5e0!3m2!1sen!2sus!4v1750685540049!5m2!1sen!2sus" 
+                  width="100%" 
+                  height="300" 
+                  style={{ border: 0 }} 
+                  allowFullScreen
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
               <div className="text-center mt-4">
+                <p className="font-semibold text-lg">First Baptist Church of Fenton</p>
+                <p className="text-muted-foreground">860 N Leroy St, Fenton, MI 48430</p>
                 <Button 
                   variant="outline" 
                   size="sm" 
