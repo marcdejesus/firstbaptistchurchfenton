@@ -4,68 +4,68 @@ import { Facebook, Youtube, Mail, Phone, MapPin, Clock } from 'lucide-react';
 
 export function Footer() {
   return (
-    <footer className="bg-accent text-accent-foreground py-8">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-grid">
           
           {/* Church Logo and Name */}
-          <div className="space-y-4 text-center">
-            <Link href="/" className="flex items-center justify-center space-x-3 text-primary-foreground hover:text-accent transition-colors">
+          <div className="footer-section">
+            <Link href="/" className="footer-logo">
               <Image
                 src="/logo.svg"
                 alt="First Baptist Church of Fenton Logo"
                 width={56}
                 height={56}
-                className="h-14 w-14 text-accent"
+                className="h-14 w-14"
               />
-              <div className="flex flex-col font-lora leading-none">
-                <span className="text-xl font-semibold">First Baptist</span>
-                <span className="text-sm font-normal">Church of Fenton</span>
+              <div className="footer-logo-text">
+                <span className="footer-logo-primary">First Baptist</span>
+                <span className="footer-logo-secondary">Church of Fenton</span>
               </div>
             </Link>
-            <p className="text-sm text-primary-foreground/80">
+            <p className="footer-description">
               A community of faith, hope, and love in the heart of Fenton.
             </p>
             
             {/* Social Media Links */}
-            <div className="flex justify-center space-x-4">
+            <div className="footer-social">
               <Link 
                 href="https://www.facebook.com/pg/FBCfenton" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-primary-foreground/80 hover:text-accent transition-colors"
+                className="footer-social-link"
                 aria-label="Visit our Facebook page (opens in new tab)"
               >
-                <Facebook className="h-5 w-5" />
+                <Facebook className="footer-social-icon" />
               </Link>
               <Link 
                 href="https://www.youtube.com/channel/UCo8E0MoXuz_E5BvaROleSDQ" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-primary-foreground/80 hover:text-accent transition-colors"
+                className="footer-social-link"
                 aria-label="Visit our YouTube channel (opens in new tab)"
               >
-                <Youtube className="h-5 w-5" />
+                <Youtube className="footer-social-icon" />
               </Link>
             </div>
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-3 text-center">
-            <h3 className="text-md font-semibold mb-3">Contact Information</h3>
+          <div className="footer-section">
+            <h3 className="footer-title">Contact Information</h3>
             <div className="space-y-2">
-              <p className="text-sm flex items-center justify-center">
-                <MapPin className="mr-2 h-4 w-4 text-accent/80" />
-                860 N. Leroy St., Fenton, MI 48430
-              </p>
-              <p className="text-sm flex items-center justify-center">
-                <Phone className="mr-2 h-4 w-4 text-accent/80" />
-                810.629.9427
-              </p>
-              <p className="text-sm flex items-center justify-center">
-                <Mail className="mr-2 h-4 w-4 text-accent/80" />
-                hello@firstbaptistchurch.org
-              </p>
+              <div className="footer-contact-item">
+                <MapPin className="footer-contact-icon" />
+                <span>860 N. Leroy St., Fenton, MI 48430</span>
+              </div>
+              <div className="footer-contact-item">
+                <Phone className="footer-contact-icon" />
+                <span>810.629.9427</span>
+              </div>
+              <div className="footer-contact-item">
+                <Mail className="footer-contact-icon" />
+                <span>hello@firstbaptistchurch.org</span>
+              </div>
             </div>
           </div>
 

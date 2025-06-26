@@ -82,21 +82,21 @@ export function Header() {
 
   return (
     <header className={cn(
-      "sticky top-0 z-50 transition-all duration-300 ease-in-out",
-      isScrolled ? "bg-white/95 backdrop-blur-md shadow-md" : "bg-white"
+      "header",
+      isScrolled && "scrolled"
     )}>
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center space-x-3 text-primary-foreground hover:text-accent transition-colors">
+      <div className="header-container">
+        <Link href="/" className="header-logo">
           <Image
             src="/logo.svg"
             alt="First Baptist Church of Fenton Logo"
             width={56}
             height={56}
-            className="h-14 w-14 text-accent"
+            className="h-14 w-14"
           />
-          <div className="flex flex-col font-lora leading-none">
-            <span className="text-xl font-semibold">First Baptist</span>
-            <span className="text-sm font-normal">Church of Fenton</span>
+          <div className="header-logo-text">
+            <span className="header-logo-primary">First Baptist</span>
+            <span className="header-logo-secondary">Church of Fenton</span>
           </div>
         </Link>
 
