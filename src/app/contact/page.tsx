@@ -78,18 +78,18 @@ export default function ContactPage() {
   if (submitted) {
     return (
       <div className="max-w-2xl mx-auto space-y-8">
-        <Card className="shadow-lg border-0 bg-gradient-to-br from-green-50 to-green-100">
+        <Card className="shadow-lg border-0 bg-scheme-2-background">
           <CardContent className="p-12 text-center">
             <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-6" />
-            <h1 className="text-3xl font-lora font-bold text-primary-foreground mb-4">
+            <h1 className="text-desktop-heading2 font-heading font-bold text-scheme-2-text mb-4">
               Message Sent Successfully!
             </h1>
-            <p className="text-lg text-primary-foreground/80 mb-6">
+            <p className="text-desktop-textLarge text-scheme-2-text opacity-80 mb-6 font-body">
               Thank you for reaching out. We'll get back to you as soon as possible.
             </p>
             <Button 
               onClick={() => setSubmitted(false)}
-              className="bg-accent text-accent-foreground hover:bg-accent/90"
+              className="bg-primary-orange text-white hover:bg-primary-orange-dark"
             >
               Send Another Message
             </Button>
@@ -101,12 +101,12 @@ export default function ContactPage() {
 
   return (
     <div className="space-y-12">
-      {/* Header */}
-      <section className="text-center space-y-6 max-w-4xl mx-auto">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-lora font-bold text-primary-foreground leading-tight">
+      {/* Header - Design System Enhanced */}
+      <section className="text-center space-y-6 max-w-4xl mx-auto bg-scheme-1-background p-8 rounded-lg">
+        <h1 className="text-desktop-heading1 font-heading font-bold text-scheme-1-text leading-tight">
           Let's Chat
         </h1>
-        <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-desktop-textLarge text-scheme-1-text opacity-90 max-w-3xl mx-auto leading-relaxed font-body">
           We'd love to hear from you. Whether you have questions, prayer requests, or just want to connect, 
           don't hesitate to reach out to our church family.
         </p>

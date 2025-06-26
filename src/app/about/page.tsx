@@ -29,11 +29,11 @@ const aboutSections = [
 
 export default function AboutUsPage() {
   return (
-    <div className="bg-gray-50/50">
+    <div className="bg-scheme-3-background">
       <div className="container mx-auto px-4 py-8 md:py-16">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">About First Baptist Church</h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+          <h1 className="text-desktop-heading1 font-heading font-bold tracking-tight text-scheme-3-text">About First Baptist Church</h1>
+          <p className="mt-4 text-desktop-textLarge text-scheme-3-text opacity-80 max-w-3xl mx-auto font-body">
             We are a community of believers dedicated to knowing God and making Him known. Our mission is to lead people into a growing relationship with Jesus Christ.
           </p>
         </div>
@@ -59,13 +59,13 @@ export default function AboutUsPage() {
           ))}
         </div>
 
-        <div className="mt-16 text-center bg-white p-8 rounded-lg shadow-inner border">
-          <h3 className="text-2xl font-bold">Have Questions?</h3>
-          <p className="mt-3 max-w-2xl mx-auto text-muted-foreground">
+        <div className="mt-16 text-center bg-scheme-1-background p-8 rounded-lg shadow-inner border border-scheme-1-border">
+          <h3 className="text-desktop-heading3 font-heading font-bold text-scheme-1-text">Have Questions?</h3>
+          <p className="mt-3 max-w-2xl mx-auto text-desktop-textMedium text-scheme-1-text opacity-80 font-body">
             We would love to answer any questions you have about our church, our faith, or how you can get connected.
           </p>
           <div className="mt-6">
-            <Button size="lg" asChild>
+            <Button size="lg" asChild className="bg-primary-orange text-white hover:bg-primary-orange-dark">
                 <Link href="/contact">Contact Us</Link>
             </Button>
           </div>

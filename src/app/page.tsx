@@ -72,11 +72,11 @@ export default function Home() {
       {/* 1. Hero Welcome Card - Enhanced */}
       <WelcomeCard todaysHours={todaysHours} nextEvent={nextEvent} />
 
-      {/* 2. Mission Statement */}
-      <section className="container mx-auto px-4 text-center py-16">
+      {/* 2. Mission Statement - Design System Enhanced */}
+      <section className="container mx-auto px-4 text-center py-16 bg-scheme-1-background">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-6">Our Mission</h2>
-          <p className="text-xl text-primary-foreground/80 leading-relaxed">
+          <h2 className="text-desktop-heading2 md:text-desktop-heading1 font-heading font-bold text-scheme-1-text mb-6">Our Mission</h2>
+          <p className="text-desktop-textLarge text-scheme-1-text opacity-80 leading-relaxed font-body">
             To lead people into a growing relationship with Jesus Christ by creating environments where people are encouraged and equipped to pursue intimacy with God, community with insiders, and influence with outsiders.
           </p>
         </div>
@@ -85,14 +85,14 @@ export default function Home() {
       {/* 3. This Week at FBC - NEW */}
       <ThisWeekAtFBC />
 
-      {/* 4. Upcoming Events - Enhanced with Design System */}
-      <section className="py-16 bg-gradient-to-b from-transparent to-primary-50/30">
+      {/* 4. Upcoming Events - Design System Enhanced */}
+      <section className="py-16 bg-scheme-2-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-3">
+            <h2 className="text-desktop-heading2 md:text-desktop-heading1 font-heading font-bold text-scheme-2-text mb-3">
               Upcoming Events
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-desktop-textLarge text-scheme-2-text opacity-80 max-w-2xl mx-auto font-body">
               Join us for upcoming activities and connect with our vibrant church community
             </p>
           </div>
@@ -153,13 +153,13 @@ export default function Home() {
       {/* 5. Community Testimonials */}
       <TestimoniesCarousel />
 
-      {/* 6. Service Information - Enhanced Core Information Grid */}
-      <section className="container mx-auto px-4 py-16">
+      {/* 6. Service Information - Design System Enhanced */}
+      <section className="container mx-auto px-4 py-16 bg-scheme-3-background">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-6">
+          <h2 className="text-desktop-heading2 md:text-desktop-heading1 font-heading font-bold text-scheme-3-text mb-6">
             Visit Us
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-desktop-textLarge text-scheme-3-text opacity-80 max-w-2xl mx-auto font-body">
             Everything you need to know for your visit to FBC Fenton
           </p>
         </div>
