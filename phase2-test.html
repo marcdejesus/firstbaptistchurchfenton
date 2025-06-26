@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 2 Test - Component Library | First Baptist Church Fenton</title>
+    
+    <!-- Font loading strategy -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Proza+Libre:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    
+    <!-- Design System CSS -->
+    <link rel="stylesheet" href="design-system/css/main.css">
+    
+    <style>
+        .component-demo {
+            background: var(--color-background-secondary);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-medium);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+        }
+        
+        .demo-section {
+            background: var(--color-background-primary);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-medium);
+            border: 1px solid var(--color-border-light);
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        
+        .component-title {
+            font-family: var(--font-family-heading);
+            font-size: var(--font-size-h3);
+            margin-bottom: var(--spacing-md);
+            color: var(--color-primary);
+        }
+        
+        .demo-label {
+            font-size: var(--font-size-text-small);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-muted);
+            margin-bottom: var(--spacing-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background: #d4edda;
+            color: #155724;
+            border-radius: var(--border-radius-small);
+            font-size: var(--font-size-text-small);
+            font-weight: var(--font-weight-medium);
+            margin-left: var(--spacing-sm);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="py-lg border-b">
+            <h1 class="mb-sm">Phase 2: Component Library Test</h1>
+            <p class="text-muted">Comprehensive testing of enhanced UI components using First Baptist Church Fenton Design System</p>
+            <div class="status-badge">
+                <span class="material-symbols-outlined">check_circle</span>
+                All Components Active
+            </div>
+        </header>
+
+        <main class="py-lg">
+            <!-- Button Components -->
+            <section class="component-demo">
+                <h2 class="component-title">Enhanced Button Components</h2>
+                
+                <div class="demo-grid">
+                    <!-- Button Variants -->
+                    <div class="demo-section">
+                        <h3>Button Variants</h3>
+                        <div class="flex flex-col gap-sm">
+                            <div class="demo-label">Primary (Orange Peel)</div>
+                            <button class="btn btn-primary">Join Our Church</button>
+                            
+                            <div class="demo-label">Secondary (Copper Rust)</div>
+                            <button class="btn btn-secondary">Learn More</button>
+                            
+                            <div class="demo-label">Outline</div>
+                            <button class="btn btn-outline">Contact Us</button>
+                            
+                            <div class="demo-label">Ghost</div>
+                            <button class="btn btn-ghost">Watch Online</button>
+                            
+                            <div class="demo-label">Link</div>
+                            <button class="btn btn-link">Read More</button>
+                            
+                            <div class="demo-label">Destructive</div>
+                            <button class="btn btn-destructive">Cancel</button>
+                        </div>
+                    </div>
+
+                    <!-- Button Sizes -->
+                    <div class="demo-section">
+                        <h3>Button Sizes</h3>
+                        <div class="flex flex-col gap-sm items-start">
+                            <div class="demo-label">Large</div>
+                            <button class="btn btn-primary btn-large">Large Button</button>
+                            
+                            <div class="demo-label">Medium (Default)</div>
+                            <button class="btn btn-primary btn-medium">Medium Button</button>
+                            
+                            <div class="demo-label">Small</div>
+                            <button class="btn btn-primary btn-small">Small Button</button>
+                        </div>
+                    </div>
+
+                    <!-- Icon Buttons -->
+                    <div class="demo-section">
+                        <h3>Icon Buttons</h3>
+                        <div class="flex flex-col gap-sm">
+                            <div class="demo-label">With Icons</div>
+                            <div class="flex gap-sm flex-wrap">
+                                <button class="btn btn-primary">
+                                    <span class="material-symbols-outlined icon">favorite</span>
+                                    Favorite
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <span class="material-symbols-outlined icon">share</span>
+                                    Share
+                                </button>
+                                <button class="btn btn-outline">
+                                    <span class="material-symbols-outlined icon">download</span>
+                                    Download
+                                </button>
+                            </div>
+                            
+                            <div class="demo-label">Icon Only</div>
+                            <div class="flex gap-sm">
+                                <button class="btn btn-primary btn-icon">
+                                    <span class="material-symbols-outlined icon">search</span>
+                                </button>
+                                <button class="btn btn-secondary btn-icon">
+                                    <span class="material-symbols-outlined icon">menu</span>
+                                </button>
+                                <button class="btn btn-outline btn-icon">
+                                    <span class="material-symbols-outlined icon">close</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Button States -->
+                    <div class="demo-section">
+                        <h3>Button States</h3>
+                        <div class="flex flex-col gap-sm">
+                            <div class="demo-label">Normal</div>
+                            <button class="btn btn-primary">Normal State</button>
+                            
+                            <div class="demo-label">Disabled</div>
+                            <button class="btn btn-primary" disabled>Disabled State</button>
+                            
+                            <div class="demo-label">Loading</div>
+                            <button class="btn btn-primary btn-loading">Loading State</button>
+                        </div>
+                    </div>
+
+                    <!-- Button Group -->
+                    <div class="demo-section">
+                        <h3>Button Group</h3>
+                        <div class="demo-label">Grouped Actions</div>
+                        <div class="btn-group">
+                            <button class="btn btn-outline">Previous</button>
+                            <button class="btn btn-outline">Current</button>
+                            <button class="btn btn-outline">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Form Components -->
+            <section class="component-demo">
+                <h2 class="component-title">Enhanced Form Components</h2>
+                
+                <div class="demo-grid">
+                    <!-- Input Variations -->
+                    <div class="demo-section">
+                        <h3>Input Variations</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Default Input</label>
+                            <input type="text" class="input" placeholder="Enter your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Search Input</label>
+                            <input type="search" class="input input-search" placeholder="Search sermons...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Large Input</label>
+                            <input type="text" class="input input-large" placeholder="Large input field">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Small Input</label>
+                            <input type="text" class="input input-small" placeholder="Small input">
+                        </div>
+                    </div>
+
+                    <!-- Input with Icons -->
+                    <div class="demo-section">
+                        <h3>Input with Icons</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Email with Icon</label>
+                            <div class="input-group">
+                                <span class="material-symbols-outlined icon-left">email</span>
+                                <input type="email" class="input input-icon-left" placeholder="your.email@example.com">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Password with Toggle</label>
+                            <div class="input-group">
+                                <input type="password" class="input input-icon-right" placeholder="Enter password">
+                                <span class="material-symbols-outlined icon-right">visibility</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Field States -->
+                    <div class="demo-section">
+                        <h3>Form Field States</h3>
+                        
+                        <div class="form-group has-error">
+                            <label class="form-label required">Required Field</label>
+                            <input type="text" class="input" placeholder="This field is required">
+                            <span class="form-error">This field is required</span>
+                        </div>
+                        
+                        <div class="form-group has-success">
+                            <label class="form-label">Valid Field</label>
+                            <input type="text" class="input" value="Valid input" readonly>
+                            <span class="form-success">Input is valid</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Disabled Field</label>
+                            <input type="text" class="input" value="Cannot edit" disabled>
+                            <span class="form-help">This field is disabled</span>
+                        </div>
+                    </div>
+
+                    <!-- Select & Textarea -->
+                    <div class="demo-section">
+                        <h3>Select & Textarea</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Select Dropdown</label>
+                            <select class="select input">
+                                <option>Choose a service time</option>
+                                <option>9:00 AM Sunday</option>
+                                <option>11:00 AM Sunday</option>
+                                <option>6:00 PM Wednesday</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Textarea</label>
+                            <textarea class="textarea input" placeholder="Share your prayer request..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Small Textarea</label>
+                            <textarea class="textarea textarea-small input" placeholder="Brief message..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Checkboxes & Radio -->
+                    <div class="demo-section">
+                        <h3>Checkboxes & Radio Buttons</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Newsletter Preferences</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox">
+                                    <input type="checkbox" checked>
+                                    Weekly Newsletter
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox">
+                                    Event Notifications
+                                </label>
+                                <label class="checkbox">
+                                    <input type="checkbox">
+                                    Prayer Requests
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Service Preference</label>
+                            <div class="radio-group">
+                                <label class="radio">
+                                    <input type="radio" name="service" value="in-person" checked>
+                                    In-Person Service
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="service" value="online">
+                                    Online Service
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="service" value="both">
+                                    Both Options
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Toggle Switch</label>
+                            <label class="checkbox">
+                                <div class="toggle">
+                                    <input type="checkbox">
+                                    <span class="toggle-slider"></span>
+                                </div>
+                                Enable notifications
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Form Layout -->
+                    <div class="demo-section">
+                        <h3>Form Layout</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">First Name</label>
+                                <input type="text" class="input" placeholder="John">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Last Name</label>
+                                <input type="text" class="input" placeholder="Doe">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Full Address</label>
+                            <input type="text" class="input" placeholder="123 Main Street, City, State 12345">
+                            <span class="form-help">We'll never share your address with anyone else.</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Card Components -->
+            <section class="component-demo">
+                <h2 class="component-title">Enhanced Card Components</h2>
+                
+                <div class="demo-grid">
+                    <!-- Default Cards -->
+                    <div class="demo-section">
+                        <h3>Card Variants</h3>
+                        
+                        <div class="card mb-md">
+                            <div class="card-header">
+                                <h4 class="card-title">Default Card</h4>
+                                <p class="card-subtitle">Standard card with border and shadow</p>
+                            </div>
+                            <div class="card-content">
+                                <p>This is the default card style with standard padding and styling.</p>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn btn-primary btn-small">Learn More</button>
+                                <button class="btn btn-ghost btn-small">Share</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card card-elevated mb-md">
+                            <div class="card-header">
+                                <h4 class="card-title">Elevated Card</h4>
+                                <p class="card-subtitle">Enhanced shadow for prominence</p>
+                            </div>
+                            <div class="card-content">
+                                <p>This card has an elevated appearance with increased shadow depth.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Themed Cards -->
+                    <div class="demo-section">
+                        <h3>Themed Cards</h3>
+                        
+                        <div class="card card-primary mb-md">
+                            <div class="card-header">
+                                <h4 class="card-title">Primary Theme</h4>
+                                <p class="card-subtitle">Orange peel themed card</p>
+                            </div>
+                            <div class="card-content">
+                                <p>Perfect for highlighting important church announcements and events.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card card-secondary mb-md">
+                            <div class="card-header">
+                                <h4 class="card-title">Secondary Theme</h4>
+                                <p class="card-subtitle">Copper rust themed card</p>
+                            </div>
+                            <div class="card-content">
+                                <p>Great for supporting content and ministry information.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Cards -->
+                    <div class="demo-section">
+                        <h3>Interactive Cards</h3>
+                        
+                        <div class="card card-interactive mb-md">
+                            <div class="card-header">
+                                <h4 class="card-title">Sunday Service</h4>
+                                <p class="card-subtitle">Click to view details</p>
+                            </div>
+                            <div class="card-content">
+                                <p>Join us for worship every Sunday at 9:00 AM and 11:00 AM.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card card-compact card-interactive">
+                            <div class="card-header">
+                                <h4 class="card-title">Bible Study</h4>
+                                <p class="card-subtitle">Compact interactive card</p>
+                            </div>
+                            <div class="card-content">
+                                <p>Wednesday evenings at 6:00 PM.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card with Actions -->
+                    <div class="demo-section">
+                        <h3>Card Actions</h3>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Youth Ministry</h4>
+                                <p class="card-subtitle">Ages 13-18</p>
+                            </div>
+                            <div class="card-content">
+                                <p>Exciting youth programs every Friday evening with games, worship, and biblical teaching.</p>
+                            </div>
+                            <div class="card-actions">
+                                <button class="btn btn-primary btn-small">Join Now</button>
+                                <button class="btn btn-outline btn-small">Learn More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tags & Components -->
+            <section class="component-demo">
+                <h2 class="component-title">Additional Components</h2>
+                
+                <div class="demo-grid">
+                    <!-- Tags -->
+                    <div class="demo-section">
+                        <h3>Tags & Labels</h3>
+                        
+                        <div class="mb-md">
+                            <div class="demo-label">Default Tags</div>
+                            <div class="flex gap-xs flex-wrap">
+                                <span class="tag">Worship</span>
+                                <span class="tag">Prayer</span>
+                                <span class="tag">Community</span>
+                                <span class="tag">Bible Study</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-md">
+                            <div class="demo-label">Primary Tags</div>
+                            <div class="flex gap-xs flex-wrap">
+                                <span class="tag tag-primary">Featured</span>
+                                <span class="tag tag-primary">Important</span>
+                                <span class="tag tag-primary">New</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="demo-label">Removable Tags</div>
+                            <div class="flex gap-xs flex-wrap">
+                                <span class="tag tag-removable">
+                                    Ministries
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+                                </span>
+                                <span class="tag tag-removable">
+                                    Events
+                                    <span class="material-symbols-outlined" style="font-size: 16px;">close</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Elements -->
+                    <div class="demo-section">
+                        <h3>Interactive Elements</h3>
+                        
+                        <div class="mb-md">
+                            <div class="demo-label">Tooltip Example</div>
+                            <div class="tooltip">
+                                <button class="btn btn-outline btn-small">Hover for info</button>
+                                <div class="tooltip-content">
+                                    This tooltip provides additional context and information about the element.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-md">
+                            <div class="demo-label">Filter Buttons</div>
+                            <div class="filters">
+                                <button class="filter-btn active">All Events</button>
+                                <button class="filter-btn">Worship</button>
+                                <button class="filter-btn">Community</button>
+                                <button class="filter-btn">Education</button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="demo-label">Tab Navigation</div>
+                            <div class="tabs">
+                                <button class="tab active">About</button>
+                                <button class="tab">Ministries</button>
+                                <button class="tab">Events</button>
+                                <button class="tab">Contact</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Utility Classes -->
+                    <div class="demo-section">
+                        <h3>Utility Classes</h3>
+                        
+                        <div class="mb-md">
+                            <div class="demo-label">Shadows</div>
+                            <div class="flex gap-md flex-wrap">
+                                <div class="p-md bg-white shadow-sm rounded-md">Small</div>
+                                <div class="p-md bg-white shadow-md rounded-md">Medium</div>
+                                <div class="p-md bg-white shadow-lg rounded-md">Large</div>
+                                <div class="p-md bg-white shadow-xl rounded-md">Extra Large</div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="demo-label">Border Radius</div>
+                            <div class="flex gap-md flex-wrap">
+                                <div class="p-md bg-lightest radius-sm">Small</div>
+                                <div class="p-md bg-lightest radius-md">Medium</div>
+                                <div class="p-md bg-lightest radius-lg">Large</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="border-t py-lg mt-xl">
+            <div class="text-center">
+                <h3 class="mb-sm">Phase 2: Component Library Complete ✅</h3>
+                <p class="text-muted mb-lg">Enhanced button, form, card, and interactive components successfully implemented</p>
+                
+                <div class="flex justify-center gap-md flex-wrap">
+                    <div class="status-badge">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        Enhanced Buttons
+                    </div>
+                    <div class="status-badge">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        Form Components
+                    </div>
+                    <div class="status-badge">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        Card Components
+                    </div>
+                    <div class="status-badge">
+                        <span class="material-symbols-outlined">check_circle</span>
+                        Interactive Elements
+                    </div>
+                </div>
+                
+                <p class="text-small mt-lg">Ready to proceed to <strong>Phase 3: Layout & Navigation</strong></p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Test JavaScript functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ Phase 2 Component Library Loaded Successfully');
+            
+            // Test button interactions
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    if (!this.disabled) {
+                        console.log('Button clicked:', this.textContent.trim());
+                    }
+                });
+            });
+            
+            // Test form interactions
+            document.querySelectorAll('.input, .textarea, .select').forEach(input => {
+                input.addEventListener('focus', function() {
+                    console.log('Form field focused:', this.placeholder || this.type);
+                });
+            });
+            
+            // Test card interactions
+            document.querySelectorAll('.card-interactive').forEach(card => {
+                card.addEventListener('click', function() {
+                    console.log('Interactive card clicked:', this.querySelector('.card-title')?.textContent);
+                });
+            });
+            
+            // Test tab functionality
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active from siblings
+                    this.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    // Add active to clicked tab
+                    this.classList.add('active');
+                    console.log('Tab activated:', this.textContent);
+                });
+            });
+            
+            // Test filter functionality
+            document.querySelectorAll('.filter-btn').forEach(filter => {
+                filter.addEventListener('click', function() {
+                    // Remove active from siblings
+                    this.parentElement.querySelectorAll('.filter-btn').forEach(f => f.classList.remove('active'));
+                    // Add active to clicked filter
+                    this.classList.add('active');
+                    console.log('Filter activated:', this.textContent);
+                });
+            });
+            
+            console.log('🎨 Component Library Status:', {
+                'Button Variants': document.querySelectorAll('.btn').length,
+                'Form Fields': document.querySelectorAll('.input, .textarea, .select').length,
+                'Cards': document.querySelectorAll('.card').length,
+                'Interactive Elements': 'All functional ✅'
+            });
+        });
+    </script>
+</body>
+</html> 
