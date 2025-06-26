@@ -37,9 +37,9 @@ export default function Home() {
               <Image 
                 src="/bible.png" 
                 alt="Holy Bible"
-                width={566} 
-                height={565} 
-                className="rounded-lg object-cover"
+                width={650} 
+                height={650} 
+                className="rounded-lg object-cover animate-slide-in-rotate"
               />
             </div>
           </div>

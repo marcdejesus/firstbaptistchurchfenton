@@ -101,6 +101,10 @@ export default {
         "fade-up": {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        'slide-in-rotate': {
+          '0%': { transform: 'translateX(-100%) rotate(0deg)', opacity: '0' },
+          '100%': { transform: 'translateX(0) rotate(-20deg)', opacity: '1' },
         }
   		},
   		animation: {
@@ -108,6 +112,7 @@ export default {
   			'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in': 'fade-in 0.5s ease-out',
         'fade-up': 'fade-up 0.5s ease-out forwards',
+        'slide-in-rotate': 'slide-in-rotate 1s ease-out forwards',
   		}
   	}
   },
