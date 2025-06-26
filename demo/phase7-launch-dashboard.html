@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phase 7: Launch Management Dashboard - First Baptist Church Fenton</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #FF9A00 0%, #924D4D 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .status-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        .status-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .status-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .status-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .status-label {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF9A00, #924D4D);
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f1f3f4;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #FF9A00;
+            border-bottom: 3px solid #FF9A00;
+        }
+        
+        .tab:hover {
+            background: #e8f0fe;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .checklist-category {
+            margin-bottom: 30px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .category-icon {
+            font-size: 2rem;
+        }
+        
+        .category-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .category-progress {
+            margin-left: auto;
+            text-align: right;
+        }
+        
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            margin-bottom: 10px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .checklist-item:hover {
+            border-color: #FF9A00;
+            box-shadow: 0 5px 15px rgba(255, 154, 0, 0.1);
+        }
+        
+        .status-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 3px solid #ccc;
+        }
+        
+        .status-indicator.completed {
+            background: #4CAF50;
+            border-color: #4CAF50;
+        }
+        
+        .status-indicator.in-progress {
+            background: #2196F3;
+            border-color: #2196F3;
+        }
+        
+        .status-indicator.failed {
+            background: #F44336;
+            border-color: #F44336;
+        }
+        
+        .item-content {
+            flex: 1;
+        }
+        
+        .item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .item-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .item-time {
+            color: #999;
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        .priority-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .priority-critical {
+            background: #ffebee;
+            color: #c62828;
+        }
+        
+        .priority-high {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        
+        .priority-medium {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .deployment-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .control-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+            text-align: center;
+        }
+        
+        .deploy-button {
+            width: 100%;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+        }
+        
+        .deploy-button.primary {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+        
+        .deploy-button.primary:hover {
+            background: linear-gradient(135deg, #45a049, #3d8b40);
+            transform: translateY(-2px);
+        }
+        
+        .deploy-button.danger {
+            background: linear-gradient(135deg, #F44336, #d32f2f);
+            color: white;
+        }
+        
+        .deploy-button.secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+        
+        .deploy-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        .monitoring-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .monitor-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .monitor-title {
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status-online {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        
+        .status-warning {
+            background: #fff8e1;
+            color: #f57c00;
+        }
+        
+        .analytics-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .metric-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .chart-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+        
+        .alert {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid;
+        }
+        
+        .alert-success {
+            background: #e8f5e8;
+            border-color: #4CAF50;
+            color: #2e7d32;
+        }
+        
+        .alert-warning {
+            background: #fff8e1;
+            border-color: #FF9800;
+            color: #e65100;
+        }
+        
+        .alert-error {
+            background: #ffebee;
+            border-color: #F44336;
+            color: #c62828;
+        }
+        
+        .console {
+            background: #1e1e1e;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        
+        .console-line {
+            margin-bottom: 5px;
+        }
+        
+        .timestamp {
+            color: #888;
+            margin-right: 10px;
+        }
+        
+        .log-success { color: #4CAF50; }
+        .log-error { color: #F44336; }
+        .log-warning { color: #FF9800; }
+        .log-info { color: #2196F3; }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @media (max-width: 768px) {
+            .status-overview {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                padding: 15px;
+            }
+            
+            .deployment-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .monitoring-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🚀 Phase 7: Launch Management Dashboard</h1>
+            <p>First Baptist Church Fenton - Production Launch Control Center</p>
+        </div>
+
+        <!-- Status Overview -->
+        <div class="status-overview">
+            <div class="status-card">
+                <div class="status-value" id="readiness-percentage">94%</div>
+                <div class="status-label">Launch Readiness</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 94%"></div>
+                </div>
+                <div class="status-label">23 of 25 items complete</div>
+            </div>
+            
+            <div class="status-card">
+                <div class="status-value" style="color: #F44336;" id="critical-issues">2</div>
+                <div class="status-label">Critical Issues</div>
+                <div class="status-label">Must resolve before launch</div>
+            </div>
+            
+            <div class="status-card">
+                <div class="status-value" style="color: #FF9800;" id="overall-status">NEEDS WORK</div>
+                <div class="status-label">Overall Status</div>
+                <div class="status-label">Final validations required</div>
+            </div>
+            
+            <div class="status-card">
+                <div class="status-value" id="last-check">2 min ago</div>
+                <div class="status-label">Last Check</div>
+                <div class="status-label">Production environment</div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('checklist')">📋 Launch Checklist</button>
+            <button class="tab" onclick="showTab('deployment')">🚀 Deployment</button>
+            <button class="tab" onclick="showTab('monitoring')">📈 Monitoring</button>
+            <button class="tab" onclick="showTab('analytics')">📊 Analytics</button>
+        </div>
+
+        <!-- Launch Checklist Tab -->
+        <div id="checklist" class="tab-content active">
+            <div class="alert alert-warning">
+                <strong>⚠️ Critical Issues Detected:</strong> 2 critical items require attention before launch can proceed.
+            </div>
+
+            <!-- Technical Category -->
+            <div class="checklist-category">
+                <div class="category-header">
+                    <div class="category-icon">⚙️</div>
+                    <div class="category-title">Technical Validation</div>
+                    <div class="category-progress">
+                        <div style="font-weight: 600;">4/5 Complete</div>
+                        <div class="progress-bar" style="width: 150px;">
+                            <div class="progress-fill" style="width: 80%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator completed"></div>
+                    <div class="item-content">
+                        <div class="item-title">Production Build Success</div>
+                        <div class="item-description">Verify that production build completes without errors</div>
+                        <div class="item-time">⏱️ Est. 5 minutes</div>
+                    </div>
+                    <div class="priority-badge priority-critical">Critical</div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator completed"></div>
+                    <div class="item-content">
+                        <div class="item-title">All Pages Render Correctly</div>
+                        <div class="item-description">Ensure all 45+ pages render without JavaScript errors</div>
+                        <div class="item-time">⏱️ Est. 15 minutes</div>
+                    </div>
+                    <div class="priority-badge priority-critical">Critical</div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator completed"></div>
+                    <div class="item-content">
+                        <div class="item-title">Cross-Browser Testing</div>
+                        <div class="item-description">Verify functionality in Chrome, Firefox, Safari, and Edge</div>
+                        <div class="item-time">⏱️ Est. 30 minutes</div>
+                    </div>
+                    <div class="priority-badge priority-high">High</div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator completed"></div>
+                    <div class="item-content">
+                        <div class="item-title">API Endpoints Functional</div>
+                        <div class="item-description">Test all API endpoints including church events, contact forms, etc.</div>
+                        <div class="item-time">⏱️ Est. 15 minutes</div>
+                    </div>
+                    <div class="priority-badge priority-critical">Critical</div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator failed"></div>
+                    <div class="item-content">
+                        <div class="item-title">SSL Certificate Valid</div>
+                        <div class="item-description">HTTPS certificate properly configured and valid</div>
+                        <div class="item-time">⏱️ Est. 5 minutes</div>
+                        <div style="color: #F44336; font-size: 0.8rem; margin-top: 5px;">❌ Certificate expires in 2 days</div>
+                    </div>
+                    <div class="priority-badge priority-high">High</div>
+                </div>
+            </div>
+
+            <!-- Performance Category -->
+            <div class="checklist-category">
+                <div class="category-header">
+                    <div class="category-icon">⚡</div>
+                    <div class="category-title">Performance Validation</div>
+                    <div class="category-progress">
+                        <div style="font-weight: 600;">3/3 Complete</div>
+                        <div class="progress-bar" style="width: 150px;">
+                            <div class="progress-fill" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator completed"></div>
+                    <div class="item-content">
+                        <div class="item-title">Core Web Vitals Optimization</div>
+                        <div class="item-description">LCP: 1.2s, INP: 89ms, CLS: 0.02 - All excellent!</div>
+                        <div class="item-time">⏱️ Est. 10 minutes</div>
+                    </div>
+                    <div class="priority-badge priority-critical">Critical</div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator completed"></div>
+                    <div class="item-content">
+                        <div class="item-title">Lighthouse Performance Score</div>
+                        <div class="item-description">Achieved 92% performance score</div>
+                        <div class="item-time">⏱️ Est. 10 minutes</div>
+                    </div>
+                    <div class="priority-badge priority-high">High</div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator completed"></div>
+                    <div class="item-content">
+                        <div class="item-title">Image Optimization Complete</div>
+                        <div class="item-description">All images optimized with WebP/AVIF formats</div>
+                        <div class="item-time">⏱️ Est. 15 minutes</div>
+                    </div>
+                    <div class="priority-badge priority-medium">Medium</div>
+                </div>
+            </div>
+
+            <!-- Content Category -->
+            <div class="checklist-category">
+                <div class="category-header">
+                    <div class="category-icon">📝</div>
+                    <div class="category-title">Content Validation</div>
+                    <div class="category-progress">
+                        <div style="font-weight: 600;">3/4 Complete</div>
+                        <div class="progress-bar" style="width: 150px;">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator completed"></div>
+                    <div class="item-content">
+                        <div class="item-title">Image Alt Text Complete</div>
+                        <div class="item-description">All images have meaningful alt text</div>
+                        <div class="item-time">⏱️ Est. 20 minutes</div>
+                    </div>
+                    <div class="priority-badge priority-critical">Critical</div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator completed"></div>
+                    <div class="item-content">
+                        <div class="item-title">Contact Information Accuracy</div>
+                        <div class="item-description">All contact details verified and current</div>
+                        <div class="item-time">⏱️ Est. 10 minutes</div>
+                    </div>
+                    <div class="priority-badge priority-critical">Critical</div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator completed"></div>
+                    <div class="item-content">
+                        <div class="item-title">Service Times Current</div>
+                        <div class="item-description">Service schedules updated and accurate</div>
+                        <div class="item-time">⏱️ Est. 10 minutes</div>
+                    </div>
+                    <div class="priority-badge priority-critical">Critical</div>
+                </div>
+                
+                <div class="checklist-item">
+                    <div class="status-indicator failed"></div>
+                    <div class="item-content">
+                        <div class="item-title">Content Proofreading Complete</div>
+                        <div class="item-description">Final review of all text content needed</div>
+                        <div class="item-time">⏱️ Est. 60 minutes</div>
+                        <div style="color: #F44336; font-size: 0.8rem; margin-top: 5px;">❌ 3 pages pending review</div>
+                    </div>
+                    <div class="priority-badge priority-high">High</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Deployment Tab -->
+        <div id="deployment" class="tab-content">
+            <div class="deployment-controls">
+                <div class="control-card">
+                    <h3>🔄 Pre-Launch Actions</h3>
+                    <p style="margin: 15px 0; color: #666;">Complete these steps before launching</p>
+                    
+                    <button class="deploy-button secondary">📦 Create Full Backup</button>
+                    <button class="deploy-button secondary">🧪 Run Final Tests</button>
+                    <button class="deploy-button secondary">🌐 Verify DNS Settings</button>
+                    <button class="deploy-button secondary">📊 Check Analytics Setup</button>
+                </div>
+                
+                <div class="control-card">
+                    <h3>🚀 Launch Controls</h3>
+                    <p style="margin: 15px 0; color: #666;">Main deployment actions</p>
+                    
+                    <button class="deploy-button primary" disabled id="launch-btn">
+                        🚀 Launch Website
+                    </button>
+                    <p style="font-size: 0.8rem; color: #666; margin-bottom: 15px;">
+                        ⚠️ Blocked by 2 critical issues
+                    </p>
+                    
+                    <button class="deploy-button danger">🔄 Emergency Rollback</button>
+                </div>
+                
+                <div class="control-card">
+                    <h3>📋 Deployment History</h3>
+                    <p style="margin: 15px 0; color: #666;">Recent deployments</p>
+                    
+                    <div style="text-align: left;">
+                        <div class="metric-row">
+                            <span>🟢 v2.1.3 (staging)</span>
+                            <span style="font-size: 0.8rem; color: #666;">2 hours ago</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>🟡 v2.1.2 (failed)</span>
+                            <span style="font-size: 0.8rem; color: #666;">1 day ago</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>🟢 v2.1.1 (production)</span>
+                            <span style="font-size: 0.8rem; color: #666;">3 days ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deployment Console -->
+            <div style="margin-top: 30px;">
+                <h3>📟 Deployment Console</h3>
+                <div class="console" id="deployment-console">
+                    <div class="console-line">
+                        <span class="timestamp">[14:23:45]</span>
+                        <span class="log-info">🔍 Initializing Phase 7 deployment system...</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="timestamp">[14:23:46]</span>
+                        <span class="log-success">✅ Environment validation complete</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="timestamp">[14:23:47]</span>
+                        <span class="log-success">✅ Build artifacts ready</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="timestamp">[14:23:48]</span>
+                        <span class="log-warning">⚠️ SSL certificate expires in 2 days</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="timestamp">[14:23:49]</span>
+                        <span class="log-error">❌ Content review incomplete (3 pages pending)</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="timestamp">[14:23:50]</span>
+                        <span class="log-info">🚫 Launch blocked - resolve critical issues first</span>
+                    </div>
+                    <div class="console-line">
+                        <span class="timestamp">[14:23:51]</span>
+                        <span class="log-info">📊 System ready for monitoring...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monitoring Tab -->
+        <div id="monitoring" class="tab-content">
+            <div class="monitoring-grid">
+                <div class="monitor-card">
+                    <div class="monitor-title">
+                        🟢 System Status
+                    </div>
+                    
+                    <div class="metric-row">
+                        <span>Website Status</span>
+                        <span class="status-badge status-online">🟢 Online</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>API Endpoints</span>
+                        <span class="status-badge status-online">🟢 Operational</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Database</span>
+                        <span class="status-badge status-online">🟢 Connected</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>CDN Status</span>
+                        <span class="status-badge status-online">🟢 Active</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>SSL Certificate</span>
+                        <span class="status-badge status-warning">⚠️ Expires Soon</span>
+                    </div>
+                </div>
+                
+                <div class="monitor-card">
+                    <div class="monitor-title">
+                        ⚡ Performance Metrics
+                    </div>
+                    
+                    <div class="metric-row">
+                        <span>Average Load Time</span>
+                        <span class="status-badge status-online">1.2s</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Server Response</span>
+                        <span class="status-badge status-online">89ms</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Uptime (30 days)</span>
+                        <span class="status-badge status-online">99.9%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Error Rate</span>
+                        <span class="status-badge status-online">0.02%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Cache Hit Rate</span>
+                        <span class="status-badge status-online">94.7%</span>
+                    </div>
+                </div>
+                
+                <div class="monitor-card">
+                    <div class="monitor-title">
+                        📊 Traffic Overview
+                    </div>
+                    
+                    <div class="metric-row">
+                        <span>Active Users</span>
+                        <span class="status-badge status-online">42</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Page Views (today)</span>
+                        <span class="status-badge status-online">1,247</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Bounce Rate</span>
+                        <span class="status-badge status-online">28.4%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Mobile Traffic</span>
+                        <span class="status-badge status-online">67.2%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Average Session</span>
+                        <span class="status-badge status-online">4m 32s</span>
+                    </div>
+                </div>
+                
+                <div class="monitor-card">
+                    <div class="monitor-title">
+                        🚨 Recent Alerts
+                    </div>
+                    
+                    <div style="text-align: left;">
+                        <div style="padding: 10px 0; border-bottom: 1px solid #f0f0f0;">
+                            <div style="font-weight: 600; color: #F44336;">⚠️ SSL Certificate Warning</div>
+                            <div style="font-size: 0.8rem; color: #666;">Certificate expires in 2 days</div>
+                            <div style="font-size: 0.7rem; color: #999;">14:23:48</div>
+                        </div>
+                        <div style="padding: 10px 0; border-bottom: 1px solid #f0f0f0;">
+                            <div style="font-weight: 600; color: #FF9800;">📝 Content Review Needed</div>
+                            <div style="font-size: 0.8rem; color: #666;">3 pages pending review</div>
+                            <div style="font-size: 0.7rem; color: #999;">13:45:12</div>
+                        </div>
+                        <div style="padding: 10px 0;">
+                            <div style="font-weight: 600; color: #4CAF50;">✅ Backup Completed</div>
+                            <div style="font-size: 0.8rem; color: #666;">Weekly backup successful</div>
+                            <div style="font-size: 0.7rem; color: #999;">12:00:00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Chart -->
+            <div class="monitor-card" style="margin-top: 20px;">
+                <div class="monitor-title">📈 Performance Trends</div>
+                <div class="chart-placeholder">
+                    📊 Performance metrics chart would display here
+                    <br>
+                    <small>(Core Web Vitals over time)</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analytics" class="tab-content">
+            <div class="monitoring-grid">
+                <div class="analytics-card">
+                    <div class="metric-value" id="events-tracked">1,247</div>
+                    <div class="metric-label">Events Tracked (Today)</div>
+                </div>
+                
+                <div class="analytics-card">
+                    <div class="metric-value" style="color: #F44336;" id="errors-reported">3</div>
+                    <div class="metric-label">Errors Reported</div>
+                </div>
+                
+                <div class="analytics-card">
+                    <div class="metric-value" style="color: #4CAF50;" id="performance-score">92%</div>
+                    <div class="metric-label">Performance Score</div>
+                </div>
+                
+                <div class="analytics-card">
+                    <div class="metric-value" id="user-satisfaction">4.8/5</div>
+                    <div class="metric-label">User Satisfaction</div>
+                </div>
+            </div>
+
+            <!-- Top Events -->
+            <div class="monitor-card" style="margin-top: 20px;">
+                <div class="monitor-title">🔥 Top Events</div>
+                
+                <div class="metric-row">
+                    <span>page_view</span>
+                    <span class="status-badge status-online">847</span>
+                </div>
+                <div class="metric-row">
+                    <span>scroll_depth</span>
+                    <span class="status-badge status-online">324</span>
+                </div>
+                <div class="metric-row">
+                    <span>ministry_interest</span>
+                    <span class="status-badge status-online">156</span>
+                </div>
+                <div class="metric-row">
+                    <span>prayer_request_submitted</span>
+                    <span class="status-badge status-online">89</span>
+                </div>
+                <div class="metric-row">
+                    <span>newsletter_signup</span>
+                    <span class="status-badge status-online">67</span>
+                </div>
+            </div>
+
+            <!-- User Journey -->
+            <div class="monitor-card" style="margin-top: 20px;">
+                <div class="monitor-title">🗺️ User Journey Insights</div>
+                
+                <div style="text-align: left;">
+                    <div style="margin: 15px 0;">
+                        <div style="font-weight: 600;">Most Popular Pages:</div>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                            1. Home (34.2%)<br>
+                            2. About Us (18.7%)<br>
+                            3. Service Times (15.3%)<br>
+                            4. Ministries (12.8%)<br>
+                            5. Contact (8.9%)
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 15px 0;">
+                        <div style="font-weight: 600;">Conversion Funnel:</div>
+                        <div style="font-size: 0.9rem; color: #666; margin-top: 5px;">
+                            Landing → About: 67.2%<br>
+                            About → Contact: 24.8%<br>
+                            Contact → Form Submit: 18.4%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Simulate real-time updates
+        function updateDashboard() {
+            const timestamp = new Date().toLocaleTimeString();
+            document.getElementById('last-check').textContent = 'Just now';
+            
+            // Add new console log
+            const console = document.getElementById('deployment-console');
+            const newLine = document.createElement('div');
+            newLine.className = 'console-line';
+            newLine.innerHTML = `
+                <span class="timestamp">[${timestamp}]</span>
+                <span class="log-info">🔄 System monitoring active...</span>
+            `;
+            console.appendChild(newLine);
+            console.scrollTop = console.scrollHeight;
+        }
+
+        // Simulate deployment progress
+        function simulateDeployment() {
+            const steps = [
+                'Validating environment...',
+                'Creating backup...',
+                'Building application...',
+                'Running tests...',
+                'Deploying to staging...',
+                'Health checks...',
+                'Deployment complete!'
+            ];
+            
+            let stepIndex = 0;
+            const console = document.getElementById('deployment-console');
+            
+            const interval = setInterval(() => {
+                if (stepIndex < steps.length) {
+                    const timestamp = new Date().toLocaleTimeString();
+                    const newLine = document.createElement('div');
+                    newLine.className = 'console-line';
+                    newLine.innerHTML = `
+                        <span class="timestamp">[${timestamp}]</span>
+                        <span class="log-success">✅ ${steps[stepIndex]}</span>
+                    `;
+                    console.appendChild(newLine);
+                    console.scrollTop = console.scrollHeight;
+                    stepIndex++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 2000);
+        }
+
+        // Animate metrics
+        function animateMetrics() {
+            const eventsElement = document.getElementById('events-tracked');
+            let currentValue = parseInt(eventsElement.textContent.replace(',', ''));
+            const increment = Math.floor(Math.random() * 5) + 1;
+            
+            eventsElement.textContent = (currentValue + increment).toLocaleString();
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Phase 7 Launch Dashboard initialized');
+            
+            // Update dashboard every 30 seconds
+            setInterval(updateDashboard, 30000);
+            
+            // Animate metrics every 10 seconds
+            setInterval(animateMetrics, 10000);
+            
+            // Add click handlers for deployment buttons
+            document.querySelectorAll('.deploy-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.textContent.includes('Create Backup')) {
+                        const console = document.getElementById('deployment-console');
+                        const timestamp = new Date().toLocaleTimeString();
+                        const newLine = document.createElement('div');
+                        newLine.className = 'console-line';
+                        newLine.innerHTML = `
+                            <span class="timestamp">[${timestamp}]</span>
+                            <span class="log-info">📦 Starting backup process...</span>
+                        `;
+                        console.appendChild(newLine);
+                        console.scrollTop = console.scrollHeight;
+                    }
+                });
+            });
+            
+            // Check if launch conditions are met every 5 seconds
+            setInterval(() => {
+                const criticalIssues = parseInt(document.getElementById('critical-issues').textContent);
+                const launchBtn = document.getElementById('launch-btn');
+                
+                if (criticalIssues === 0) {
+                    launchBtn.disabled = false;
+                    launchBtn.style.opacity = '1';
+                    document.getElementById('overall-status').textContent = 'READY';
+                    document.getElementById('overall-status').style.color = '#4CAF50';
+                }
+            }, 5000);
+        });
+
+        // Add some interactivity for demo purposes
+        setTimeout(() => {
+            console.log('🎯 Demo: Resolving SSL certificate issue...');
+            setTimeout(() => {
+                // Simulate resolving one issue
+                document.getElementById('critical-issues').textContent = '1';
+                document.getElementById('readiness-percentage').textContent = '96%';
+                document.querySelector('.progress-fill').style.width = '96%';
+                
+                const console = document.getElementById('deployment-console');
+                const timestamp = new Date().toLocaleTimeString();
+                const newLine = document.createElement('div');
+                newLine.className = 'console-line';
+                newLine.innerHTML = `
+                    <span class="timestamp">[${timestamp}]</span>
+                    <span class="log-success">✅ SSL certificate renewed successfully</span>
+                `;
+                console.appendChild(newLine);
+                console.scrollTop = console.scrollHeight;
+            }, 10000);
+        }, 5000);
+    </script>
+</body>
+</html> 
