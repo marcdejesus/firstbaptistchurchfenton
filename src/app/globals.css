@@ -1,7 +1,7 @@
 /* First Baptist Church Fenton Design System Integration */
 
 /* Import our complete design system */
-@import url('../../../design-system/css/main.css');
+@import '../design-system/css/main.css';
 
 /* Tailwind CSS for additional utilities (keeping for compatibility) */
 @tailwind base;
