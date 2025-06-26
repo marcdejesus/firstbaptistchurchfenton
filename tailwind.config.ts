@@ -103,7 +103,7 @@ export default {
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
         'slide-in-rotate': {
-          '0%': { transform: 'translateX(-100%) rotate(0deg)', opacity: '0' },
+          '0%': { transform: 'translateX(100%) rotate(0deg)', opacity: '0' },
           '100%': { transform: 'translateX(0) rotate(-20deg)', opacity: '1' },
         }
   		},
