@@ -201,7 +201,7 @@ export function MegaMenuDropdown({ category, isOpen, onClose }: MegaMenuDropdown
   return (
     <div
       className={cn(
-        "absolute top-full left-1/2 -translate-x-1/2 w-[700px] max-w-[calc(100vw-32px)] bg-white/95 backdrop-blur-md shadow-lg border-t border-border z-40 rounded-lg",
+        "absolute top-full left-1/2 -translate-x-1/2 w-[700px] max-w-[calc(100vw-32px)] bg-white/95 backdrop-blur-md shadow-lg border-t border-border z-40 rounded-lg mt-2",
         {
           "animate-in fade-in-0 zoom-in-95": isOpen,
           "animate-out fade-out-0 zoom-out-95": !isOpen,
