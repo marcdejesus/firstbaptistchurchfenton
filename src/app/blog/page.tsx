@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useState, useMemo } from 'react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Link from 'next/link';
-import { ArrowRight, UserCircle, Calendar, Search, Filter, Share2, BookOpen, Heart } from 'lucide-react';
+import { ArrowRight, UserCircle, Calendar, Search, BookOpen, Heart, Share2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
+import { ArticleCard } from '@/components/blog/ArticleCard';
 
-// Enhanced blog posts data with additional fields
 // TODO: Replace with data fetched from Firebase
 const blogPosts = [
   {
@@ -40,7 +40,7 @@ const blogPosts = [
     likes: 28,
     views: 89,
   },
-  {
+    {
     slug: 'advent-season-reflection',
     title: 'Preparing Our Hearts for Christmas',
     author: 'Pastor John Bell',
@@ -66,35 +66,8 @@ const blogPosts = [
     likes: 35,
     views: 124,
   },
-  {
-    slug: 'why-we-serve',
-    title: 'The Heart Behind Our Service',
-    author: 'Mike Thompson',
-    date: 'November 28, 2024',
-    readTime: '5 min read',
-    excerpt: 'Serving is a core part of our church\'s DNA. Explore the biblical reasons why we give our time and talents to serve others in the church and our community.',
-    imageUrl: '/front-art.png',
-    tags: ['Serving', 'Volunteer', 'Ministry'],
-    category: 'ministry',
-    likes: 23,
-    views: 87,
-  },
-  {
-    slug: 'youth-ministry-update',
-    title: 'Exciting Updates from Youth Ministry',
-    author: 'Jessica Davis',
-    date: 'November 20, 2024',
-    readTime: '3 min read',
-    excerpt: 'Our youth ministry is growing and thriving! Read about our recent activities, upcoming events, and how you can support our young people.',
-    imageUrl: '/front-art.png',
-    tags: ['Youth', 'Ministry', 'Events'],
-    category: 'youth',
-    likes: 19,
-    views: 76,
-  },
 ];
 
-// Blog categories for filtering
 const blogCategories = [
   { id: 'all', name: 'All Articles', color: 'bg-gray-100 text-gray-700' },
   { id: 'spiritual-growth', name: 'Spiritual Growth', color: 'bg-emerald-100 text-emerald-700' },
@@ -110,16 +83,11 @@ export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('date');
 
-  // Filter and search functionality
   const filteredPosts = useMemo(() => {
     let filtered = blogPosts;
-
-    // Filter by category
     if (selectedCategory !== 'all') {
       filtered = filtered.filter(post => post.category === selectedCategory);
     }
-
-    // Search functionality
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(post =>
@@ -129,28 +97,19 @@ export default function BlogPage() {
         post.author.toLowerCase().includes(query)
       );
     }
-
-    // Sort posts
     filtered.sort((a, b) => {
       switch (sortBy) {
-        case 'date':
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
-        case 'popularity':
-          return (b.likes + b.views) - (a.likes + a.views);
-        case 'title':
-          return a.title.localeCompare(b.title);
-        default:
-          return 0;
+        case 'popularity': return (b.likes + b.views) - (a.likes + a.views);
+        case 'title': return a.title.localeCompare(b.title);
+        default: return new Date(b.date).getTime() - new Date(a.date).getTime();
       }
     });
-
     return filtered;
   }, [searchQuery, selectedCategory, sortBy]);
 
   const featuredPost = blogPosts.find(p => p.featured);
   const otherPosts = filteredPosts.filter(p => !p.featured);
 
-  // Social sharing function
   const handleShare = async (post: typeof blogPosts[0]) => {
     const shareData = {
       title: post.title,
@@ -171,288 +130,90 @@ export default function BlogPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-transparent to-primary-50/30">
-      {/* Enhanced Header with Design System */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-primary-50 to-accent-50 py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="relative z-10 text-center">
-            <div className="flex items-center justify-center mb-6">
-              <BookOpen className="h-12 w-12 text-accent mr-4" />
-              <h1 className="text-4xl md:text-6xl font-lora font-bold text-primary-foreground">
-                From the Blog
-              </h1>
-            </div>
-            <p className="text-xl text-primary-foreground/80 max-w-3xl mx-auto mb-8">
-              Articles, devotionals, and updates from our church leadership and community. 
-              Growing together in faith and understanding.
-            </p>
-            
-            {/* Search and Filter Controls */}
-            <div className="max-w-4xl mx-auto">
-              <div className="grid md:grid-cols-3 gap-4 mb-6">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input
-                    placeholder="Search articles..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 bg-white/80 backdrop-blur-sm"
-                  />
-                </div>
-                
-                <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                  <SelectTrigger className="bg-white/80 backdrop-blur-sm">
-                    <SelectValue placeholder="All Categories" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {blogCategories.map(category => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                
-                <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="bg-white/80 backdrop-blur-sm">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="date">Latest First</SelectItem>
-                    <SelectItem value="popularity">Most Popular</SelectItem>
-                    <SelectItem value="title">Alphabetical</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              {/* Category Tags */}
-              <div className="flex flex-wrap justify-center gap-2">
-                {blogCategories.map(category => (
-                  <Badge
-                    key={category.id}
-                    variant={selectedCategory === category.id ? "default" : "outline"}
-                    className={`cursor-pointer transition-all hover:scale-105 ${
-                      selectedCategory === category.id 
-                        ? 'bg-accent text-accent-foreground' 
-                        : 'bg-white/80 hover:bg-accent/10'
-                    }`}
-                    onClick={() => setSelectedCategory(category.id)}
-                  >
-                    {category.name}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          </div>
-          
-          {/* Background decoration */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full -translate-y-16 translate-x-16"></div>
-          <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/10 rounded-full translate-y-12 -translate-x-12"></div>
-        </div>
-      </div>
-
+    <div className="bg-background text-foreground">
       <div className="container mx-auto px-4 py-12">
+        
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-lora font-bold text-primary mb-4">From the Blog</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Articles, devotionals, and updates from our church leadership and community.
+          </p>
+        </div>
+        
+        {/* Filters */}
+        <div className="flex flex-wrap gap-4 justify-center mb-12">
+          <Input
+            placeholder="Search articles..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="max-w-xs"
+          />
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="All Categories" />
+            </SelectTrigger>
+            <SelectContent>
+              {blogCategories.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}
+            </SelectContent>
+          </Select>
+          <Select value={sortBy} onValueChange={setSortBy}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="date">Latest</SelectItem>
+              <SelectItem value="popularity">Popular</SelectItem>
+              <SelectItem value="title">Alphabetical</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-        {/* Enhanced Featured Post */}
+        {/* Featured Post */}
         {featuredPost && (
-          <Card className="mb-12 overflow-hidden shadow-xl border-0 bg-white/90 backdrop-blur-sm">
-            <div className="grid md:grid-cols-2">
-              <div className="p-8 md:p-12 flex flex-col justify-center">
-                <div className="flex items-center gap-3 mb-4">
-                  <Badge className="bg-accent/10 text-accent border-accent/20">Featured Article</Badge>
-                  <Badge className={blogCategories.find(c => c.id === featuredPost.category)?.color}>
-                    {blogCategories.find(c => c.id === featuredPost.category)?.name}
-                  </Badge>
-                </div>
-                
-                <CardTitle className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-4 leading-tight">
-                  {featuredPost.title}
-                </CardTitle>
-                
-                <CardDescription className="mb-6 text-lg text-muted-foreground leading-relaxed">
-                  {featuredPost.excerpt}
-                </CardDescription>
-                
-                <div className="flex items-center text-sm text-muted-foreground mb-6 space-x-4">
-                  <div className="flex items-center">
-                    <UserCircle className="h-4 w-4 mr-2 text-accent" />
-                    <span className="font-medium">{featuredPost.author}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <Calendar className="h-4 w-4 mr-2 text-accent" />
-                    <span>{featuredPost.date}</span>
-                  </div>
-                  <span className="text-accent font-medium">{featuredPost.readTime}</span>
-                </div>
-                
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                    <div className="flex items-center">
-                      <Heart className="h-4 w-4 mr-1 text-red-500" />
-                      <span>{featuredPost.likes}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <span className="h-4 w-4 mr-1">👁️</span>
-                      <span>{featuredPost.views}</span>
-                    </div>
-                  </div>
-                  
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleShare(featuredPost)}
-                    className="border-accent text-accent hover:bg-accent/10"
-                  >
-                    <Share2 className="h-4 w-4 mr-2" />
-                    Share
-                  </Button>
-                </div>
-                
-                <CardFooter className="p-0">
-                  <Button asChild size="lg" className="bg-accent hover:bg-accent-600 w-full">
-                    <Link href={`/blog/${featuredPost.slug}`}>
-                      Read Full Article
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </CardFooter>
+          <div className="mb-16">
+            <h2 className="text-3xl font-lora font-bold mb-6 text-center">Featured Article</h2>
+            <Card className="grid md:grid-cols-2 overflow-hidden shadow-lg border-border">
+              <div className="relative h-64 md:h-full">
+                <Image src={featuredPost.imageUrl} alt={featuredPost.title} fill className="object-cover"/>
               </div>
-              
-              <div className="relative h-64 md:h-full bg-gradient-to-br from-primary-50 to-accent-50">
-                <Image 
-                  src={featuredPost.imageUrl} 
-                  alt={featuredPost.title} 
-                  fill
-                  className="object-cover"
-                  onError={(e) => { 
-                    e.currentTarget.src = '/front-art.png'; 
-                  }} 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              <div className="p-8 flex flex-col justify-center">
+                <CardTitle className="text-3xl font-lora mb-4">{featuredPost.title}</CardTitle>
+                <div className="flex items-center text-sm text-muted-foreground mb-4 space-x-4">
+                  <span>{featuredPost.author}</span>
+                  <span>{featuredPost.date}</span>
+                  <span>{featuredPost.readTime}</span>
+                </div>
+                <p className="mb-6">{featuredPost.excerpt}</p>
+                <Button asChild size="lg">
+                  <Link href={`/blog/${featuredPost.slug}`}>Read Full Article <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                </Button>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </div>
         )}
 
-        {/* Enhanced Article Grid */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-lora font-bold text-primary-foreground">
-              {searchQuery || selectedCategory !== 'all' 
-                ? `${otherPosts.length} ${otherPosts.length === 1 ? 'Article' : 'Articles'} Found`
-                : 'Recent Articles'
-              }
-            </h2>
-            {(searchQuery || selectedCategory !== 'all') && (
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory('all');
-                }}
-                className="border-accent text-accent hover:bg-accent/10"
-              >
-                Clear Filters
-              </Button>
-            )}
-          </div>
-          
-          {otherPosts.length === 0 ? (
-            <Card className="text-center py-12 bg-white/80 backdrop-blur-sm border-0">
-              <CardContent>
-                <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No articles found</h3>
-                <p className="text-muted-foreground mb-4">
-                  Try adjusting your search terms or category filters.
-                </p>
-                <Button 
-                  variant="outline" 
-                  onClick={() => {
-                    setSearchQuery('');
-                    setSelectedCategory('all');
-                  }}
-                >
-                  View All Articles
-                </Button>
-              </CardContent>
-            </Card>
-          ) : (
+        {/* Article Grid */}
+        <div>
+          <h2 className="text-3xl font-lora font-bold mb-8 text-center">
+            {searchQuery || selectedCategory !== 'all' ? 'Search Results' : 'Recent Articles'}
+          </h2>
+          {otherPosts.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {otherPosts.map((post) => (
-                <Card key={post.slug} className="group flex flex-col hover:shadow-xl transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm overflow-hidden">
-                  <div className="relative h-48 bg-gradient-to-br from-primary-50 to-accent-50">
-                    <Image 
-                      src={post.imageUrl} 
-                      alt={post.title} 
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => { 
-                        e.currentTarget.src = '/front-art.png'; 
-                      }} 
-                    />
-                    <div className="absolute top-3 left-3">
-                      <Badge className={blogCategories.find(c => c.id === post.category)?.color}>
-                        {blogCategories.find(c => c.id === post.category)?.name}
-                      </Badge>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                  </div>
-                  
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-xl font-lora font-semibold group-hover:text-accent transition-colors leading-tight">
-                      {post.title}
-                    </CardTitle>
-                    <div className="flex items-center text-sm text-muted-foreground space-x-3">
-                      <div className="flex items-center">
-                        <UserCircle className="h-4 w-4 mr-1 text-accent" />
-                        <span className="font-medium">{post.author}</span>
-                      </div>
-                      <div className="flex items-center">
-                        <Calendar className="h-4 w-4 mr-1 text-accent" />
-                        <span>{post.date}</span>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent className="flex-grow pb-4">
-                    <p className="text-muted-foreground leading-relaxed line-clamp-3 mb-4">
-                      {post.excerpt}
-                    </p>
-                    
-                    <div className="flex items-center justify-between text-sm">
-                      <div className="flex items-center space-x-3 text-muted-foreground">
-                        <span className="text-accent font-medium">{post.readTime}</span>
-                        <div className="flex items-center">
-                          <Heart className="h-3 w-3 mr-1 text-red-500" />
-                          <span>{post.likes}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <span className="h-3 w-3 mr-1">👁️</span>
-                          <span>{post.views}</span>
-                        </div>
-                      </div>
-                      
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleShare(post)}
-                        className="h-8 w-8 p-0 hover:bg-accent/10"
-                      >
-                        <Share2 className="h-4 w-4 text-accent" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                  
-                  <CardFooter>
-                    <Button asChild className="w-full bg-accent hover:bg-accent-600">
-                      <Link href={`/blog/${post.slug}`}>
-                        Read Article
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
+                <ArticleCard
+                  key={post.slug}
+                  post={post}
+                  categoryName={blogCategories.find(c => c.id === post.category)?.name || 'Article'}
+                  categoryColor={blogCategories.find(c => c.id === post.category)?.color || 'bg-gray-200'}
+                />
               ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-xl font-semibold">No articles found</h3>
+              <p className="text-muted-foreground mt-2">Try adjusting your filters.</p>
             </div>
           )}
         </div>
