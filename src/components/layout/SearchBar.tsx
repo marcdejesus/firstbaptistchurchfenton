@@ -10,9 +10,10 @@ interface SearchBarProps {
   onSearch?: (query: string) => void;
   placeholder?: string;
   className?: string;
+  autoFocus?: boolean;
 }
 
-export function SearchBar({ onSearch, placeholder = "Search...", className }: SearchBarProps) {
+export function SearchBar({ onSearch, placeholder = "Search...", className, autoFocus }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
 
@@ -41,6 +42,7 @@ export function SearchBar({ onSearch, placeholder = "Search...", className }: Se
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          autoFocus={autoFocus}
           className={cn(
             "pl-10 pr-10 transition-all duration-200",
             isFocused && "ring-2 ring-accent/20"

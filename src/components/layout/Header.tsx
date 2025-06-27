@@ -14,7 +14,7 @@ import {
     DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu";
 import { 
-    UserCircle, LogOut, Menu as MenuIcon, Search, HandCoins, X
+    UserCircle, LogOut, Menu as MenuIcon, Search, HandCoins, X, LucideProps
 } from 'lucide-react';
 import { useUser } from '@/contexts/UserContext';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -26,9 +26,37 @@ import { navigationCategories, MegaMenuDropdown, MegaMenuTrigger, userNavigation
 import { SearchBar } from './SearchBar';
 import { useIsMobile } from '@/hooks/use-mobile';
 
+// Type definitions for navigation
+type NavItem = {
+  title: string;
+  href: string;
+  description: string;
+  icon: React.ComponentType<LucideProps>;
+};
+
+type NavCategory = {
+  id: string;
+  label: string;
+  icon: React.ComponentType<LucideProps>;
+  description: string;
+  items: NavItem[];
+};
+
+type NavLink = {
+  id: string;
+  label: string;
+  href: string;
+  icon: React.ComponentType<LucideProps>;
+  featured?: boolean;
+};
+
+function isNavLink(item: NavCategory | NavLink): item is NavLink {
+  return 'href' in item;
+}
+
 // Enhanced mobile navigation structure for the new mega-menu system
-const enhancedMobileNavItems = [
-  ...navigationCategories,
+const enhancedMobileNavItems: (NavCategory | NavLink)[] = [
+  ...(navigationCategories as NavCategory[]),
   {
     id: "give",
     label: "Give",
@@ -168,10 +196,11 @@ export function Header() {
           </SheetHeader>
           <ScrollArea className="flex-grow">
             <nav className="flex flex-col p-4 space-y-1">
-              {enhancedMobileNavItems.map((item) => (
-                <React.Fragment key={item.id}>
-                  {'href' in item && item.href ? (
+              {enhancedMobileNavItems.map((item) => {
+                if (isNavLink(item)) {
+                  return (
                     <Button
+                      key={item.id}
                       asChild
                       variant={item.featured ? "default" : "ghost"}
                       className="justify-start text-base"
@@ -182,9 +211,10 @@ export function Header() {
                         {item.label}
                       </Link>
                     </Button>
-                  ) : (
-                    // Logic for categories with sub-items
-                    <div className="pt-2">
+                  );
+                } else {
+                  return (
+                    <div className="pt-2" key={item.id}>
                       <p className="px-4 text-sm font-semibold text-muted-foreground">{item.label}</p>
                       <div className="mt-1 space-y-1">
                         {item.items.map((subItem) => (
@@ -202,9 +232,9 @@ export function Header() {
                         ))}
                       </div>
                     </div>
-                  )}
-                </React.Fragment>
-              ))}
+                  );
+                }
+              })}
             </nav>
           </ScrollArea>
            {user ? (
@@ -248,22 +278,22 @@ export function Header() {
   return (
     <>
       <header className={cn("header", isScrolled && "scrolled")}>
-        <div className="header-container">
-          <Link href="/" className="header-logo">
-            <Image
-              src="/logo.svg"
-              alt="First Baptist Church of Fenton Logo"
-              width={isMobile ? 40 : 56}
-              height={isMobile ? 40 : 56}
-              className={cn("transition-all", isMobile ? "h-10 w-10" : "h-14 w-14")}
-            />
-            {!isMobile && (
-              <div className="header-logo-text">
-                <span className="header-logo-primary">First Baptist</span>
-                <span className="header-logo-secondary">Church of Fenton</span>
-              </div>
-            )}
-          </Link>
+        <div className="flex items-center justify-between h-16 md:h-20 px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center space-x-4">
+            <Link href="/" className="flex items-center space-x-2">
+              <Image
+                src="/logo.svg"
+                alt="First Baptist Church of Fenton Logo"
+                width={isMobile ? 32 : 40}
+                height={isMobile ? 32 : 40}
+                priority
+              />
+              <VisuallyHidden><h1>First Baptist Church of Fenton</h1></VisuallyHidden>
+              <span className="hidden sm:inline font-lora font-semibold text-lg">
+                FBC Fenton
+              </span>
+            </Link>
+          </div>
 
           {isMobile ? renderMobileNav() : renderDesktopNav()}
         </div>
