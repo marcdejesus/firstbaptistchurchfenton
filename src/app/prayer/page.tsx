@@ -10,6 +10,8 @@ import { Send, Heart, AlertCircle } from 'lucide-react';
 import { db } from '@/lib/firebase';
 import { collection, addDoc, serverTimestamp, query, orderBy, onSnapshot } from 'firebase/firestore';
 import Link from 'next/link';
+import { Header } from '@/components/layout/Header';
+import { PageLayout } from '@/components/layout/PageLayout';
 
 interface PrayerRequest {
   id: string;
@@ -28,6 +30,11 @@ export default function PrayerPage() {
   const [prayerRequests, setPrayerRequests] = useState<PrayerRequest[]>([]);
   const [loadingRequests, setLoadingRequests] = useState(true);
   const { toast } = useToast();
+
+  const breadcrumbs = [
+    { label: "Home", href: "/" },
+    { label: "Prayer" },
+  ];
 
   useEffect(() => {
     if (!user) {
@@ -192,17 +199,16 @@ export default function PrayerPage() {
   };
   
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-2xl mx-auto">
-        <div className="text-center mb-8">
-          <Heart className="mx-auto h-12 w-12 text-accent mb-4" />
-          <h1 className="text-4xl font-bold">Prayer Requests</h1>
-          <p className="mt-4 text-lg text-muted-foreground">
-            "Carry each other's burdens, and in this way you will fulfill the law of Christ." - Galatians 6:2
-          </p>
+    <>
+      <Header breadcrumbs={breadcrumbs} />
+      <PageLayout
+        title="Prayer Requests"
+        subtitle={`"Carry each other's burdens, and in this way you will fulfill the law of Christ." - Galatians 6:2`}
+      >
+        <div className="max-w-2xl mx-auto">
+          {renderContent()}
         </div>
-        {renderContent()}
-      </div>
-    </div>
+      </PageLayout>
+    </>
   );
 } 

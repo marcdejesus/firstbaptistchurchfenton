@@ -1131,10 +1131,9 @@ body, p, .text-regular {
 
 /* Page Layout */
 .page-layout {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-top: 140px; /* Adjust this value based on the actual height of your fixed header */
+  min-height: 100vh;
 }
 
 .page-header {
@@ -1142,9 +1141,8 @@ body, p, .text-regular {
 }
 
 .page-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1;
+  margin-top: 140px; /* Adjust this value based on the final header height */
 }
 
 .page-footer {
