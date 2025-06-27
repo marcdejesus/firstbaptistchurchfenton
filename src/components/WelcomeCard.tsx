@@ -55,10 +55,10 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
           <Badge variant="secondary" className="text-accent-foreground bg-accent/10 mb-4">
             Welcome Home
           </Badge>
-          <h1 className="text-4xl md:text-5xl font-lora font-bold text-primary-foreground mb-4">
+          <h1 className="text-4xl md:text-5xl font-lora font-bold text-gray-900 mb-4" style={{ color: '#111827' }}>
             Welcome to FBC Fenton
           </h1>
-          <p className="text-xl text-primary-foreground/80 mb-6 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-700 mb-6 max-w-2xl mx-auto" style={{ color: '#374151' }}>
             Growing in Faith, Sharing God's Love
           </p>
         </div>
@@ -67,7 +67,7 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
         <div className="grid lg:grid-cols-2 gap-8 items-center">
           {/* Left Column - Content & Actions */}
           <div className="space-y-6">
-            <p className="text-lg text-primary-foreground/80 leading-relaxed">
+            <p className="text-lg text-gray-700 leading-relaxed" style={{ color: '#374151' }}>
               We're a community dedicated to growing in faith and sharing God's love. 
               Whether you're exploring faith for the first time or looking for a church home, 
               you're welcome here.
@@ -98,7 +98,7 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
                   <h3 className="font-semibold mb-1">Next Event</h3>
                   {nextEvent ? (
                     <>
-                      <p className="text-sm font-medium text-primary-foreground">{nextEvent.title}</p>
+                      <p className="text-sm font-medium text-gray-900" style={{ color: '#111827' }}>{nextEvent.title}</p>
                       <p className="text-xs text-muted-foreground">
                         {new Date(nextEvent.date).toLocaleDateString('en-US', { 
                           weekday: 'short', 
@@ -145,12 +145,12 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
                     <Youtube className="w-5 h-5 text-red-600" />
                   </a>
                 </div>
-                <div className="text-sm text-primary-foreground/70">
+                <div className="text-sm text-gray-600" style={{ color: '#4b5563' }}>
                   <p>Follow us for updates</p>
                 </div>
               </div>
               
-              <div className="text-right text-sm text-primary-foreground/70">
+              <div className="text-right text-sm text-gray-600" style={{ color: '#4b5563' }}>
                 <p className="font-medium">Office Hours</p>
                 <p>{todaysHours}</p>
               </div>
@@ -216,23 +216,23 @@ export function WelcomeCard({ todaysHours, nextEvent }: WelcomeCardProps) {
         </div>
 
         {/* Quick Stats */}
-        <div className="mt-8 pt-8 border-t border-white/20">
+        <div className="mt-8 pt-8 border-t border-gray-900/10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
               <p className="text-2xl font-bold text-accent">50+</p>
-              <p className="text-sm text-primary-foreground/70">Years Serving</p>
+              <p className="text-sm text-gray-600" style={{ color: '#4b5563' }}>Years Serving</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-accent">200+</p>
-              <p className="text-sm text-primary-foreground/70">Church Family</p>
+              <p className="text-sm text-gray-600" style={{ color: '#4b5563' }}>Church Family</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-accent">15+</p>
-              <p className="text-sm text-primary-foreground/70">Ministries</p>
+              <p className="text-sm text-gray-600" style={{ color: '#4b5563' }}>Ministries</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-accent">100%</p>
-              <p className="text-sm text-primary-foreground/70">Welcome</p>
+              <p className="text-sm text-gray-600" style={{ color: '#4b5563' }}>Welcome</p>
             </div>
           </div>
         </div>

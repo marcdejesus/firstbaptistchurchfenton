@@ -6,17 +6,18 @@ import Link from 'next/link';
 import Image from "next/image";
 import { ArrowRight, Star, Mail, Phone, MapPin, BookOpen, Users, Church } from "lucide-react";
 import { WelcomeCard } from "@/components/WelcomeCard";
+import { Event } from "@/types";
 
 export default function Home() {
-  const nextEvent = {
+  const nextEvent: Event = {
     id: '1',
     title: 'Community Cookout',
-    date: '2024-08-15T17:00:00.000Z',
+    date: '2024-08-15',
     time: '5:00 PM',
+    rsvps: 0,
     description: 'Join us for a fun evening of food, games, and fellowship.',
     location: 'Church Lawn',
-    category: 'Community',
-    isFeatured: true
+    category: { id: 'community', name: 'Community', color: '#3b82f6', icon: '👨‍👩‍👧‍👦' }
   };
 
   return (
@@ -326,29 +327,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  );
-}
-
-// Missing icon components - let's add them
-function Users({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-      <circle cx="9" cy="7" r="4"/>
-      <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-    </svg>
-  );
-}
-
-function Church({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="m18 7 4 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9l4-2"/>
-      <path d="M14 22v-4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4"/>
-      <path d="M18 22V5l-6-3-6 3v17"/>
-      <path d="M12 7v5"/>
-      <path d="M10 9h4"/>
-    </svg>
   );
 }
