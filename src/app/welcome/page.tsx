@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from 'next/link';
-import { Users, Heart, Coffee, BookOpen } from "lucide-react";
+import { Users, Heart, Coffee, BookOpen, UserCheck, HeartHandshake } from "lucide-react";
 import Image from 'next/image';
 
 export default function WelcomePage() {
@@ -11,74 +11,82 @@ export default function WelcomePage() {
     <div className="bg-background text-foreground">
       <header className="bg-primary text-primary-foreground py-20 text-center">
         <div className="container mx-auto">
-          <Image
-            src="/welcome.png"
-            alt="Welcome to First Baptist Church"
-            width={500}
-            height={200}
-            className="mx-auto"
-          />
+          <h1 className="text-5xl font-lora font-bold">Welcome to First Baptist</h1>
+          <p className="mt-4 text-xl text-primary-foreground/80">We're so glad you're here. Let's get you connected.</p>
         </div>
       </header>
 
-      <main className="container mx-auto py-16 px-4 space-y-20">
-        <section className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-lora font-bold text-primary-foreground mb-4">Your First Visit</h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            Joining us for the first time? We know it can be a little daunting. Here's what you can expect on a typical Sunday morning. We can't wait to meet you!
-          </p>
-        </section>
-
-        <section className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h3 className="text-2xl font-lora font-semibold text-primary-foreground mb-4">What to Expect</h3>
-            <ul className="space-y-4 text-muted-foreground">
-              <li className="flex items-start">
-                <Coffee className="h-6 w-6 text-accent mr-4 mt-1" />
-                <span><strong>Casual Atmosphere:</strong> Come as you are! You'll see everything from jeans to suits. We care about you, not what you wear.</span>
-              </li>
-              <li className="flex items-start">
-                <BookOpen className="h-6 w-6 text-accent mr-4 mt-1" />
-                <span><strong>Biblical Teaching:</strong> Our services feature messages that are relevant to your life, rooted in the truth of the Bible.</span>
-              </li>
-              <li className="flex items-start">
-                <Heart className="h-6 w-6 text-accent mr-4 mt-1" />
-                <span><strong>Worship Music:</strong> We have a blend of contemporary songs and traditional hymns, all focused on glorifying God.</span>
-              </li>
-            </ul>
-          </div>
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="font-lora">Service Times</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between items-center py-2 border-b">
-                <span><strong>Sunday Worship</strong></span>
-                <span className="font-semibold text-accent">10:30 AM</span>
-              </div>
-              <p className="text-sm text-muted-foreground pt-2">
-                We recommend arriving 10-15 minutes early to grab a coffee and find a seat. Childcare is available.
+      <main className="container mx-auto px-4 py-16 space-y-16">
+        {/* Section 1: What to Expect */}
+        <section>
+          <h2 className="text-3xl font-lora font-bold text-center mb-8">Your First Visit</h2>
+          <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-lora font-semibold mb-4">What to Expect</h3>
+              <p className="text-muted-foreground">
+                Visiting a new church can be intimidating. We get it. At First Baptist, you can expect a warm, friendly atmosphere. Our services feature contemporary worship music and a relevant message from the Bible. Don't worry about what to wear—come as you are!
               </p>
-            </CardContent>
-          </Card>
+              <Button asChild>
+                <Link href="/contact">
+                  <Button size="lg" variant="outline">
+                    Ask a Question
+                  </Button>
+                </Link>
+              </Button>
+            </div>
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="font-lora">Service Times</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex justify-between items-center py-2 border-b">
+                  <span><strong>Sunday Worship</strong></span>
+                  <span className="font-semibold text-accent">10:30 AM</span>
+                </div>
+                <p className="text-sm text-muted-foreground pt-2">
+                  We recommend arriving 10-15 minutes early to grab a coffee and find a seat. Childcare is available.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </section>
 
-        <section className="text-center bg-primary/10 p-12 rounded-lg">
-          <h2 className="text-3xl font-lora font-bold text-primary-foreground mb-4">Ready to Get Connected?</h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
-            The best way to feel at home is to get involved. Whether it's joining a small group, serving on a team, or attending an event, we have a place for you.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
+        {/* Section 2: Get Connected */}
+        <section>
+          <h2 className="text-3xl font-lora font-bold text-center mb-8">Ready to Get Connected?</h2>
+          <div className="grid md:grid-cols-3 gap-8">
             <Link href="/ministries">
-              <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Users className="mr-2 h-5 w-5" />
-                Explore Ministries
-              </Button>
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardContent className="p-6 text-center">
+                  <Users className="h-10 w-10 text-accent mx-auto mb-4" />
+                  <h3 className="text-xl font-lora font-bold mb-2">Find a Ministry</h3>
+                  <p className="text-muted-foreground">
+                    From kids to adults, there's a place for you to connect and grow.
+                  </p>
+                </CardContent>
+              </Card>
             </Link>
-            <Link href="/contact">
-              <Button size="lg" variant="outline">
-                Ask a Question
-              </Button>
+            <Link href="/#small-groups-section-id">
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardContent className="p-6 text-center">
+                  <UserCheck className="h-10 w-10 text-accent mx-auto mb-4" />
+                  <h3 className="text-xl font-lora font-bold mb-2">Join a Small Group</h3>
+                  <p className="text-muted-foreground">
+                    Life is better together. Find a small group that fits your life stage and schedule.
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+            <Link href="/volunteer">
+              <Card className="h-full hover:shadow-lg transition-shadow">
+                <CardContent className="p-6 text-center">
+                  <HeartHandshake className="h-10 w-10 text-accent mx-auto mb-4" />
+                  <h3 className="text-xl font-lora font-bold mb-2">Serve With Us</h3>
+                  <p className="text-muted-foreground">
+                    Use your gifts to make a difference in our church and community.
+                  </p>
+                </CardContent>
+              </Card>
             </Link>
           </div>
         </section>

@@ -118,8 +118,8 @@ export function CreateEventForm({ onEventCreated }: CreateEventFormProps) {
         </Button>
         {generatedSummary && (
           <div className="p-3 bg-primary/10 rounded-md border border-primary/20">
-            <h4 className="text-xs font-semibold text-primary-foreground mb-1">Generated Summary:</h4>
-            <p className="text-xs text-primary-foreground/80">{generatedSummary}</p>
+            <h4 className="text-xs font-semibold mb-1">Generated Summary:</h4>
+            <p className="text-xs text-muted-foreground">{generatedSummary}</p>
           </div>
         )}
       </div>

@@ -368,10 +368,10 @@ export default function EventsPage() {
       <div className="relative overflow-hidden bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl p-8 md:p-12 mb-8">
         <div className="relative z-10">
           <div className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-lora font-bold text-primary-foreground mb-4">
+            <h1 className="text-4xl md:text-5xl font-lora font-bold mb-4">
               Church Events
             </h1>
-            <p className="text-xl text-primary-foreground/80 mb-6">
+            <p className="text-xl mb-6">
               Discover upcoming events and join our vibrant church community. 
               From worship services to fellowship gatherings, there's something for everyone.
             </p>
@@ -432,7 +432,7 @@ export default function EventsPage() {
               {selectedDate && (
                 <div className="flex items-center justify-between bg-accent/10 border border-accent/20 rounded-lg p-4">
                   <div>
-                    <h3 className="font-medium text-primary-foreground">
+                    <h3 className="font-medium">
                       Events for {selectedDate.toLocaleDateString('en-US', { 
                         weekday: 'long',
                         year: 'numeric', 

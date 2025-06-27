@@ -87,10 +87,10 @@ export default function WhatToExpectPage() {
         <Badge variant="secondary" className="text-accent-foreground bg-accent/10">
           First Time Visitor
         </Badge>
-        <h1 className="text-4xl md:text-5xl font-lora font-bold text-primary-foreground">
+        <h1 className="text-4xl md:text-5xl font-lora font-bold">
           What to Expect
         </h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+        <p className="text-xl max-w-3xl mx-auto leading-relaxed">
           We're excited you're considering visiting First Baptist Church Fenton! 
           Here's everything you need to know to feel comfortable and prepared for your first visit.
         </p>
@@ -99,10 +99,10 @@ export default function WhatToExpectPage() {
       {/* Service Schedule */}
       <section className="space-y-8">
         <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-lora font-bold mb-4">
             Service Times
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto">
             Choose the service time that works best for you and your family.
           </p>
         </div>
@@ -131,10 +131,10 @@ export default function WhatToExpectPage() {
       {/* What Happens During Service */}
       <section className="space-y-8">
         <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-lora font-bold mb-4">
             What Happens During Service
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto">
             Here's a typical flow of our Sunday morning worship service.
           </p>
         </div>
@@ -159,10 +159,10 @@ export default function WhatToExpectPage() {
       {/* Practical Information */}
       <section className="space-y-8">
         <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-lora font-bold mb-4">
             Practical Information
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto">
             Everything you need to know for a smooth visit.
           </p>
         </div>
@@ -185,7 +185,7 @@ export default function WhatToExpectPage() {
       {/* FAQ Section */}
       <section className="space-y-8">
         <div className="text-center">
-          <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground mb-4">
+          <h2 className="text-3xl md:text-4xl font-lora font-bold mb-4">
             Common Questions
           </h2>
         </div>
@@ -235,10 +235,10 @@ export default function WhatToExpectPage() {
 
       {/* Call to Action */}
       <section className="text-center space-y-6 bg-accent/5 rounded-2xl p-8 md:p-12">
-        <h2 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground">
+        <h2 className="text-3xl md:text-4xl font-lora font-bold">
           Ready for Your Visit?
         </h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+        <p className="text-lg max-w-2xl mx-auto">
           We can't wait to meet you! If you have any other questions, don't hesitate to reach out.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">

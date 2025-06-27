@@ -439,7 +439,7 @@ export default function AdminPage() {
               <div>
                 <div className="flex items-center mb-4">
                   <Shield className="h-8 w-8 text-accent mr-3" />
-                  <h1 className="text-3xl md:text-4xl font-lora font-bold text-primary-foreground">
+                  <h1 className="text-3xl md:text-4xl font-lora font-bold">
                     Admin Dashboard
                   </h1>
                 </div>

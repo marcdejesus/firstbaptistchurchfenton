@@ -17,7 +17,7 @@
     --card-foreground: 0 0% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 0 0% 9%;
 
     --primary: 24 89% 54%; /* Orange from design system */
     --primary-foreground: 0 0% 100%; /* White text on orange */
@@ -26,7 +26,7 @@
     --secondary-foreground: 0 0% 9%;
 
     --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%; /* Medium gray for muted text */
+    --muted-foreground: 0 0% 9%; /* Medium gray for muted text */
 
     --accent: 24 89% 54%; /* Vibrant Orange from logo - approx #F27421 */
     --accent-foreground: 0 0% 100%; /* White text on orange */
@@ -65,7 +65,7 @@
     --card-foreground: 0 0% 98%;
 
     --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover-foreground: 0 0% 98%;
 
     --primary: 24 89% 58%; /* Brighter Orange for dark mode */
     --primary-foreground: 0 0% 100%;
@@ -74,7 +74,7 @@
     --secondary-foreground: 0 0% 98%;
 
     --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
+    --muted-foreground: 0 0% 98%;
 
     --accent: 24 89% 58%; /* Brighter Orange for dark mode */
     --accent-foreground: 0 0% 100%; 

@@ -114,25 +114,25 @@ const MinistriesPage: React.FC = () => {
                   <div className="w-full lg:w-1/2 space-y-6">
                     <div className="flex items-center space-x-3 mb-4">
                       <IconComponent className="h-8 w-8 text-accent" />
-                      <h2 className="text-3xl font-lora font-bold text-primary-foreground">
+                      <h2 className="text-3xl font-lora font-bold">
                         {ministry.title}
                       </h2>
                     </div>
                     
-                    <p className="text-lg text-primary-foreground/80 leading-relaxed">
+                    <p className="text-lg text-muted-foreground leading-relaxed">
                       {ministry.description}
                     </p>
 
                     {/* Highlights */}
                     <div className="space-y-3">
-                      <h3 className="text-xl font-semibold text-primary-foreground">
+                      <h3 className="text-xl font-semibold">
                         What We Offer:
                       </h3>
                       <ul className="space-y-2">
                         {ministry.highlights.map((highlight, highlightIndex) => (
                           <li key={highlightIndex} className="flex items-start space-x-3">
                             <div className="w-2 h-2 bg-accent rounded-full mt-2 flex-shrink-0"></div>
-                            <span className="text-primary-foreground/80">{highlight}</span>
+                            <span className="text-muted-foreground">{highlight}</span>
                           </li>
                         ))}
                       </ul>
