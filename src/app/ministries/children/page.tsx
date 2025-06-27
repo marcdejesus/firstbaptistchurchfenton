@@ -1,13 +1,26 @@
 import { FC } from 'react';
+import { PageLayout } from '@/components/layout/PageLayout';
+import { Header } from '@/components/layout/Header';
 
 const ChildrensMinistryPage: FC = () => {
+  const breadcrumbs = [
+    { label: "Home", href: "/" },
+    { label: "Ministries", href: "/ministries" },
+    { label: "Children" },
+  ];
+
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold">Children's Ministry</h1>
-      <p className="mt-4 text-lg">
-        Information about our ministry for children.
-      </p>
-    </main>
+    <>
+      <Header breadcrumbs={breadcrumbs} />
+      <PageLayout
+        title="Children's Ministry"
+        subtitle="Information about our ministry for children."
+      >
+        <p>
+          More content about the children's ministry can go here.
+        </p>
+      </PageLayout>
+    </>
   );
 };
 
