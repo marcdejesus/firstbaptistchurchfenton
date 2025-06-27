@@ -65,7 +65,7 @@ export default function MissionsPage() {
           </p>
         </div>
 
-        <WorldMap />
+        {/* <WorldMap /> */}
 
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-center mb-10">Our Partners in the Field</h2>
