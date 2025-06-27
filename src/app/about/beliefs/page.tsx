@@ -7,73 +7,62 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import Link from 'next/link';
-
-// Mock data for beliefs
-// TODO: Replace with your church's actual statement of faith
-const beliefs = [
-  {
-    id: 'scriptures',
-    title: 'The Scriptures',
-    content: 'We believe the Holy Bible is the inspired, infallible, and authoritative Word of God. It is the final authority for faith and life, revealing God\'s plan of salvation and His principles for holy living.',
-  },
-  {
-    id: 'god',
-    title: 'The Godhead',
-    content: 'We believe in one God, eternally existing in three persons: the Father, the Son (Jesus Christ), and the Holy Spirit. These three are co-equal in power and glory, and they work in perfect unity.',
-  },
-  {
-    id: 'jesus',
-    title: 'The Person and Work of Christ',
-    content: 'We believe in the deity of our Lord Jesus Christ, in His virgin birth, in His sinless life, in His miracles, in His vicarious and atoning death through His shed blood, in His bodily resurrection, in His ascension to the right hand of the Father, and in His personal return in power and glory.',
-  },
-  {
-    id: 'salvation',
-    title: 'Salvation',
-    content: 'We believe that salvation is a gift from God, received by grace through faith in the Lord Jesus Christ. It is not earned by works but is freely given to all who repent of their sins and trust in Christ alone for eternal life.',
-  },
-  {
-    id: 'church',
-    title: 'The Church',
-    content: 'We believe that the Church is the body of Christ, a spiritual organism made up of all born-again believers. We are called to worship God, edify one another, and proclaim the Gospel to the ends of the earth.',
-  },
-];
+import { PageLayout } from '@/components/layout/PageLayout';
+import { beliefsData, executiveSummary, introduction } from './content';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Header } from '@/components/layout/Header';
 
 export default function BeliefsPage() {
-  return (
-    <div className="bg-white">
-      <div className="container mx-auto px-4 py-8 md:py-12">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">Our Beliefs</h1>
-            <p className="mt-4 text-lg text-muted-foreground">
-              This is the foundation of our faith and the core of our church. These are the truths that unite us.
-            </p>
-          </div>
-          
-          <Accordion type="single" collapsible className="w-full">
-            {beliefs.map((belief) => (
-              <AccordionItem key={belief.id} value={belief.id}>
-                <AccordionTrigger className="text-xl font-semibold">
-                  {belief.title}
-                </AccordionTrigger>
-                <AccordionContent className="text-base text-muted-foreground leading-relaxed">
-                  {belief.content}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+  const breadcrumbs = [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+    { label: "Our Beliefs" },
+  ];
 
-          <div className="mt-12 text-center border-t pt-8">
-            <p className="text-muted-foreground">
-              Our full statement of faith is available upon request. If you have any questions, please don't hesitate to{' '}
-              <Link href="/contact" className="text-primary hover:underline">
-                contact us
-              </Link>.
-            </p>
+  return (
+    <>
+      <Header breadcrumbs={breadcrumbs} />
+      <PageLayout
+        title="Our Beliefs"
+        subtitle="The theological foundations that guide our church"
+        variant="narrow"
+      >
+        <div className="space-y-12">
+          <Card>
+            <CardHeader>
+              <CardTitle>{executiveSummary.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">{executiveSummary.content}</p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>{introduction.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">{introduction.content}</p>
+            </CardContent>
+          </Card>
+
+          <div>
+            <h2 className="text-3xl font-bold text-center mb-8">Statement of Faith</h2>
+            <Accordion type="single" collapsible className="w-full" defaultValue='core-theological-foundations'>
+              {beliefsData.map((belief) => (
+                <AccordionItem key={belief.id} value={belief.id}>
+                  <AccordionTrigger className="text-2xl font-semibold hover:no-underline">
+                    {belief.title}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base text-muted-foreground leading-relaxed pt-4">
+                    {belief.content}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
-      </div>
-    </div>
+      </PageLayout>
+    </>
   );
 } 

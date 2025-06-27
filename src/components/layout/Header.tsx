@@ -25,6 +25,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { navigationCategories, MegaMenuDropdown, MegaMenuTrigger, userNavigation } from './MegaMenu';
 import { SearchBar } from './SearchBar';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Breadcrumbs, BreadcrumbItem } from '../ui/breadcrumbs';
 
 // Type definitions for navigation
 type NavItem = {
@@ -32,6 +33,7 @@ type NavItem = {
   href: string;
   description: string;
   icon: React.ComponentType<LucideProps>;
+  featured?: boolean;
 };
 
 type NavCategory = {
@@ -66,7 +68,11 @@ const enhancedMobileNavItems: (NavCategory | NavLink)[] = [
   }
 ];
 
-export function Header() {
+export interface HeaderProps {
+  breadcrumbs?: BreadcrumbItem[];
+}
+
+export function Header({ breadcrumbs }: HeaderProps) {
   const { user, logout } = useUser();
   const isMobile = useIsMobile();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -275,38 +281,47 @@ export function Header() {
     </div>
   );
 
+  const headerClasses = cn(
+    "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+    {
+      "bg-white/80 backdrop-blur-sm shadow-md": isScrolled || isMobile,
+      "bg-transparent": !isScrolled && !isMobile,
+    }
+  );
+
   return (
-    <>
-      <header className={cn("header", isScrolled && "scrolled")}>
-        <div className="flex items-center justify-between h-16 md:h-20 px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center space-x-4">
-            <Link href="/" className="flex items-center space-x-2">
-              <Image
-                src="/logo.svg"
-                alt="First Baptist Church of Fenton Logo"
-                width={isMobile ? 32 : 40}
-                height={isMobile ? 32 : 40}
-                priority
-              />
-              <VisuallyHidden><h1>First Baptist Church of Fenton</h1></VisuallyHidden>
-              <span className="hidden sm:inline font-lora font-semibold text-lg">
-                FBC Fenton
-              </span>
+    <header className={headerClasses} onClick={(e) => e.stopPropagation()}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          <div className="flex items-center">
+            <Link href="/" className="flex-shrink-0">
+              <div className="flex items-center space-x-2">
+                <Image src="/logo.svg" alt="FBC Fenton Logo" width={40} height={40} />
+                <span className={cn(
+                  "font-lora font-bold text-xl tracking-tight",
+                  (isScrolled || isMobile) ? 'text-gray-900' : 'text-white'
+                )}>
+                  First Baptist Fenton
+                </span>
+              </div>
             </Link>
           </div>
-
+          
           {isMobile ? renderMobileNav() : renderDesktopNav()}
         </div>
-      </header>
-      {isMobile && isSearchOpen && (
-        <div className="fixed top-[60px] left-0 right-0 bg-background z-40 p-4 border-b">
-          <SearchBar 
-            onSearch={handleSearch} 
-            placeholder="Search our site..."
-            autoFocus
-          />
+        {isSearchOpen && isMobile && (
+          <div className="py-4 px-2">
+            <SearchBar onSearch={handleSearch} placeholder="Search our site..." autoFocus />
+          </div>
+        )}
+      </div>
+      {breadcrumbs && breadcrumbs.length > 0 && (
+        <div className="bg-gray-100/50 border-t border-b border-gray-200/50">
+           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+              <Breadcrumbs items={breadcrumbs} />
+           </div>
         </div>
       )}
-    </>
+    </header>
   );
 }

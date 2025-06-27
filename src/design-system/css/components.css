@@ -1134,6 +1134,7 @@ body, p, .text-regular {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding-top: 140px; /* Adjust this value based on the actual height of your fixed header */
 }
 
 .page-header {

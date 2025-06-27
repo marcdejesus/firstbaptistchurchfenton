@@ -34,10 +34,6 @@ const PageLayout = React.forwardRef<HTMLDivElement, PageLayoutProps>(
 
     return (
       <div ref={ref} className={cn("page-layout", className)}>
-        <header className="page-header">
-          <Header />
-        </header>
-
         <main className="page-main">
           {variant === "hero" ? (
             <>
@@ -48,17 +44,11 @@ const PageLayout = React.forwardRef<HTMLDivElement, PageLayoutProps>(
                 </div>
               </section>
               <div className={contentClasses}>
-                {showBreadcrumbs && breadcrumbs.length > 0 && (
-                  <Breadcrumbs items={breadcrumbs} />
-                )}
                 {children}
               </div>
             </>
           ) : (
             <div className={contentClasses}>
-              {showBreadcrumbs && breadcrumbs.length > 0 && (
-                <Breadcrumbs items={breadcrumbs} />
-              )}
               
               {(title || subtitle) && (
                 <div className="section-header">
