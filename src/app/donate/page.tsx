@@ -1,78 +1,257 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Link from "next/link";
-import { DollarSign, ExternalLink, Heart } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, ChevronRight, Mail, Phone, MapPin, ImageIcon, Heart, Users, Briefcase } from "lucide-react";
+
+// Placeholder for images
+const ImagePlaceholder = () => (
+  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+    <ImageIcon className="text-gray-400 w-12 h-12" />
+  </div>
+);
 
 export default function DonatePage() {
-  // PayPal donation URL
-  const paypalDonationUrl = "https://www.paypal.com/donate?token=7ZK2msRFAeEPABp5v30NBZ2nLeUL1qzDW-tI8eJjHrylgMrNJxGCmNY9OBY7tObacJXlVgkDhaJZWtWk";
+  const faqItems = [
+    {
+      question: "How can I give?",
+      answer: "You can give online through our secure donation portal. We also accept donations during services or by mail. Checks can be made payable to First Baptist Church of Fenton.",
+    },
+    {
+      question: "Is my donation secure?",
+      answer: "Yes, our online giving platform uses industry-standard encryption to ensure your information is safe. We prioritize your privacy and security. You can give with confidence.",
+    },
+    {
+      question: "What is the process?",
+      answer: "Simply visit our donation page, select the amount, and choose your preferred payment method. Follow the prompts to complete your donation. You will receive a confirmation email for your records.",
+    },
+    {
+      question: "Can I donate anonymously?",
+      answer: "Yes, you have the option to give anonymously through our online portal. Your privacy is important to us. If you choose to remain anonymous, your information will not be shared.",
+    },
+    {
+      question: "Will I receive a receipt?",
+      answer: "Absolutely! You will receive a receipt via email after your donation is processed. This receipt can be used for tax purposes. If you need a physical copy, please let us know.",
+    },
+  ];
 
   return (
-    <div className="max-w-2xl mx-auto py-12">
-      <Card className="shadow-xl bg-card">
-        <CardHeader className="text-center">
-          <DollarSign className="mx-auto h-16 w-16 text-accent mb-4" />
-          <CardTitle className="text-3xl font-lora text-card-foreground">Support Our Ministry</CardTitle>
-          <CardDescription className="text-card-foreground/80 pt-2">
-            Your generous contributions help us spread the Word, support our community, and maintain our church.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="text-center space-y-6">
-          {/* Scripture-based message about giving */}
-          <div className="bg-primary/10 rounded-lg p-6 border border-primary/20">
-            <div className="flex items-center justify-center mb-3">
-              <Heart className="h-6 w-6 text-accent mr-2" />
-              <h3 className="text-lg font-lora font-semibold text-card-foreground">Don't Give Under Compulsion</h3>
+    <div className="bg-gray-50">
+      {/* Hero Section */}
+      <section className="text-center py-20 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-5xl font-bold text-gray-800">Give to Grow</h1>
+        <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+          Your generosity fuels our mission and helps us serve our community and spread the Word.
+        </p>
+        <div className="mt-8 flex justify-center gap-4">
+          <Button size="lg" className="bg-primary text-primary-foreground">Donate</Button>
+          <Button size="lg" variant="outline">Learn More</Button>
+        </div>
+      </section>
+
+      {/* Explore Ways to Support */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 className="text-4xl font-bold text-gray-800">
+              Explore the Many Ways to Support Our Church Community
+            </h2>
+            <p className="mt-4 text-lg text-gray-600">
+              Your donation supports our mission and helps us serve our community. Discover how you can contribute through various giving options.
+            </p>
+            <div className="mt-10 grid sm:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-xl font-semibold">Online</h3>
+                <p className="mt-2 text-gray-600">Securely through our website anytime.</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold">In-Person</h3>
+                <p className="mt-2 text-gray-600">During services to give directly.</p>
+              </div>
             </div>
-            <p className="text-card-foreground/90 leading-relaxed mb-4">
-              At First Baptist Church, we believe that giving should never be done out of compulsion or pressure. 
-              Instead, we encourage giving from the heart, as it says in 2 Corinthians 9:6-8:
-            </p>
-            <blockquote className="italic text-card-foreground/80 border-l-4 border-accent pl-4 mb-4">
-              "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, 
-              for God loves a cheerful giver."
-            </blockquote>
-            <p className="text-card-foreground/90 leading-relaxed">
-              If you feel led to make a donation to support our church and its mission, we offer a convenient and 
-              secure online donation system. Simply click on the donate button and follow the prompts to make your 
-              contribution. Thank you for your generosity and support.
-            </p>
           </div>
+          <div className="h-96 rounded-lg overflow-hidden">
+            <Image
+              src="/volunteer.png"
+              alt="Community service"
+              width={600}
+              height={400}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
 
-          {/* PayPal donation button */}
-          <Button 
-            size="lg" 
-            className="bg-accent text-accent-foreground hover:bg-accent/90 shadow-md w-full sm:w-auto"
-            asChild
-          >
-            <Link 
-              href={paypalDonationUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Donate securely through PayPal (opens in new tab)"
-            >
-              <ExternalLink className="mr-2 h-5 w-5" />
-              Donate Securely Online
-            </Link>
-          </Button>
+      {/* Support Ministries and Outreach */}
+      <section className="bg-white py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <Heart className="w-12 h-12 text-primary mb-4" />
+            <h2 className="text-4xl font-bold text-gray-800">
+              Support Our Ministries and Community Outreach
+            </h2>
+            <p className="mt-4 text-lg text-gray-600">
+              Your generous donations empower us to enhance our ministries and outreach programs. Every contribution, no matter the size, makes a significant impact on our community and beyond.
+            </p>
+            <div className="mt-8 flex items-center gap-6">
+              <Button>Donate</Button>
+              <Link href="#" className="flex items-center text-primary font-semibold">
+                Learn More <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+          <div className="h-96">
+            <ImagePlaceholder />
+          </div>
+        </div>
+      </section>
 
-          {/* Additional giving options */}
-          <p className="text-sm text-muted-foreground">
-            If you prefer to give by mail or in person, please visit our{" "}
-            <Link href="/#contact-us-section-id" className="text-accent hover:underline">
-              contact section
-            </Link>{" "}
-            for more details.
+      {/* Support Our Church's Mission */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <Card className="max-w-7xl mx-auto overflow-hidden">
+          <div className="grid md:grid-cols-2">
+            <div className="p-12">
+              <h2 className="text-4xl font-bold text-gray-800">Support Our Church's Mission</h2>
+              <p className="mt-4 text-lg text-gray-600">
+                Your generous giving helps us serve our community and spread the message of hope.
+              </p>
+              <div className="mt-8 flex gap-4">
+                <Button>Donate</Button>
+                <Button variant="outline">Give</Button>
+              </div>
+            </div>
+            <div className="bg-gray-200">
+              <ImagePlaceholder />
+            </div>
+          </div>
+        </Card>
+      </section>
+
+      {/* Generous Giving Options */}
+      <section className="bg-white py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-primary font-semibold">Giving</p>
+          <h2 className="mt-2 text-4xl font-bold text-gray-800">
+            Support Our Church Through Generous Giving
+          </h2>
+          <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+            Your contributions help us fulfill our mission and serve our community. Explore various ways you can support our church today.
           </p>
+        </div>
+        <div className="max-w-7xl mx-auto mt-16 grid md:grid-cols-3 gap-8">
+          <Card className="text-center">
+            <CardHeader>
+              <div className="h-48 bg-gray-200 mb-4 flex items-center justify-center">
+                 <Users className="text-gray-400 w-12 h-12" />
+              </div>
+              <CardTitle>Opportunities to Give Back to Our Community</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">Join us in making a difference through your generosity.</p>
+              <div className="mt-6 flex justify-center items-center gap-4">
+                <Button variant="outline">Donate</Button>
+                <Link href="#" className="flex items-center text-primary font-semibold">
+                  Learn More <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="text-center">
+            <CardHeader>
+              <div className="h-48 bg-gray-200 mb-4 flex items-center justify-center">
+                 <Heart className="text-gray-400 w-12 h-12" />
+              </div>
+              <CardTitle>Tithe: Support Our Church's Ongoing Ministries</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">Your tithes are vital for our Church's operations.</p>
+               <div className="mt-6 flex justify-center items-center gap-4">
+                <Button variant="outline">Donate</Button>
+                <Link href="#" className="flex items-center text-primary font-semibold">
+                  Learn More <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="text-center">
+            <CardHeader>
+              <div className="h-48 bg-gray-200 mb-4 flex items-center justify-center">
+                 <Briefcase className="text-gray-400 w-12 h-12" />
+              </div>
+              <CardTitle>Missions: Impact Lives Locally and Globally</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">Help us spread hope through mission work.</p>
+              <div className="mt-6 flex justify-center items-center gap-4">
+                <Button variant="outline">Donate</Button>
+                <Link href="#" className="flex items-center text-primary font-semibold">
+                  Learn More <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
 
-          {/* Tax deductible notice */}
-          <p className="text-xs text-muted-foreground pt-4">
-            All donations are tax-deductible as allowed by law. Thank you for your faithfulness!
+      {/* FAQ Section */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl font-bold text-center text-gray-800">FAQs</h2>
+          <p className="mt-4 text-center text-lg text-gray-600">
+            Find answers to your questions about giving and how your donations make a difference.
           </p>
-        </CardContent>
-      </Card>
+          <Accordion type="single" collapsible className="w-full mt-12">
+            {faqItems.map((item, index) => (
+              <AccordionItem value={`item-${index}`} key={index}>
+                <AccordionTrigger className="text-lg font-semibold">{item.question}</AccordionTrigger>
+                <AccordionContent className="text-base text-gray-700">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+          <div className="mt-16 text-center">
+             <h3 className="text-2xl font-bold">Still have questions?</h3>
+             <div className="mt-6">
+                <Button variant="outline">Contact</Button>
+             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Get in Touch Section */}
+      <section className="bg-white py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <p className="text-primary font-semibold">Support</p>
+          <h2 className="mt-2 text-4xl font-bold text-gray-800">Get in Touch</h2>
+          <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+            We're here to help you with your donations.
+          </p>
+        </div>
+        <div className="max-w-7xl mx-auto mt-16 grid md:grid-cols-3 gap-12 text-center">
+          <div>
+            <Mail className="mx-auto h-12 w-12 text-primary" />
+            <h3 className="mt-6 text-xl font-semibold">Email</h3>
+            <p className="mt-2 text-gray-600">For inquiries about donations, please reach out via email.</p>
+            <a href="mailto:info@firstbaptistfenton.org" className="mt-4 inline-block text-primary font-semibold">info@firstbaptistfenton.org</a>
+          </div>
+          <div>
+            <Phone className="mx-auto h-12 w-12 text-primary" />
+            <h3 className="mt-6 text-xl font-semibold">Phone</h3>
+            <p className="mt-2 text-gray-600">Call us for immediate assistance regarding your donations.</p>
+            <a href="tel:+1-555-123-4567" className="mt-4 inline-block text-primary font-semibold">+1 (555) 123-4567</a>
+          </div>
+          <div>
+            <MapPin className="mx-auto h-12 w-12 text-primary" />
+            <h3 className="mt-6 text-xl font-semibold">Office</h3>
+            <p className="mt-2 text-gray-600">Visit us at our office for more information.</p>
+            <p className="mt-4 text-primary font-semibold">123 Church St, Fenton, MI 48430, USA</p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
