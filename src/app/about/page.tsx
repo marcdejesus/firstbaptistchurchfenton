@@ -32,9 +32,9 @@ export default function AboutUsPage() {
     <div className="bg-scheme-3-background">
       <div className="container mx-auto px-4 py-8 md:py-16">
         <div className="text-center mb-12">
-          <h1 className="text-desktop-heading1 font-heading font-bold tracking-tight text-scheme-3-text">About First Baptist Church</h1>
+          <h1 className="text-desktop-heading1 font-heading font-bold tracking-tight text-scheme-3-text">About Us</h1>
           <p className="mt-4 text-desktop-textLarge text-scheme-3-text opacity-80 max-w-3xl mx-auto font-body">
-            We are a community of believers dedicated to knowing God and making Him known. Our mission is to lead people into a growing relationship with Jesus Christ.
+            At First Baptist Church of Fenton, our mission is simple: to glorify God by making disciples who love deeply, live authentically, and lead others to Jesus. We are a gospel-centered church committed to Scripture, to each other, and to our calling—both locally and globally.
           </p>
         </div>
 

@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { PageLayout } from '@/components/layout/PageLayout';
-import { historyMilestones } from './content';
+import { historyMilestones, historyIntro } from './content';
 import { Header } from '@/components/layout/Header';
 
 export default function HistoryPage() {
@@ -17,10 +17,13 @@ export default function HistoryPage() {
     <>
       <Header breadcrumbs={breadcrumbs} />
       <PageLayout
-        title="Our History"
-        subtitle="A journey of faith, community, and God's faithfulness through the years."
+        title={historyIntro.title}
+        subtitle={historyIntro.subtitle}
         variant="wide"
       >
+        <div className="mb-12 text-center">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">{historyIntro.paragraph}</p>
+        </div>
         <div className="relative">
           {/* The timeline vertical line */}
           <div className="absolute left-1/2 h-full w-0.5 bg-primary/20 transform -translate-x-1/2" />
