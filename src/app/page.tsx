@@ -29,28 +29,37 @@ export default function Home() {
           <div className="flex-1 flex flex-col items-start gap-8 text-center md:text-left">
             <div className="w-full flex flex-col items-start gap-6">
               <h1 className="w-full text-scheme-1-text text-4xl sm:text-5xl font-heading font-bold leading-tight">
-                Welcome to First Baptist Church of Fenton, Michigan
+                No matter where you've been, you're welcome here.
               </h1>
               <p className="w-full text-scheme-1-text text-lg font-body leading-relaxed">
-                Join us for uplifting worship and community. We gather every Sunday at 10 AM at 860 N Leroy St, Fenton, MI.
+                Come as you are and discover the hope, truth, and grace of Jesus Christ.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 w-full">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 w-full sm:w-auto" asChild>
-                <Link href="/visit">Learn More</Link>
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center md:justify-start gap-4 w-full">
+              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
+                <Link href="/visit">Plan a Visit</Link>
               </Button>
-              <Button size="lg" variant="outline" className="w-full sm:w-auto" asChild>
-                <Link href="/events">Sign Up</Link>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/sermons">Watch a Sermon</Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/next-steps">Get Involved</Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/donate">Give Online</Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <Link href="/contact">Contact Us</Link>
               </Button>
             </div>
           </div>
           <div className="flex-1 mt-8 md:mt-0">
             <Image 
-              src="/bible.png" 
-              alt="Holy Bible"
+              src="https://t4.ftcdn.net/jpg/02/14/74/17/360_F_214741783_rc2gf6sEFtvsN8tYK76kDEG9BzfjSN09.jpg"
+              alt="Welcoming church community"
               width={600} 
               height={600} 
-              className="rounded-lg object-cover mx-auto animate-slide-in-rotate"
+              className="rounded-lg object-cover mx-auto"
             />
           </div>
         </div>

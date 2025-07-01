@@ -197,7 +197,7 @@ export function Header({ breadcrumbs }: HeaderProps) {
           <SheetHeader className="p-4 border-b">
             <SheetTitle className="flex items-center space-x-2">
               <Image src="/logo.svg" alt="FBC Logo" width={32} height={32} />
-              <span className="font-lora font-semibold text-lg">FBC Fenton</span>
+              <span className="font-heading font-semibold text-lg">FBC Fenton</span>
             </SheetTitle>
           </SheetHeader>
           <ScrollArea className="flex-grow">
