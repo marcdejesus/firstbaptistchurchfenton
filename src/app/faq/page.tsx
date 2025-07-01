@@ -1,108 +1,75 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { db } from '@/lib/firebase';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { PageLayout } from '@/components/layout/PageLayout';
 
-interface FAQ {
-  id: string;
-  question: string;
-  answer: string;
-  category: string;
-}
-
-// Mock data simulating Firestore structure.
-// Replace this with actual data fetching from Firestore.
-const mockFaqs: FAQ[] = [
+const faqs = [
   {
-    id: '1',
-    question: "What time is your Sunday service?",
-    answer: "Our Sunday worship service begins at 10:30 AM. We also have small groups that meet at 9:30 AM.",
-    category: "About Our Services"
+    question: "1. What time are Sunday services?",
+    answer: "Sundays at 10:30 AM. Bible classes for all ages begin at 9:00 AM."
   },
   {
-    id: '2',
-    question: "What should I wear?",
-    answer: "Come as you are! You'll see everything from jeans to suits. We care more about you than what you're wearing.",
-    category: "About Our Services"
+    question: "2. What should I wear?",
+    answer: "Come as you are! Most people dress casual or business casual."
   },
   {
-    id: '3',
-    question: "Is there something for my kids?",
-    answer: "Yes! We have a vibrant Kids Ministry for children from birth through 5th grade during our 10:30 AM service. We also have a Student Ministry for older kids.",
-    category: "For Your Family"
+    question: "3. Is there something for my kids?",
+    answer: "Yes! We offer nursery for infants and toddlers, and a full Kids Church for PreK–5th grade during the 10:30 AM service."
   },
   {
-    id: '4',
-    question: "How can I get involved?",
-    answer: "A great first step is to join a Small Group or attend one of our upcoming events. You can also explore our volunteer opportunities to serve with us.",
-    category: "Getting Involved"
+    question: "4. How do I get involved in a small group?",
+    answer: "Visit our Next Steps page or stop by the Welcome Center. We'll help you find a group that fits your schedule and stage of life."
   },
   {
-    id: '5',
-    question: "What are your beliefs?",
-    answer: "We are a Baptist church and our beliefs are rooted in the Bible. You can read our full statement of faith on our 'Our Beliefs' page.",
-    category: "Our Beliefs"
+    question: "5. How do I become a member?",
+    answer: "We offer a membership class quarterly. It's a great chance to learn about our beliefs, leadership, and mission. Sign up through our Next Steps page or email discipleship@fbfenton.org."
   },
+  {
+    question: "6. Do you offer counseling?",
+    answer: "Yes, we provide biblical counseling for individuals, couples, and families. Visit our counseling page or email counseling@fbfenton.org."
+  },
+  {
+    question: "7. How can I serve?",
+    answer: "There are many opportunities to serve—from kids and youth to worship, tech, and missions. Fill out the Volunteer Interest Form on our Volunteer page."
+  },
+  {
+    question: "8. What denomination are you?",
+    answer: "We are an independent Baptist church committed to the authority of Scripture and the centrality of the gospel."
+  },
+  {
+    question: "9. Do you livestream your services?",
+    answer: "Yes! You can watch live on our YouTube channel or find past messages in our sermon archive."
+  },
+  {
+    question: "10. How can I talk to a pastor?",
+    answer: "Reach out anytime by emailing info@fbfenton.org or calling the church office. A pastor will be glad to connect with you."
+  }
 ];
 
 export default function FAQPage() {
-  const [faqs, setFaqs] = useState<FAQ[]>(mockFaqs);
-  const [loading, setLoading] = useState(false);
-
-  // NOTE: This is an example of how you would fetch from firestore
-  // useEffect(() => {
-  //   const fetchFaqs = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const q = query(collection(db, "faqs"), orderBy("category"));
-  //       const querySnapshot = await getDocs(q);
-  //       const faqsData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as FAQ[];
-  //       setFaqs(faqsData);
-  //     } catch (error) {
-  //       console.error("Error fetching FAQs: ", error);
-  //     }
-  //     setLoading(false);
-  //   };
-  //   fetchFaqs();
-  // }, []);
-
-  const groupedFaqs = faqs.reduce((acc, faq) => {
-    (acc[faq.category] = acc[faq.category] || []).push(faq);
-    return acc;
-  }, {} as Record<string, FAQ[]>);
-
-
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8 text-center">Frequently Asked Questions</h1>
-      {loading ? (
-        <p>Loading FAQs...</p>
-      ) : (
+    <PageLayout
+        title="Frequently Asked Questions"
+        subtitle="Find answers to common questions about our church, services, and how to get involved."
+    >
         <div className="max-w-3xl mx-auto">
-          {Object.keys(groupedFaqs).map((category) => (
-            <div key={category} className="mb-8">
-              <h2 className="text-2xl font-semibold mb-4">{category}</h2>
-              <Accordion type="single" collapsible className="w-full">
-                {groupedFaqs[category].map(faq => (
-                  <AccordionItem key={faq.id} value={faq.id}>
-                    <AccordionTrigger>{faq.question}</AccordionTrigger>
-                    <AccordionContent>
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          ))}
+            <Accordion type="single" collapsible className="w-full">
+            {faqs.map((faq, index) => (
+                <AccordionItem key={index} value={`item-${index}`}>
+                <AccordionTrigger className="text-left">{faq.question}</AccordionTrigger>
+                <AccordionContent>
+                    {faq.answer}
+                </AccordionContent>
+                </AccordionItem>
+            ))}
+            </Accordion>
         </div>
-      )}
-    </div>
+    </PageLayout>
   );
 } 

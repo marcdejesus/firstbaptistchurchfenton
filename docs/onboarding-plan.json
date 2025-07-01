@@ -27,7 +27,7 @@
     {
       "phase": 5,
       "title": "Core Pages (Prayer, Donate, Contact, FAQ)",
-      "completion_status": false,
+      "completion_status": true,
       "prompt": "Update the core informational pages of the website. 1. `src/app/prayer/page.tsx`: Add a simple form for prayer requests that sends submissions to prayer@fbfenton.org. 2. `src/app/donate/page.tsx`: Add a button or link for online giving (use a placeholder link for now) and provide the mailing address for checks. 3. `src/app/contact/page.tsx`: Update the church's phone number, email, office hours, and add links to their social media profiles (Facebook, Instagram, YouTube). 4. `src/app/faq/page.tsx`: Populate the page with the 10 frequently asked questions and their answers as provided in the document."
     },
     {
