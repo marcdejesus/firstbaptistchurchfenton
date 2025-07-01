@@ -15,7 +15,7 @@
     {
       "phase": 3,
       "title": "Plan a Visit Section Update",
-      "completion_status": false,
+      "completion_status": true,
       "prompt": "Please update the 'Plan a Visit' section using the client's detailed information. 1. In `src/app/visit/page.tsx`, update the service times to include Sunday and Wednesday details, the full church address, and specific instructions for parking and finding the main entrance. 2. In `src/app/visit/what-to-expect/page.tsx`, describe a typical worship service, the dress code, and the programs available for children and babies. Mention the welcome center and the gift for first-time guests."
     },
     {

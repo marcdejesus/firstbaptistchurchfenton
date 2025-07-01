@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from "@/components/ui/card";
-import { Clock, MapPin, Mail, Users, Calendar } from "lucide-react";
+import { Clock, MapPin, Mail, Users, Calendar, Car } from "lucide-react";
 import Link from "next/link";
 
 export default function VisitPage() {
@@ -10,22 +10,24 @@ export default function VisitPage() {
     <div className="bg-background">
       <header className="bg-primary text-primary-foreground py-20 text-center">
         <div className="container mx-auto">
-          <h1 className="text-5xl font-lora font-bold">Visit Us</h1>
-          <p className="mt-4 text-xl text-primary-foreground/80">We look forward to welcoming you!</p>
+          <h1 className="text-5xl font-heading font-bold">Plan Your Visit</h1>
+          <p className="mt-4 text-xl text-primary-foreground/80 max-w-2xl mx-auto">
+            We'd love to meet you! Whether you're new to church or just new to the area, we want your first visit to be easy, meaningful, and welcoming.
+          </p>
         </div>
       </header>
       
       <main className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-2 gap-16 items-center mb-16">
-          {/* Location & Service Times */}
-          <div className="space-y-8">
+        <div className="grid md:grid-cols-2 gap-16 items-start mb-16">
+          {/* Location, Service Times & Parking */}
+          <div className="space-y-12">
             <div>
-              <h2 className="text-3xl font-lora font-bold mb-4">Our Location</h2>
+              <h2 className="text-3xl font-heading font-bold mb-4">Our Location</h2>
               <div className="flex items-start space-x-4">
                 <MapPin className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
                 <div>
                   <p className="font-semibold text-lg">First Baptist Church of Fenton</p>
-                  <p className="text-muted-foreground">860 N Leroy St, Fenton, MI 48430</p>
+                  <p className="text-muted-foreground">860 N. Leroy Street, Fenton, MI 48430</p>
                   <Button variant="link" className="px-0" asChild>
                     <a href="https://www.google.com/maps/dir/?api=1&destination=First+Baptist+Church+of+Fenton" target="_blank" rel="noopener noreferrer">
                       View on Google Maps
@@ -36,12 +38,36 @@ export default function VisitPage() {
             </div>
 
             <div>
-              <h2 className="text-3xl font-lora font-bold mb-4">Service Times</h2>
+              <h2 className="text-3xl font-heading font-bold mb-4">Service Times</h2>
+              <div className="space-y-4">
+                <div className="flex items-start space-x-4">
+                  <Clock className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-lg">Sundays</p>
+                    <ul className="list-disc pl-5 text-muted-foreground">
+                      <li>10:30 AM – Worship Service</li>
+                      <li>9:00 AM – Adult Bible Study, Student & Kids Classes</li>
+                    </ul>
+                  </div>
+                </div>
+                 <div className="flex items-start space-x-4">
+                  <Clock className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
+                  <div>
+                    <p className="font-semibold text-lg">Wednesdays</p>
+                    <ul className="list-disc pl-5 text-muted-foreground">
+                      <li>6:30 PM – Awana (PreK–5th), Youth Group (6th–12th), & Adult Prayer Gathering</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+             <div>
+              <h2 className="text-3xl font-heading font-bold mb-4">Parking & Entrance</h2>
               <div className="flex items-start space-x-4">
-                <Clock className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
+                <Car className="h-6 w-6 text-accent mt-1 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-lg">Sunday Worship</p>
-                  <p className="text-muted-foreground">10:30 AM</p>
+                  <p className="text-muted-foreground">We have plenty of on-site parking, with guest spots reserved near the main entrance. Look for the entrance under the large covered portico on the south side of the building. Greeters will be ready to welcome you and point you in the right direction.</p>
                 </div>
               </div>
             </div>
@@ -64,12 +90,12 @@ export default function VisitPage() {
         </div>
 
         {/* Action Cards */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 mt-24">
           <Link href="/visit/what-to-expect">
             <Card className="h-full hover:shadow-lg transition-shadow">
               <CardContent className="p-6 text-center">
                 <Users className="h-10 w-10 text-accent mx-auto mb-4" />
-                <h3 className="text-xl font-lora font-bold mb-2">What to Expect</h3>
+                <h3 className="text-xl font-heading font-bold mb-2">What to Expect</h3>
                 <p className="text-muted-foreground">
                   First time? Learn about our services, dress code, and what we have for kids.
                 </p>
@@ -80,7 +106,7 @@ export default function VisitPage() {
             <Card className="h-full hover:shadow-lg transition-shadow">
               <CardContent className="p-6 text-center">
                 <Mail className="h-10 w-10 text-accent mx-auto mb-4" />
-                <h3 className="text-xl font-lora font-bold mb-2">Have Questions?</h3>
+                <h3 className="text-xl font-heading font-bold mb-2">Have Questions?</h3>
                 <p className="text-muted-foreground">
                   We'd love to answer them. Get in touch with our team.
                 </p>
@@ -91,7 +117,7 @@ export default function VisitPage() {
             <Card className="h-full hover:shadow-lg transition-shadow">
               <CardContent className="p-6 text-center">
                 <Calendar className="h-10 w-10 text-accent mx-auto mb-4" />
-                <h3 className="text-xl font-lora font-bold mb-2">Upcoming Events</h3>
+                <h3 className="text-xl font-heading font-bold mb-2">Upcoming Events</h3>
                 <p className="text-muted-foreground">
                   Check out what's happening at First Baptist Church.
                 </p>
