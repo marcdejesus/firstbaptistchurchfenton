@@ -4,39 +4,21 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Globe, ExternalLink, Heart } from 'lucide-react';
-import { Header } from '@/components/layout/Header';
+import { Globe } from 'lucide-react';
 import { PageLayout } from '@/components/layout/PageLayout';
 
-// Mock data for missionaries/organizations
-// TODO: Replace with data fetched from Firebase
-const missionaries = [
+const missionPartners = [
   {
-    id: 'the-gomez-family',
-    name: 'The Gomez Family',
-    location: 'Guatemala',
-    region: 'Central America',
-    description: 'Serving local communities through education and church planting initiatives. Their focus is on empowering the next generation of leaders.',
-    imageUrl: '/images/missions/missionary-1.jpg', // Placeholder image path
-    website: 'https://missionary-example.com/gomez',
+    location: 'Pakistan',
+    description: 'Supporting indigenous pastors and church planters with resources, biblical training, and encouragement in one of the most spiritually challenging regions in the world.',
   },
   {
-    id: 'hope-for-asia',
-    name: 'Hope for Asia Initiative',
+    location: 'India',
+    description: 'Partnering with a growing network of pastors who are planting churches, making disciples, and spreading the gospel in both urban and remote areas.',
+  },
+  {
     location: 'Thailand',
-    region: 'Southeast Asia',
-    description: 'Providing humanitarian aid, medical care, and sharing the Gospel in remote villages. They partner with local believers to establish sustainable projects.',
-    imageUrl: '/images/missions/missionary-2.jpg', // Placeholder image path
-    website: 'https://missionary-example.com/hope-for-asia',
-  },
-  {
-    id: 'sahara-outreach',
-    name: 'Sahara Outreach Project',
-    location: 'Niger',
-    region: 'West Africa',
-    description: 'Focused on water well projects and agricultural training to combat famine and create opportunities for community development.',
-    imageUrl: '/images/missions/missionary-3.jpg', // Placeholder image path
-    website: 'https://missionary-example.com/sahara-outreach',
+    description: 'Training tribal leaders and pastors to strengthen local churches and reach unreached people groups through biblical education and ongoing mentoring.',
   }
 ];
 
@@ -54,76 +36,55 @@ const WorldMap = () => (
     </div>
 );
 
-
 export default function MissionsPage() {
-  const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "Missions" },
-  ];
-
   return (
-    <>
-      <Header breadcrumbs={breadcrumbs} />
-      <PageLayout
-        title="Missions & Outreach"
-        subtitle="We believe in taking the Gospel to our community, our nation, and the world. Discover the missionaries and organizations we partner with."
-      >
-        <div className="bg-gray-50/50">
-          <div className="container mx-auto px-4 py-8 md:py-12">
-            
-            {/* <WorldMap /> */}
+    <PageLayout
+      title="Global Missions"
+      subtitle="We are passionate about making disciples of all nations by equipping local leaders to reach their own communities. Our approach is simple: train and support national pastors and leaders already doing the work."
+    >
+      <div className="bg-gray-50/50">
+        <div className="container mx-auto px-4 py-8 md:py-12">
+          
+          {/* <WorldMap /> */}
 
-            <div className="mt-16">
-              <h2 className="text-3xl font-bold text-center mb-10">Our Partners in the Field</h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {missionaries.map((missionary) => (
-                  <Card key={missionary.id} className="flex flex-col hover:shadow-lg transition-shadow">
-                    <div className="h-48 bg-gray-200 rounded-t-lg flex items-center justify-center">
-                       {/* In a real app, you'd use Next/Image here */}
-                      <img src={missionary.imageUrl} alt={missionary.name} className="h-full w-full object-cover rounded-t-lg" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/400x300/E2E8F0/A0AEC0?text=Mission+Partner'; }} />
+          <div className="mt-16">
+            <h2 className="text-3xl font-bold text-center mb-10">Our Partners in the Field</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {missionPartners.map((partner) => (
+                <Card key={partner.location} className="flex flex-col hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <div className="flex items-center space-x-3">
+                       <Globe className="h-6 w-6 text-primary" />
+                       <CardTitle className="text-2xl">{partner.location}</CardTitle>
                     </div>
-                    <CardHeader>
-                      <CardTitle>{missionary.name}</CardTitle>
-                      <p className="text-sm font-medium text-muted-foreground">{missionary.location}</p>
-                    </CardHeader>
-                    <CardContent className="flex-grow flex flex-col">
-                      <p className="text-muted-foreground flex-grow">{missionary.description}</p>
-                      <div className="mt-6 flex flex-wrap gap-2">
-                        <Button asChild variant="secondary">
-                            <Link href={missionary.website} target="_blank">
-                                Learn More <ExternalLink className="ml-2 h-4 w-4" />
-                            </Link>
-                        </Button>
-                        <Button asChild>
-                            <Link href="/donate">
-                                Support <Heart className="ml-2 h-4 w-4" />
-                            </Link>
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                  </CardHeader>
+                  <CardContent className="flex-grow">
+                    <p className="text-muted-foreground">{partner.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
-
-            <div className="mt-16 text-center bg-white p-8 rounded-lg shadow-inner border">
-              <h3 className="text-2xl font-bold">How Can You Get Involved?</h3>
-              <p className="mt-3 max-w-2xl mx-auto text-muted-foreground">
-                Your prayers, financial support, and willingness to go are all vital parts of our missions effort. 
-              </p>
-              <div className="mt-6 flex justify-center gap-4">
-                <Button size="lg" asChild>
-                    <Link href="/donate">Give to Missions</Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                    <Link href="/contact">Join a Team</Link>
-                </Button>
-              </div>
-            </div>
-
           </div>
+
+          <div className="mt-16 text-center bg-white p-8 rounded-lg shadow-inner border">
+            <h3 className="text-2xl font-bold">How Can You Get Involved?</h3>
+            <p className="mt-3 max-w-2xl mx-auto text-muted-foreground">
+              "The harvest is plentiful, but the laborers are few…" — Luke 10:2
+              <br/><br/>
+              Your prayers, financial support, and willingness to go are all vital parts of our missions effort. Attend a missions interest meeting to learn more.
+            </p>
+            <div className="mt-6 flex justify-center gap-4">
+              <Button size="lg" asChild>
+                  <Link href="/donate">Give to Missions</Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                  <Link href="/contact">Ask About a Trip</Link>
+              </Button>
+            </div>
+          </div>
+
         </div>
-      </PageLayout>
-    </>
+      </div>
+    </PageLayout>
   );
 } 

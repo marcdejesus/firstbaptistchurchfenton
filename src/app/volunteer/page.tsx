@@ -1,191 +1,121 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from '@/components/ui/dialog';
-import { useToast } from '@/hooks/use-toast';
-import { useUser } from '@/contexts/UserContext';
-import { HandHelping, Users, Calendar, Clock } from 'lucide-react';
-import { db } from '@/lib/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { HandHelping, Heart, Tv, Wrench, Users, Music, BookOpen, PenSquare, Mic, Handshake, Utensils } from 'lucide-react';
 import Link from 'next/link';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 
-interface VolunteerOpportunity {
-  id: string;
-  title: string;
-  description: string;
-  ministry: string;
-  commitment: string;
-  requirements: string[];
-}
-
-const mockOpportunities: VolunteerOpportunity[] = [
+const coreTeams = [
   {
-    id: '1',
-    title: 'Greeting Team Member',
-    description: 'Be the first smiling face people see on Sunday mornings. Welcome attendees, hand out bulletins, and help visitors find their way.',
-    ministry: 'Hospitality',
-    commitment: 'Once a month, Sunday mornings',
-    requirements: ['Friendly and welcoming attitude', 'Arrive 30 minutes before service'],
+    icon: Heart,
+    title: 'Outreach Team',
+    description: 'Leads local community outreach efforts including serve days, widow care, the cookie ministry, and seasonal events like Trunk-or-Treat, Easter Egg Hunt, and our 4th of July BBQ.',
   },
   {
-    id: '2',
-    title: 'Kids Ministry Teacher',
-    description: 'Invest in the next generation by teaching and caring for children during the Sunday service. Curriculum is provided.',
-    ministry: 'Kids Ministry',
-    commitment: 'Twice a month, Sunday mornings',
-    requirements: ['Passion for working with children', 'Background check required'],
+    icon: Users,
+    title: 'Missions Team',
+    description: 'Supports global missions efforts and partnerships in Pakistan, India, and Thailand. Coordinates prayer, communication, care, and future missions trips.',
   },
   {
-    id: '3',
-    title: 'Audio/Visual Technician',
-    description: 'Help create a seamless worship experience by running sound, slides, or the livestream during our services.',
-    ministry: 'Worship Arts',
-    commitment: 'Once or twice a month, including rehearsal',
-    requirements: ['Tech-savvy and willing to learn', 'Training will be provided'],
+    icon: Wrench,
+    title: 'Property, Grounds & Security Team',
+    description: 'Keeps our church building and grounds clean, safe, and welcoming. Includes lawn care, minor repairs, building projects, and Sunday security.',
+  },
+    {
+    icon: Handshake,
+    title: 'Care Team',
+    description: 'Offers care and encouragement to widows, shut-ins, grieving families, and those facing hardship. Helps with funeral meals, hospital visits, and follow-up care.',
+  },
+  {
+    icon: Music,
+    title: 'Worship Team',
+    description: 'Leads our congregation in Christ-centered worship through music and song. Includes vocalists, musicians, and support roles.',
+  },
+  {
+    icon: BookOpen,
+    title: 'Discipleship Team',
+    description: 'Oversees small groups, Bible studies, and discipleship pathways. Mentors new believers and helps others grow spiritually.',
+  },
+    {
+    icon: PenSquare,
+    title: 'Administrative Team',
+    description: 'Supports behind-the-scenes work such as scheduling, communications, organizing materials, data entry, and ministry follow-up.',
   },
 ];
 
+const additionalOpportunities = [
+    { icon: Handshake, title: 'Greeters & Welcome Team', description: 'Create a friendly, inviting atmosphere at the doors and in the lobby.' },
+    { icon: Users, title: 'Nursery & Kids Ministry', description: 'Care for babies and toddlers or teach children with crafts, songs, and Bible stories.' },
+    { icon: Users, title: 'Youth Ministry', description: 'Mentor teens through weekly gatherings, events, and trips.' },
+    { icon: Tv, title: 'Tech & Media Team', description: 'Run slides, audio, livestream, and video production. Training provided.' },
+    { icon: Utensils, title: 'Hospitality & Events', description: 'Help with church meals, coffee, decor, and hosting for church-wide events.' },
+]
+
 export default function VolunteerPage() {
-  const [opportunities, setOpportunities] = useState<VolunteerOpportunity[]>(mockOpportunities);
-  const [loading, setLoading] = useState(false);
-
-  // NOTE: This is an example of how you would fetch from firestore
-  // useEffect(() => {
-  //   const fetchOpportunities = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const querySnapshot = await getDocs(collection(db, "volunteer-opportunities"));
-  //       const opportunitiesData = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as VolunteerOpportunity[];
-  //       setOpportunities(opportunitiesData);
-  //     } catch (error) {
-  //       console.error("Error fetching opportunities: ", error);
-  //     }
-  //     setLoading(false);
-  //   };
-  //   fetchOpportunities();
-  // }, []);
-
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-12">
       <div className="text-center mb-12">
         <HandHelping className="mx-auto h-12 w-12 text-accent mb-4" />
-        <h1 className="text-4xl font-bold">Volunteer Opportunities</h1>
-        <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-          Use your gifts to make a difference. Serving is a great way to connect with others and grow in your faith.
+        <h1 className="text-4xl font-bold font-heading">Volunteer at FBC Fenton</h1>
+        <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+          Serving is one of the best ways to grow, connect, and live out your faith. There's a place for everyone to use their gifts—whether you're behind the scenes, leading a group, or welcoming first-time guests.
         </p>
       </div>
 
-      {loading ? (
-        <p>Loading opportunities...</p>
-      ) : (
+      <div>
+        <h2 className="text-3xl font-bold text-center mb-8">Our 7 Core Ministry Teams</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {opportunities.map((opp) => (
-            <VolunteerCard key={opp.id} opportunity={opp} />
-          ))}
+            {coreTeams.map((team) => (
+                <Card key={team.title} className="flex flex-col hover:shadow-lg transition-shadow">
+                    <CardHeader>
+                        <div className="flex items-center space-x-4">
+                            <team.icon className="h-8 w-8 text-accent"/>
+                            <CardTitle>{team.title}</CardTitle>
+                        </div>
+                    </CardHeader>
+                    <CardContent className="flex-grow">
+                        <p className="text-muted-foreground">{team.description}</p>
+                    </CardContent>
+                </Card>
+            ))}
         </div>
-      )}
-    </div>
-  );
-}
+      </div>
 
-function VolunteerCard({ opportunity }: { opportunity: VolunteerOpportunity }) {
-  const { user } = useUser();
-  const { toast } = useToast();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [message, setMessage] = useState('');
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user) {
-        toast({ title: "Please log in", description: "You must be logged in to sign up.", variant: "destructive" });
-        return;
-    }
-    setIsSubmitting(true);
-    
-    try {
-        const response = await fetch('/api/volunteer-signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ opportunityId: opportunity.id, message })
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || "Failed to sign up.");
-        }
-        
-        toast({ title: "Thank You!", description: `We've received your interest for the ${opportunity.title} role. We will be in touch soon!` });
-        setIsOpen(false);
-        setMessage('');
-    } catch (error) {
-        toast({ title: "Error", description: (error as Error).message, variant: "destructive" });
-    } finally {
-        setIsSubmitting(false);
-    }
-  };
-
-  return (
-    <Card className="flex flex-col">
-      <CardHeader>
-        <CardTitle>{opportunity.title}</CardTitle>
-        <CardDescription>{opportunity.ministry}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <p className="text-muted-foreground mb-4">{opportunity.description}</p>
-        <div>
-          <h4 className="font-semibold mb-2">Requirements:</h4>
-          <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
-            {opportunity.requirements.map((req, i) => <li key={i}>{req}</li>)}
-          </ul>
-        </div>
-      </CardContent>
-      <CardFooter className="flex flex-col items-start space-y-4">
-         <div className="text-sm text-muted-foreground font-medium border-t pt-4 w-full">
-            <Clock className="inline-block mr-2 h-4 w-4" />
-            Commitment: {opportunity.commitment}
-         </div>
-        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger asChild>
-            <Button className="w-full">
-                <HandHelping className="mr-2 h-4 w-4"/>
-                I'm Interested
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Sign Up for: {opportunity.title}</DialogTitle>
-            </DialogHeader>
-            {user ? (
-                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label htmlFor="message">Message (Optional)</label>
-                        <Textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Let us know if you have any questions!"/>
+       <div className="mt-20">
+        <h2 className="text-3xl font-bold text-center mb-8">Additional Volunteer Opportunities</h2>
+        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+            {additionalOpportunities.map((opp) => (
+                 <Card key={opp.title} className="p-4">
+                    <div className="flex items-center space-x-4">
+                        <opp.icon className="h-6 w-6 text-accent"/>
+                        <div>
+                            <h3 className="font-semibold">{opp.title}</h3>
+                            <p className="text-sm text-muted-foreground">{opp.description}</p>
+                        </div>
                     </div>
-                    <DialogFooter>
-                        <DialogClose asChild>
-                            <Button variant="ghost">Cancel</Button>
-                        </DialogClose>
-                        <Button type="submit" disabled={isSubmitting}>
-                            {isSubmitting ? "Submitting..." : "Submit Interest"}
-                        </Button>
-                    </DialogFooter>
-                 </form>
-            ) : (
-                <div className="text-center py-4">
-                    <p className="mb-4">Please log in or create an account to express interest.</p>
-                    <Link href="/login">
-                        <Button>Login or Register</Button>
-                    </Link>
-                </div>
-            )}
-          </DialogContent>
-        </Dialog>
-      </CardFooter>
-    </Card>
+                 </Card>
+            ))}
+        </div>
+      </div>
+
+      <div className="mt-20 text-center bg-gray-50/70 p-8 rounded-lg border-t">
+        <h2 className="text-3xl font-bold font-heading">Ready to Serve?</h2>
+        <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
+            There's no perfect person—only willing hearts. We'll train you, support you, and walk with you as you serve. Here's how to get started:
+        </p>
+        <div className="mt-8 flex flex-wrap justify-center items-center gap-4">
+            <Button size="lg" asChild>
+                <Link href="/contact">Fill out an Interest Form</Link>
+            </Button>
+            <span className="text-muted-foreground font-semibold">OR</span>
+            <Button size="lg" variant="outline" asChild>
+                <a href="mailto:serve@fbfenton.org">Email serve@fbfenton.org</a>
+            </Button>
+            <span className="text-muted-foreground font-semibold">OR</span>
+             <p className="text-muted-foreground basis-full">Visit the Welcome Center on Sunday to talk with someone in person.</p>
+        </div>
+      </div>
+    </div>
   );
 } 
