@@ -225,8 +225,7 @@ export function Header({ breadcrumbs }: HeaderProps) {
               <div className="flex items-center space-x-3">
                 <Image src="/logo.svg" alt="FBC Fenton Logo" width={40} height={40} />
                 <span className={cn(
-                  "font-heading font-bold text-xl tracking-tight",
-                  (isScrolled || isMobile) ? 'text-gray-900' : 'text-white'
+                  "font-heading font-bold text-xl tracking-tight text-gray-900",
                 )}>
                   First Baptist Fenton
                 </span>
