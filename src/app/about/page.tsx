@@ -29,21 +29,21 @@ const aboutSections = [
 
 export default function AboutUsPage() {
   return (
-    <div className="bg-scheme-3-background">
-      <div className="container mx-auto px-4 py-8 md:py-16">
-        <div className="text-center mb-12">
-          <h1 className="text-desktop-heading1 font-heading font-bold tracking-tight text-scheme-3-text">About Us</h1>
-          <p className="mt-4 text-desktop-textLarge text-scheme-3-text opacity-80 max-w-3xl mx-auto font-body">
+    <div className="bg-white">
+      <div className="container mx-auto px-4 py-16 md:py-24">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-heading font-bold tracking-tight text-gray-900">About Us</h1>
+          <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
             At First Baptist Church of Fenton, our mission is simple: to glorify God by making disciples who love deeply, live authentically, and lead others to Jesus. We are a gospel-centered church committed to Scripture, to each other, and to our calling—both locally and globally.
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-8">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8">
           {aboutSections.map((section) => (
-            <Card key={section.title} className="text-center hover:shadow-xl transition-shadow flex flex-col">
+            <Card key={section.title} className="text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col">
               <CardHeader className="items-center">
-                <div className="p-4 bg-accent/10 rounded-full inline-block">
-                    <section.icon className="h-8 w-8 text-accent" />
+                <div className="p-4 bg-primary/10 rounded-full inline-block">
+                    <section.icon className="h-8 w-8 text-primary" />
                 </div>
                 <CardTitle className="mt-4">{section.title}</CardTitle>
               </CardHeader>
@@ -59,13 +59,13 @@ export default function AboutUsPage() {
           ))}
         </div>
 
-        <div className="mt-16 text-center bg-scheme-1-background p-8 rounded-lg shadow-inner border border-scheme-1-border">
-          <h3 className="text-desktop-heading3 font-heading font-bold text-scheme-1-text">Have Questions?</h3>
-          <p className="mt-3 max-w-2xl mx-auto text-desktop-textMedium text-scheme-1-text opacity-80 font-body">
+        <div className="mt-24 text-center bg-gray-50 p-12 rounded-lg">
+          <h3 className="text-3xl font-heading font-bold text-gray-900">Have Questions?</h3>
+          <p className="mt-3 max-w-2xl mx-auto text-muted-foreground">
             We would love to answer any questions you have about our church, our faith, or how you can get connected.
           </p>
           <div className="mt-6">
-            <Button size="lg" asChild className="bg-primary-orange text-white hover:bg-primary-orange-dark">
+            <Button size="lg" asChild>
                 <Link href="/contact">Contact Us</Link>
             </Button>
           </div>

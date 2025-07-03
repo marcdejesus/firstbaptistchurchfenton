@@ -106,79 +106,6 @@ export function Header({ breadcrumbs }: HeaderProps) {
     window.location.href = `/search?q=${encodeURIComponent(query)}`;
   };
 
-  const renderDesktopNav = () => (
-    <nav className="hidden lg:flex items-center space-x-1">
-      {navigationCategories.map((category) => (
-        <div key={category.id} className="relative">
-          <MegaMenuTrigger
-            category={category}
-            isOpen={openMegaMenu === category.id}
-            onToggle={() => handleMegaMenuToggle(category.id)}
-          />
-          <MegaMenuDropdown
-            category={category}
-            isOpen={openMegaMenu === category.id}
-            onClose={() => setOpenMegaMenu(null)}
-          />
-        </div>
-      ))}
-      <Button asChild variant="default" className="bg-accent hover:bg-accent-600 ml-4">
-        <Link href="/donate">
-          <HandCoins className="mr-2 h-4 w-4" />
-          Give
-        </Link>
-      </Button>
-      <div className="ml-4">
-        <SearchBar 
-          onSearch={handleSearch}
-          placeholder="Search..."
-          className="w-64"
-        />
-      </div>
-      {user ? (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-10 w-10 rounded-full ml-2">
-              <Avatar className="h-9 w-9">
-                <AvatarImage src={user.avatarUrl || `https://placehold.co/100x100.png`} alt={user.name} />
-                <AvatarFallback>{user.name.substring(0, 1).toUpperCase()}</AvatarFallback>
-              </Avatar>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56" align="end" forceMount>
-            <DropdownMenuLabel className="font-normal">
-              <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">{user.name}</p>
-                <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              {userNavigation.authenticated.map((item) => (
-                <DropdownMenuItem key={item.href} asChild>
-                  <Link href={item.href}>
-                    <item.icon className="mr-2 h-4 w-4" />
-                    {item.title}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={logout}>
-                <LogOut className="mr-2 h-4 w-4" />
-                Log out
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      ) : (
-        <div className="flex items-center space-x-2 ml-2">
-          <Button variant="ghost" asChild><Link href="/login">Login</Link></Button>
-          <Button asChild><Link href="/register">Register</Link></Button>
-        </div>
-      )}
-    </nav>
-  );
-
   const renderMobileNav = () => (
     <div className="lg:hidden flex items-center space-x-2">
       <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(!isSearchOpen)}>
@@ -293,21 +220,92 @@ export function Header({ breadcrumbs }: HeaderProps) {
     <header className={headerClasses} onClick={(e) => e.stopPropagation()}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center">
+          <div className="flex-shrink-0 flex items-center space-x-8">
             <Link href="/" className="flex-shrink-0">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <Image src="/logo.svg" alt="FBC Fenton Logo" width={40} height={40} />
                 <span className={cn(
-                  "font-lora font-bold text-xl tracking-tight",
+                  "font-heading font-bold text-xl tracking-tight",
                   (isScrolled || isMobile) ? 'text-gray-900' : 'text-white'
                 )}>
                   First Baptist Fenton
                 </span>
               </div>
             </Link>
+            <nav className="hidden lg:flex items-center space-x-1">
+              {navigationCategories.map((category) => (
+                <div key={category.id} className="relative">
+                  <MegaMenuTrigger
+                    category={category}
+                    isOpen={openMegaMenu === category.id}
+                    onToggle={() => handleMegaMenuToggle(category.id)}
+                  />
+                  <MegaMenuDropdown
+                    category={category}
+                    isOpen={openMegaMenu === category.id}
+                    onClose={() => setOpenMegaMenu(null)}
+                  />
+                </div>
+              ))}
+            </nav>
           </div>
           
-          {isMobile ? renderMobileNav() : renderDesktopNav()}
+          <div className="hidden lg:flex items-center space-x-4">
+              <Button asChild variant="default" className="bg-accent hover:bg-accent-600">
+                <Link href="/donate">
+                  <HandCoins className="mr-2 h-4 w-4" />
+                  Give
+                </Link>
+              </Button>
+              <SearchBar 
+                  onSearch={handleSearch}
+                  placeholder="Search..."
+                  className="w-56"
+              />
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                    <Avatar className="h-9 w-9">
+                      <AvatarImage src={user.avatarUrl || `https://placehold.co/100x100.png`} alt={user.name} />
+                      <AvatarFallback>{user.name.substring(0, 1).toUpperCase()}</AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="end" forceMount>
+                  <DropdownMenuLabel className="font-normal">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-medium leading-none">{user.name}</p>
+                      <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    {userNavigation.authenticated.map((item) => (
+                      <DropdownMenuItem key={item.href} asChild>
+                        <Link href={item.href}>
+                          <item.icon className="mr-2 h-4 w-4" />
+                          {item.title}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={logout}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Log out
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <div className="flex items-center space-x-1">
+                <Button variant="ghost" asChild><Link href="/login">Login</Link></Button>
+                <Button asChild><Link href="/register">Register</Link></Button>
+              </div>
+            )}
+          </div>
+          
+          {renderMobileNav()}
         </div>
         {isSearchOpen && isMobile && (
           <div className="py-4 px-2">

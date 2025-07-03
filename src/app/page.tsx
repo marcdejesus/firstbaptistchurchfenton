@@ -1,338 +1,185 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import Link from 'next/link';
 import Image from "next/image";
-import { ArrowRight, Star, Mail, Phone, MapPin, BookOpen, Users, Church } from "lucide-react";
-import { WelcomeCard } from "@/components/WelcomeCard";
-import { Event } from "@/types";
+import { ArrowRight, Star, Church, Users, HeartHandshake } from "lucide-react";
+
+// A more focused feature card
+const Feature = ({ icon: Icon, title, description, href, cta }: {
+  icon: React.ComponentType<{className?: string}>,
+  title: string,
+  description: string,
+  href: string,
+  cta: string
+}) => (
+  <div className="flex flex-col items-center gap-6 text-center">
+    <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/10">
+      <Icon className="w-8 h-8 text-primary" />
+    </div>
+    <div className="flex flex-col gap-4">
+      <h3 className="text-2xl font-heading font-bold">{title}</h3>
+      <p className="text-muted-foreground">{description}</p>
+    </div>
+    <Link href={href} className="flex items-center gap-2 group text-primary font-medium hover:underline">
+      <span>{cta}</span>
+      <ArrowRight className="w-5 h-5" />
+    </Link>
+  </div>
+);
 
 export default function Home() {
-  const nextEvent: Event = {
-    id: '1',
-    title: 'Community Cookout',
-    date: '2024-08-15',
-    time: '5:00 PM',
-    rsvps: 0,
-    description: 'Join us for a fun evening of food, games, and fellowship.',
-    location: 'Church Lawn',
-    category: { id: 'community', name: 'Community', color: '#3b82f6', icon: '👨‍👩‍👧‍👦' }
-  };
-
   return (
     <div className="flex flex-col">
       
       {/* Hero Section */}
-      <section className="w-full px-4 sm:px-8 md:px-16 py-12 md:py-20 bg-scheme-1-background">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-20">
-          <div className="flex-1 flex flex-col items-start gap-8 text-center md:text-left">
-            <div className="w-full flex flex-col items-start gap-6">
-              <h1 className="w-full text-scheme-1-text text-4xl sm:text-5xl font-heading font-bold leading-tight">
+      <section className="bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="flex flex-col items-start gap-8 text-center md:text-left">
+              <h1 className="text-4xl sm:text-5xl font-heading font-bold leading-tight">
                 No matter where you've been, you're welcome here.
               </h1>
-              <p className="w-full text-scheme-1-text text-lg font-body leading-relaxed">
-                Come as you are and discover the hope, truth, and grace of Jesus Christ.
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Come as you are and discover the hope, truth, and grace of Jesus Christ. We are a community of real people, with real struggles, following a real Savior.
               </p>
+              <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                <Button size="lg" asChild>
+                  <Link href="/visit">Plan Your Visit</Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild>
+                  <Link href="/sermons">Watch a Sermon</Link>
+                </Button>
+              </div>
             </div>
-            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center md:justify-start gap-4 w-full">
-              <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90" asChild>
-                <Link href="/visit">Plan a Visit</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/sermons">Watch a Sermon</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/next-steps">Get Involved</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/donate">Give Online</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/contact">Contact Us</Link>
-              </Button>
+            <div className="mt-8 md:mt-0">
+              <Image 
+                src="https://t4.ftcdn.net/jpg/02/14/74/17/360_F_214741783_rc2gf6sEFtvsN8tYK76kDEG9BzfjSN09.jpg"
+                alt="Welcoming church community"
+                width={600} 
+                height={600} 
+                className="rounded-lg object-cover mx-auto shadow-lg"
+              />
             </div>
-          </div>
-          <div className="flex-1 mt-8 md:mt-0">
-            <Image 
-              src="https://t4.ftcdn.net/jpg/02/14/74/17/360_F_214741783_rc2gf6sEFtvsN8tYK76kDEG9BzfjSN09.jpg"
-              alt="Welcoming church community"
-              width={600} 
-              height={600} 
-              className="rounded-lg object-cover mx-auto"
-            />
           </div>
         </div>
       </section>
 
-      {/* Three Pillars Section */}
-      <section className="w-full px-4 sm:px-8 md:px-16 py-16 md:py-28 bg-scheme-1-background">
-        <div className="max-w-7xl mx-auto flex flex-col items-center gap-12 md:gap-20">
-          <h2 className="max-w-4xl text-center text-scheme-1-text text-3xl sm:text-4xl font-heading font-bold leading-snug">
-            Experience uplifting worship services every week at First Baptist Church of Fenton.
-          </h2>
+      {/* About Us / What to Expect Section */}
+      <section className="py-20 md:py-28">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-16">
+          <div className="text-center max-w-3xl">
+            <h2 className="text-3xl sm:text-4xl font-heading font-bold">A Place to Belong, A Space to Grow</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              We focus on three things: loving God, growing together in community, and serving our world.
+            </p>
+          </div>
           <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-12">
-            
-            <div className="flex flex-col items-center gap-6 text-center">
-              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/10">
-                <Users className="w-8 h-8 text-primary" />
-              </div>
-              <div className="flex flex-col gap-4">
-                <h3 className="text-scheme-1-text text-2xl font-heading font-bold leading-tight">
-                  Join our vibrant community events and connect with fellow believers.
-                </h3>
-                <p className="text-scheme-1-text text-base font-body leading-relaxed">
-                  Discover various ministry opportunities to grow in faith and serve others.
-                </p>
-              </div>
-              <Link href="/community" className="flex items-center gap-2 group">
-                <span className="text-primary font-medium leading-6 group-hover:underline">Learn More</span>
-                <ArrowRight className="w-5 h-5 text-primary" />
-              </Link>
-            </div>
-
-            <div className="flex flex-col items-center gap-6 text-center">
-              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/10">
-                <Church className="w-8 h-8 text-primary" />
-              </div>
-              <div className="flex flex-col gap-4">
-                <h3 className="text-scheme-1-text text-2xl font-heading font-bold leading-tight">
-                  Engage in enriching programs designed for all ages and backgrounds.
-                </h3>
-                <p className="text-scheme-1-text text-base font-body leading-relaxed">
-                  Participate in our church activities that foster fellowship and spiritual growth.
-                </p>
-              </div>
-              <Link href="/ministries" className="flex items-center gap-2 group">
-                <span className="text-primary font-medium leading-6 group-hover:underline">Sign Up</span>
-                <ArrowRight className="w-5 h-5 text-primary" />
-              </Link>
-            </div>
-
-            <div className="flex flex-col items-center gap-6 text-center">
-              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-primary/10">
-                <BookOpen className="w-8 h-8 text-primary" />
-              </div>
-              <div className="flex flex-col gap-4">
-                <h3 className="text-scheme-1-text text-2xl font-heading font-bold leading-tight">
-                  Explore our resources for spiritual development and community support.
-                </h3>
-                <p className="text-scheme-1-text text-base font-body leading-relaxed">
-                  Access sermons, blogs, and prayer resources to deepen your faith journey.
-                </p>
-              </div>
-              <Link href="/sermons" className="flex items-center gap-2 group">
-                <span className="text-primary font-medium leading-6 group-hover:underline">Get Involved</span>
-                <ArrowRight className="w-5 h-5 text-primary" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Worship Services Section */}
-      <section className="w-full px-4 sm:px-8 md:px-16 py-16 md:py-28 bg-scheme-1-background relative">
-        <div className="absolute inset-0 bg-cover bg-center opacity-10" style={{backgroundImage: "url('/sermon.png')"}}></div>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-20 relative z-10">
-          <div className="flex-1 flex flex-col items-start gap-8">
-            <div className="w-full flex flex-col items-start gap-4">
-              <span className="text-primary text-base font-semibold leading-6">Worship</span>
-              <h2 className="w-full text-scheme-1-text text-4xl sm:text-5xl font-heading font-bold leading-tight">
-                Join Us for Inspiring Worship Services
-              </h2>
-              <p className="w-full text-scheme-1-text text-lg font-body leading-relaxed">
-                Experience uplifting worship and powerful sermons every Sunday. Connect with our community and grow in faith together.
-              </p>
-            </div>
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="flex-1 flex flex-col gap-2">
-                <h3 className="text-scheme-1-text text-xl font-heading font-bold">
-                  Upcoming Services
-                </h3>
-                <p className="text-scheme-1-text text-base font-body leading-relaxed">
-                  Sundays at 10 AM - All are welcome to join us.
-                </p>
-              </div>
-              <div className="flex-1 flex flex-col gap-2">
-                <h3 className="text-scheme-1-text text-xl font-heading font-bold">
-                  Sermon Series
-                </h3>
-                <p className="text-scheme-1-text text-base font-body leading-relaxed">
-                  Dive deeper into faith with our current sermon series every week.
-                </p>
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row items-center gap-6">
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/sermons">Learn More</Link>
-              </Button>
-              <Link href="/events" className="flex items-center gap-2 group">
-                <span className="text-primary font-medium leading-6 group-hover:underline">Sign Up</span>
-                <ArrowRight className="w-5 h-5 text-primary" />
-              </Link>
-            </div>
-          </div>
-          <div className="flex-1 w-full mt-8 md:mt-0">
-            <Image 
-              src="/sermon.png" 
-              alt="Worship service"
-              width={600} 
-              height={640} 
-              className="rounded-lg object-cover w-full h-auto max-h-[560px]"
+            <Feature 
+              icon={Church}
+              title="Gospel-Centered Worship"
+              description="Join us on Sundays for passionate worship and practical, Bible-based teaching that applies to your life."
+              href="/visit/what-to-expect"
+              cta="What to Expect"
+            />
+            <Feature 
+              icon={Users}
+              title="Authentic Community"
+              description="Life is better together. We have small groups for all ages and stages of life to help you connect."
+              href="/next-steps"
+              cta="Find a Group"
+            />
+            <Feature 
+              icon={HeartHandshake}
+              title="Meaningful Service"
+              description="Use your gifts to make a difference in our church, our city, and around the world."
+              href="/volunteer"
+              cta="Serve With Us"
             />
           </div>
         </div>
       </section>
-
-      {/* Ministries Section */}
-      <section className="w-full px-4 sm:px-8 md:px-16 py-16 md:py-28 bg-scheme-1-background">
-        <div className="max-w-7xl mx-auto flex flex-col-reverse md:flex-row items-center gap-12 md:gap-20">
-          <div className="flex-1 w-full mt-8 md:mt-0">
-            <Image 
-              src="/volunteer.png" 
-              alt="Community volunteer serving food"
-              width={600} 
-              height={640} 
-              className="rounded-lg object-cover w-full h-auto max-h-[560px]"
-            />
-          </div>
-          <div className="flex-1 flex flex-col items-start gap-8">
-            <div className="w-full flex flex-col items-start gap-6">
-              <h2 className="w-full text-scheme-1-text text-3xl sm:text-4xl font-heading font-bold leading-snug">
-                Join Our Ministries and Make a Difference in Our Community
-              </h2>
-              <p className="w-full text-scheme-1-text text-lg font-body leading-relaxed">
-                At First Baptist Church of Fenton, we believe in the power of community. Get involved with our various ministries and volunteer opportunities to serve others and grow in faith.
-              </p>
+      
+      {/* Latest Sermon Section */}
+      <section className="bg-gray-50 py-20 md:py-28">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div className="flex flex-col items-start gap-6">
+                    <span className="text-primary font-semibold">CURRENT SERIES</span>
+                    <h2 className="text-3xl sm:text-4xl font-heading font-bold">Dive Deeper into God's Word</h2>
+                    <p className="text-lg text-muted-foreground">
+                        Our messages are designed to be practical, engaging, and faithful to Scripture. Watch the latest one now or browse our archive to find a series that speaks to you.
+                    </p>
+                    <Button size="lg" asChild>
+                        <Link href="/sermons">Watch Now</Link>
+                    </Button>
+                </div>
+                <div className="mt-8 md:mt-0">
+                  <Link href="/sermons" className="block group">
+                    <Image 
+                      src="/sermon.png" 
+                      alt="Latest sermon series"
+                      width={600} 
+                      height={338} 
+                      className="rounded-lg object-cover w-full h-auto shadow-lg group-hover:shadow-xl transition-shadow"
+                    />
+                  </Link>
+                </div>
             </div>
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="flex-1 flex flex-col gap-2">
-                <h3 className="text-scheme-1-text text-4xl sm:text-5xl font-heading font-bold">
-                  Volunteer
-                </h3>
-                <p className="text-scheme-1-text text-base font-body leading-relaxed">
-                  Discover ways to serve and connect today.
-                </p>
-              </div>
-              <div className="flex-1 flex flex-col gap-2">
-                <h3 className="text-scheme-1-text text-4xl sm:text-5xl font-heading font-bold">
-                  Ministries
-                </h3>
-                <p className="text-scheme-1-text text-base font-body leading-relaxed">
-                  Explore our diverse ministries and join us.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section className="w-full px-4 sm:px-8 md:px-16 py-16 md:py-28 bg-scheme-1-background">
-        <div className="max-w-7xl mx-auto flex flex-col items-center gap-12 md:gap-16">
-          <div className="max-w-4xl flex flex-col items-center gap-6 text-center">
-            <h2 className="w-full text-scheme-1-text text-4xl sm:text-5xl font-heading font-bold leading-tight">
-              Community Testimonials
-            </h2>
-            <p className="w-full text-scheme-1-text text-lg font-body leading-relaxed">
-              Hear from our church family about their experiences and faith journey.
-            </p>
+      <section className="py-20 md:py-28">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-12">
+          <div className="text-center max-w-3xl">
+            <h2 className="text-3xl sm:text-4xl font-heading font-bold">What Our Family Says</h2>
           </div>
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="p-8 bg-scheme-1-foreground rounded-lg border-2 border-scheme-1-border flex flex-col gap-6">
-              <div className="flex flex-col gap-6">
-                <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
+            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-gray-50 border-gray-100">
+                <Image src="https://t3.ftcdn.net/jpg/06/18/83/87/360_F_618838733_4urG25K25uXYj40p6o3HfYQd55nI0Rl0.jpg" alt="Testimonial author" width={80} height={80} className="rounded-full" />
+                <p className="text-muted-foreground italic">"This church has been a blessing to our family. The sense of community and the powerful sermons have truly deepened our faith."</p>
+                <div>
+                  <p className="font-semibold">The Johnson Family</p>
+                  <p className="text-sm text-muted-foreground">Members since 2021</p>
                 </div>
-                <p className="text-scheme-1-text text-base font-body leading-relaxed">
-                  "This church has been a blessing to our family. The sense of community and the powerful sermons have truly deepened our faith."
-                </p>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-scheme-1-text font-semibold">The Johnson Family</p>
-                <p className="text-muted-foreground text-sm">Members since 2021</p>
-              </div>
             </Card>
-            <Card className="p-8 bg-scheme-1-foreground rounded-lg border-2 border-scheme-1-border flex flex-col gap-6">
-              <div className="flex flex-col gap-6">
-                <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
+            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-gray-50 border-gray-100">
+                <Image src="https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg" alt="Testimonial author" width={80} height={80} className="rounded-full" />
+                <p className="text-muted-foreground italic">"The youth ministry is fantastic! My kids love coming here and have grown so much in their spiritual walk."</p>
+                <div>
+                  <p className="font-semibold">Sarah L.</p>
+                  <p className="text-sm text-muted-foreground">Parent</p>
                 </div>
-                <p className="text-scheme-1-text text-base font-body leading-relaxed">
-                  "The youth ministry is fantastic! My kids love coming here and have grown so much in their spiritual walk."
-                </p>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-scheme-1-text font-semibold">Sarah L.</p>
-                <p className="text-muted-foreground text-sm">Parent</p>
-              </div>
             </Card>
-            <Card className="p-8 bg-scheme-1-foreground rounded-lg border-2 border-scheme-1-border flex flex-col gap-6">
-              <div className="flex flex-col gap-6">
-                <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
-                  <Star className="w-5 h-5 text-yellow-400 fill-current" />
+            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-gray-50 border-gray-100">
+                <Image src="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWspNNceUavTxoK6.jpg" alt="Testimonial author" width={80} height={80} className="rounded-full" />
+                <p className="text-muted-foreground italic">"A welcoming and authentic community. From the moment I first visited, I felt right at home."</p>
+                <div>
+                  <p className="font-semibold">Mark D.</p>
+                  <p className="text-sm text-muted-foreground">New Visitor</p>
                 </div>
-                <p className="text-scheme-1-text text-base font-body leading-relaxed">
-                  "A welcoming and authentic community. From the moment I first visited, I felt right at home."
-                </p>
-              </div>
-              <div className="flex flex-col">
-                <p className="text-scheme-1-text font-semibold">Mark D.</p>
-                <p className="text-muted-foreground text-sm">New Visitor</p>
-              </div>
             </Card>
           </div>
         </div>
       </section>
-
-      {/* Welcome Card Section */}
-      <section className="w-full px-4 sm:px-8 md:px-16 py-16 md:py-20 bg-scheme-1-background">
-        <div className="max-w-5xl mx-auto">
-          <WelcomeCard todaysHours="9 AM - 4 PM" nextEvent={nextEvent} />
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section className="w-full px-4 sm:px-8 md:px-16 py-16 md:py-20 bg-primary/5">
-        <div className="max-w-7xl mx-auto flex flex-col items-center text-center gap-8">
-          <h2 className="text-scheme-1-text text-3xl sm:text-4xl font-heading font-bold leading-snug">
-            We're Here for You
-          </h2>
-          <p className="max-w-3xl text-scheme-1-text text-lg font-body leading-relaxed">
-            Whether you have questions, need prayer, or want to get connected, we're just a message or a call away.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mt-4">
-            <div className="flex flex-col items-center gap-3">
-              <Mail className="w-8 h-8 text-primary" />
-              <h3 className="text-xl font-bold">Email Us</h3>
-              <p className="text-muted-foreground">info@fbcfenton.com</p>
+      
+      {/* Final CTA Section */}
+      <section className="bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+            <h2 className="text-3xl font-heading font-bold">Ready to Take the Next Step?</h2>
+            <p className="mt-4 text-lg max-w-2xl mx-auto text-primary-foreground/80">
+                The best way to get to know us is to join us. We can't wait to meet you.
+            </p>
+            <div className="mt-8 flex justify-center gap-4">
+                <Button size="lg" variant="secondary" asChild>
+                    <Link href="/visit">Plan Your Visit</Link>
+                </Button>
+                <Button size="lg" variant="outline" className="border-primary-foreground/50 text-primary-foreground hover:bg-white/10" asChild>
+                    <Link href="/about">More About Us</Link>
+                </Button>
             </div>
-            <div className="flex flex-col items-center gap-3">
-              <Phone className="w-8 h-8 text-primary" />
-              <h3 className="text-xl font-bold">Call Us</h3>
-              <p className="text-muted-foreground">(810) 629-1234</p>
-            </div>
-            <div className="flex flex-col items-center gap-3">
-              <MapPin className="w-8 h-8 text-primary" />
-              <h3 className="text-xl font-bold">Visit Us</h3>
-              <p className="text-muted-foreground">860 N Leroy St, Fenton, MI</p>
-            </div>
-          </div>
-          <Button size="lg" className="mt-8" asChild>
-            <Link href="/contact">Get in Touch</Link>
-          </Button>
         </div>
       </section>
     </div>
