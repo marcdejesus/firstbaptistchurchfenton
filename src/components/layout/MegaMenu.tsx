@@ -38,8 +38,8 @@ export const navigationCategories = [
       },
       {
         title: "Watch Online",
-        href: "/sermons/live",
-        description: "Join our live stream or watch past services",
+        href: "/sermons",
+        description: "Watch our latest sermon or browse the archives",
         icon: Monitor
       }
     ]
