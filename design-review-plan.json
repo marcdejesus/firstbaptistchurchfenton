@@ -1,0 +1,136 @@
+{
+  "pages": [
+    {
+      "page_path": "src/app/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/sermons/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/faq/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/gallery/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/admin/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/prayer/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/ministries/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/missions/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/contact/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/donate/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/about/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/book-appointment/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/visit/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/volunteer/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/welcome/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/profile/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/register/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/next-steps/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/login/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/events/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/community/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    },
+    {
+      "page_path": "src/app/blog/page.tsx",
+      "completion_status": false,
+      "problem_report": [],
+      "solution_prompt": ""
+    }
+  ]
+} 
