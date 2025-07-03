@@ -37,46 +37,44 @@ export default function CommunityPage() {
     ];
 
   return (
-    <main>
-        <PageLayout
-            title="Community & Missions"
-            subtitle="Loving our neighbors—across the street and around the world."
-            breadcrumbs={breadcrumbs}
-        >
-            <div className="mb-16">
-              <h2 className="text-4xl font-heading font-bold text-center mb-8">Local Outreach</h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {localOutreach.map((item) => (
-                  <Card key={item.title} className="flex flex-col hover:shadow-lg transition-shadow">
-                    <CardHeader>
-                      <div className="flex items-center space-x-3">
-                         <Heart className="h-6 w-6 text-primary" />
-                         <CardTitle className="font-heading">{item.title}</CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent className="flex-grow">
-                      <p className="text-muted-foreground">{item.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
+    <PageLayout
+        title="Community & Missions"
+        subtitle="Loving our neighbors—across the street and around the world."
+        breadcrumbs={breadcrumbs}
+    >
+        <div className="mb-16">
+          <h2 className="text-4xl font-heading font-bold text-center mb-8">Local Outreach</h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {localOutreach.map((item) => (
+              <Card key={item.title} className="flex flex-col hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
+                     <Heart className="h-6 w-6 text-primary" />
+                     <CardTitle className="font-heading">{item.title}</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <p className="text-muted-foreground">{item.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
 
-            <div className="text-center bg-gray-100 p-12 rounded-lg">
-              <h3 className="text-3xl font-heading font-bold">Ready to Make a Difference?</h3>
-              <p className="mt-3 max-w-2xl mx-auto text-muted-foreground">
-                Whether you're called to go, give, or serve, there's a place for you. Join a local serve team, support a missionary, or learn how you can be part of our outreach efforts.
-              </p>
-              <div className="mt-6 flex justify-center items-center gap-4">
-                <Button size="lg" asChild>
-                    <Link href="/volunteer">Get Involved Locally</Link>
-                </Button>
-                 <Button size="lg" variant="outline" asChild>
-                    <Link href="/missions">Explore Global Missions <ArrowRight className="ml-2 h-4 w-4" /></Link>
-                </Button>
-              </div>
-            </div>
-        </PageLayout>
-    </main>
+        <div className="text-center bg-background-secondary p-12 rounded-lg">
+          <h3 className="text-3xl font-heading font-bold">Ready to Make a Difference?</h3>
+          <p className="mt-3 max-w-2xl mx-auto text-muted-foreground">
+            Whether you're called to go, give, or serve, there's a place for you. Join a local serve team, support a missionary, or learn how you can be part of our outreach efforts.
+          </p>
+          <div className="mt-6 flex justify-center items-center gap-4">
+            <Button size="lg" asChild>
+                <Link href="/volunteer">Get Involved Locally</Link>
+            </Button>
+             <Button size="lg" variant="outline" asChild>
+                <Link href="/missions">Explore Global Missions <ArrowRight className="ml-2 h-4 w-4" /></Link>
+            </Button>
+          </div>
+        </div>
+    </PageLayout>
   );
 } 

@@ -34,7 +34,7 @@ export default function Home() {
     <main className="flex flex-col">
       
       {/* Hero Section */}
-      <section className="bg-gray-50">
+      <section className="bg-background-secondary">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="flex flex-col items-start gap-8 text-center md:text-left">
@@ -102,7 +102,7 @@ export default function Home() {
       </section>
       
       {/* Latest Sermon Section */}
-      <section className="bg-gray-50 py-20 md:py-28">
+      <section className="bg-background-secondary py-20 md:py-28">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div className="flex flex-col items-start gap-6">
@@ -137,7 +137,7 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl font-heading font-bold">What Our Family Says</h2>
           </div>
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-gray-50 border-gray-100">
+            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-background-secondary border-border-light">
                 <Image src="https://t3.ftcdn.net/jpg/06/18/83/87/360_F_618838733_4urG25K25uXYj40p6o3HfYQd55nI0Rl0.jpg" alt="Testimonial author" width={80} height={80} className="rounded-full" />
                 <p className="text-muted-foreground italic">"This church has been a blessing to our family. The sense of community and the powerful sermons have truly deepened our faith."</p>
                 <div>
@@ -145,7 +145,7 @@ export default function Home() {
                   <p className="text-sm text-muted-foreground">Members since 2021</p>
                 </div>
             </Card>
-            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-gray-50 border-gray-100">
+            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-background-secondary border-border-light">
                 <Image src="https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg" alt="Testimonial author" width={80} height={80} className="rounded-full" />
                 <p className="text-muted-foreground italic">"The youth ministry is fantastic! My kids love coming here and have grown so much in their spiritual walk."</p>
                 <div>
@@ -153,7 +153,7 @@ export default function Home() {
                   <p className="text-sm text-muted-foreground">Parent</p>
                 </div>
             </Card>
-            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-gray-50 border-gray-100">
+            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-background-secondary border-border-light">
                 <Image src="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWspNNceUavTxoK6.jpg" alt="Testimonial author" width={80} height={80} className="rounded-full" />
                 <p className="text-muted-foreground italic">"A welcoming and authentic community. From the moment I first visited, I felt right at home."</p>
                 <div>

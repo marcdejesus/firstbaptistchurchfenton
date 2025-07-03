@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { HandHelping, Heart, Tv, Wrench, Users, Music, BookOpen, PenSquare, Mic, Handshake, Utensils } from 'lucide-react';
 import Link from 'next/link';
+import { PageLayout } from '@/components/layout/PageLayout';
 
 const coreTeams = [
   {
@@ -54,23 +55,18 @@ const additionalOpportunities = [
 
 export default function VolunteerPage() {
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="text-center mb-12">
-        <HandHelping className="mx-auto h-12 w-12 text-accent mb-4" />
-        <h1 className="text-4xl font-bold font-heading">Volunteer at FBC Fenton</h1>
-        <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Serving is one of the best ways to grow, connect, and live out your faith. There's a place for everyone to use their gifts—whether you're behind the scenes, leading a group, or welcoming first-time guests.
-        </p>
-      </div>
-
+    <PageLayout
+      title="Volunteer at FBC Fenton"
+      subtitle="Serving is one of the best ways to grow, connect, and live out your faith. There's a place for everyone to use their gifts—whether you're behind the scenes, leading a group, or welcoming first-time guests."
+    >
       <div>
-        <h2 className="text-3xl font-bold text-center mb-8">Our 7 Core Ministry Teams</h2>
+        <h2 className="text-3xl font-bold font-heading text-center mb-8">Our 7 Core Ministry Teams</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {coreTeams.map((team) => (
                 <Card key={team.title} className="flex flex-col hover:shadow-lg transition-shadow">
                     <CardHeader>
                         <div className="flex items-center space-x-4">
-                            <team.icon className="h-8 w-8 text-accent"/>
+                            <team.icon className="h-8 w-8 text-primary"/>
                             <CardTitle>{team.title}</CardTitle>
                         </div>
                     </CardHeader>
@@ -82,24 +78,24 @@ export default function VolunteerPage() {
         </div>
       </div>
 
-       <div className="mt-20">
-        <h2 className="text-3xl font-bold text-center mb-8">Additional Volunteer Opportunities</h2>
+      <div className="mt-20">
+        <h2 className="text-3xl font-bold font-heading text-center mb-8">Additional Volunteer Opportunities</h2>
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
             {additionalOpportunities.map((opp) => (
-                 <Card key={opp.title} className="p-4">
+                  <Card key={opp.title} className="p-4">
                     <div className="flex items-center space-x-4">
-                        <opp.icon className="h-6 w-6 text-accent"/>
+                        <opp.icon className="h-6 w-6 text-primary"/>
                         <div>
-                            <h3 className="font-semibold">{opp.title}</h3>
+                            <h3 className="font-semibold font-heading">{opp.title}</h3>
                             <p className="text-sm text-muted-foreground">{opp.description}</p>
                         </div>
                     </div>
-                 </Card>
+                  </Card>
             ))}
         </div>
       </div>
 
-      <div className="mt-20 text-center bg-gray-50/70 p-8 rounded-lg border-t">
+      <div className="mt-20 text-center bg-background-secondary p-8 rounded-lg border-t">
         <h2 className="text-3xl font-bold font-heading">Ready to Serve?</h2>
         <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">
             There's no perfect person—only willing hearts. We'll train you, support you, and walk with you as you serve. Here's how to get started:
@@ -113,9 +109,9 @@ export default function VolunteerPage() {
                 <a href="mailto:serve@fbfenton.org">Email serve@fbfenton.org</a>
             </Button>
             <span className="text-muted-foreground font-semibold">OR</span>
-             <p className="text-muted-foreground basis-full">Visit the Welcome Center on Sunday to talk with someone in person.</p>
+              <p className="text-muted-foreground basis-full">Visit the Welcome Center on Sunday to talk with someone in person.</p>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 } 

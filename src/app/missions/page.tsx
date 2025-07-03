@@ -42,47 +42,39 @@ export default function MissionsPage() {
       title="Global Missions"
       subtitle="We are passionate about making disciples of all nations by equipping local leaders to reach their own communities. Our approach is simple: train and support national pastors and leaders already doing the work."
     >
-      <div className="bg-gray-50/50">
-        <div className="container mx-auto px-4 py-8 md:py-12">
-          
-          {/* <WorldMap /> */}
+      <div className="mt-16">
+        <h2 className="text-3xl font-heading font-bold text-center mb-10">Our Partners in the Field</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {missionPartners.map((partner) => (
+            <Card key={partner.location} className="flex flex-col hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="flex items-center space-x-3">
+                    <Globe className="h-6 w-6 text-primary" />
+                    <CardTitle className="text-2xl font-heading">{partner.location}</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <p className="text-muted-foreground">{partner.description}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
 
-          <div className="mt-16">
-            <h2 className="text-3xl font-bold text-center mb-10">Our Partners in the Field</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {missionPartners.map((partner) => (
-                <Card key={partner.location} className="flex flex-col hover:shadow-lg transition-shadow">
-                  <CardHeader>
-                    <div className="flex items-center space-x-3">
-                       <Globe className="h-6 w-6 text-primary" />
-                       <CardTitle className="text-2xl">{partner.location}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="flex-grow">
-                    <p className="text-muted-foreground">{partner.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-16 text-center bg-white p-8 rounded-lg shadow-inner border">
-            <h3 className="text-2xl font-bold">How Can You Get Involved?</h3>
-            <p className="mt-3 max-w-2xl mx-auto text-muted-foreground">
-              "The harvest is plentiful, but the laborers are few…" — Luke 10:2
-              <br/><br/>
-              Your prayers, financial support, and willingness to go are all vital parts of our missions effort. Attend a missions interest meeting to learn more.
-            </p>
-            <div className="mt-6 flex justify-center gap-4">
-              <Button size="lg" asChild>
-                  <Link href="/donate">Give to Missions</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                  <Link href="/contact">Ask About a Trip</Link>
-              </Button>
-            </div>
-          </div>
-
+      <div className="mt-16 text-center bg-background-primary p-8 rounded-lg shadow-inner border">
+        <h3 className="text-2xl font-heading font-bold">How Can You Get Involved?</h3>
+        <p className="mt-3 max-w-2xl mx-auto text-muted-foreground">
+          "The harvest is plentiful, but the laborers are few…" — Luke 10:2
+          <br/><br/>
+          Your prayers, financial support, and willingness to go are all vital parts of our missions effort. Attend a missions interest meeting to learn more.
+        </p>
+        <div className="mt-6 flex justify-center gap-4">
+          <Button size="lg" asChild>
+              <Link href="/donate">Give to Missions</Link>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+              <Link href="/contact">Ask About a Trip</Link>
+          </Button>
         </div>
       </div>
     </PageLayout>

@@ -11,20 +11,18 @@ export default function BlogPage() {
   ];
 
   return (
-    <main>
-        <PageLayout
-            title="From the Blog"
-            subtitle="Articles, devotionals, and updates from our church leadership and community."
-            breadcrumbs={breadcrumbs}
-        >
-            <div className="text-center py-24 bg-gray-50 rounded-lg">
-                <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-6" />
-                <h2 className="text-3xl font-heading font-bold mb-4">Coming Soon</h2>
-                <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-                    We're currently working on bringing our blog to life. Please check back soon for articles and stories from our church family.
-                </p>
-            </div>
-        </PageLayout>
-    </main>
+    <PageLayout
+        title="From the Blog"
+        subtitle="Articles, devotionals, and updates from our church leadership and community."
+        breadcrumbs={breadcrumbs}
+    >
+        <div className="text-center py-24 bg-background-secondary rounded-lg">
+            <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-6" />
+            <h2 className="text-3xl font-heading font-bold mb-4">Coming Soon</h2>
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+                We're currently working on bringing our blog to life. Please check back soon for articles and stories from our church family.
+            </p>
+        </div>
+    </PageLayout>
   );
 } 

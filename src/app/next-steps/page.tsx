@@ -5,27 +5,28 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { ArrowRight, Church, Users, HandHelping, UserPlus } from 'lucide-react';
 import Link from 'next/link';
+import { PageLayout } from '@/components/layout/PageLayout';
 
 const involvementPath = [
   {
     icon: Church,
     title: 'Step 1: Worship With Us',
-    description: 'Start by joining us on Sunday mornings at 10:30 AM. Each service is designed to help you encounter God through biblical teaching, gospel-centered worship, and a welcoming community.',
+    description: "Start by joining us on Sunday mornings at 10:30 AM. Each service is designed to help you encounter God through biblical teaching, gospel-centered worship, and a welcoming community.",
   },
   {
     icon: Users,
     title: 'Step 2: Find Your People',
-    description: 'We want you to belong, not just attend. Join one of our small groups, where you can build meaningful relationships, study God’s Word together, and grow in your faith.',
+    description: "We want you to belong, not just attend. Join one of our small groups, where you can build meaningful relationships, study God's Word together, and grow in your faith.",
   },
   {
     icon: HandHelping,
     title: 'Step 3: Serve on a Ministry Team',
-    description: 'Everyone has a role to play. Use your gifts to make a difference by serving in a ministry—from hospitality to kids, worship to tech, or community outreach.',
+    description: "Everyone has a role to play. Use your gifts to make a difference by serving in a ministry—from hospitality to kids, worship to tech, or community outreach.",
   },
   {
     icon: UserPlus,
     title: 'Step 4: Make Disciples',
-    description: 'As you grow, we want to equip you to train and disciple others—whether that’s mentoring someone one-on-one, leading a group, or helping someone take their next step too.',
+    description: "As you grow, we want to equip you to train and disciple others—whether that's mentoring someone one-on-one, leading a group, or helping someone take their next step too.",
   },
 ];
 
@@ -58,20 +59,16 @@ const programDetails = [
 
 export default function NextStepsPage() {
   return (
-    <div className="container mx-auto px-4 py-12">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl font-bold font-heading">Take Your Next Step</h1>
-        <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          We believe every follower of Jesus is on a journey—and no one should walk that journey alone. Whether you’re new to faith or have followed Jesus for years, we want to help you take your next step.
-        </p>
-      </div>
-
+    <PageLayout
+      title="Take Your Next Step"
+      subtitle="We believe every follower of Jesus is on a journey—and no one should walk that journey alone. Whether you're new to faith or have followed Jesus for years, we want to help you take your next step."
+    >
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-24">
         {involvementPath.map((step, index) => (
           <Card key={index} className="w-full text-center hover:shadow-xl transition-shadow flex flex-col">
             <CardHeader>
-              <div className="mx-auto bg-accent/10 rounded-full h-16 w-16 flex items-center justify-center mb-4">
-                <step.icon className="h-8 w-8 text-accent" />
+              <div className="mx-auto bg-primary/10 rounded-full h-16 w-16 flex items-center justify-center mb-4">
+                <step.icon className="h-8 w-8 text-primary" />
               </div>
               <CardTitle>{step.title}</CardTitle>
             </CardHeader>
@@ -82,10 +79,10 @@ export default function NextStepsPage() {
         ))}
       </div>
 
-       <div className="text-center mb-12">
+      <div className="text-center mb-12">
         <h2 className="text-3xl font-bold font-heading">Program Details & Signups</h2>
         <p className="mt-3 text-md text-muted-foreground max-w-2xl mx-auto">
-          Ready to get started? Here’s how you can get connected with each of our core programs.
+          Ready to get started? Here's how you can get connected with each of our core programs.
         </p>
       </div>
       <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
@@ -108,6 +105,6 @@ export default function NextStepsPage() {
             </Card>
         ))}
       </div>
-    </div>
+    </PageLayout>
   );
 } 

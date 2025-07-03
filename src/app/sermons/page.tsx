@@ -22,26 +22,26 @@ export default function SermonsPage() {
 
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-scheme-1-background">
-      <h1 className="text-desktop-heading1 font-heading font-bold text-center mb-8 text-scheme-1-text">Sermons</h1>
+    <main className="container mx-auto px-4 py-8">
+      <h1 className="text-4xl sm:text-5xl font-heading font-bold text-center mb-8">Sermons</h1>
 
-      <Card className="mb-8 bg-scheme-2-background border border-scheme-2-border">
+      <Card className="mb-8 bg-background-secondary border-border-light">
         <CardHeader>
-          <CardTitle className="flex items-center justify-between text-scheme-2-text">
-            <span className="text-desktop-heading3 font-heading">Sermon Information</span>
-            <Link href={youtubeChannelUrl} target="_blank" rel="noopener noreferrer" className="text-primary-orange hover:text-primary-orange-dark transition-colors">
+          <CardTitle className="flex items-center justify-between">
+            <span className="text-2xl font-heading">Sermon Information</span>
+            <Link href={youtubeChannelUrl} target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary-dark transition-colors">
               <Youtube className="h-8 w-8" />
             </Link>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-desktop-textLarge text-scheme-2-text opacity-80 font-body">
+          <p className="text-lg text-text-secondary font-body">
             We upload our sermons live to YouTube every Sunday. Visit our channel for the latest sermons.
           </p>
         </CardContent>
       </Card>
 
-      <h2 className="text-desktop-heading2 font-heading font-bold mt-8 mb-4 text-scheme-1-text">Popular Sermons</h2>
+      <h2 className="text-3xl sm:text-4xl font-heading font-bold mt-8 mb-4">Popular Sermons</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
  {sermonVideoIds.map((videoId) => (
  <div key={videoId} className="rounded-md overflow-hidden shadow-md flex flex-col"> {/* Added flex-col for vertical stacking if needed later, currently not strictly necessary for iframe */}
@@ -55,6 +55,6 @@ export default function SermonsPage() {
           </div>
  </div>))}
       </div>
-    </div>
+    </main>
   );
 }

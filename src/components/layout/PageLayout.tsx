@@ -32,7 +32,7 @@ const PageLayout = React.forwardRef<HTMLDivElement, PageLayoutProps>(
     );
 
     return (
-      <div ref={ref} className={containerClasses}>
+      <main ref={ref} className={containerClasses}>
           {(title || subtitle || breadcrumbs) && (
             <div className="mb-12 text-center">
               {breadcrumbs && <Breadcrumbs items={breadcrumbs} className="justify-center mb-4" />}
@@ -41,7 +41,7 @@ const PageLayout = React.forwardRef<HTMLDivElement, PageLayoutProps>(
             </div>
           )}
           {children}
-      </div>
+      </main>
     )
   }
 )

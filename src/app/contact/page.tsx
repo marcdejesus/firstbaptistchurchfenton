@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,49 +7,9 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail, Clock, Send, Facebook, Instagram, Youtube } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
-import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 
-interface ContactFormData {
-  name: string;
-  email: string;
-  message: string;
-}
-
 export default function ContactPage() {
-  const [formData, setFormData] = useState<ContactFormData>({ name: "", email: "", message: "" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { toast } = useToast();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to send message. Please try again.");
-      }
-      
-      toast({ title: "Message Sent!", description: "Thank you for reaching out. We'll get back to you soon." });
-      setFormData({ name: "", email: "", message: "" });
-
-    } catch (error) {
-      toast({ title: "Error", description: (error as Error).message, variant: "destructive" });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleInputChange = (field: keyof ContactFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=860%20N%20Leroy%20St%2C%20Fenton%2C%20MI%2048430";
 
   return (
@@ -105,21 +64,21 @@ export default function ContactPage() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form className="space-y-6">
                             <div className="space-y-2">
                                 <Label htmlFor="name">Full Name</Label>
-                                <Input id="name" value={formData.name} onChange={(e) => handleInputChange('name', e.target.value)} required />
+                                <Input id="name" required disabled />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="email">Email Address</Label>
-                                <Input id="email" type="email" value={formData.email} onChange={(e) => handleInputChange('email', e.target.value)} required />
+                                <Input id="email" type="email" required disabled />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="message">Message</Label>
-                                <Textarea id="message" value={formData.message} onChange={(e) => handleInputChange('message', e.target.value)} required rows={5} />
+                                <Textarea id="message" required rows={5} disabled />
                             </div>
-                            <Button type="submit" className="w-full" disabled={isSubmitting}>
-                                {isSubmitting ? 'Sending...' : 'Send Message'} <Send className="ml-2 h-4 w-4"/>
+                            <Button type="submit" className="w-full" disabled>
+                                Send Message <Send className="ml-2 h-4 w-4"/>
                             </Button>
                         </form>
                     </CardContent>

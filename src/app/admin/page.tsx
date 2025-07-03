@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -45,8 +45,6 @@ import {
   Shield,
   Loader2
 } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
 
 const PlaceholderContent = ({ title }: { title: string }) => (
     <div className="flex items-center justify-center h-48 border-2 border-dashed rounded-lg">
@@ -152,23 +150,6 @@ const SiteSettings = () => (
 
 
 export default function AdminPage() {
-  const { user, loading } = useAuth();
-  const router = useRouter();
-  const [activeTab, setActiveTab] = useState('dashboard');
-
-  if (loading) {
-    return (
-        <main className="flex items-center justify-center h-screen">
-            <Loader2 className="h-12 w-12 animate-spin text-primary" />
-        </main>
-    );
-  }
-
-  if (!user || user.role !== 'admin') {
-    router.push('/login');
-    return null; 
-  }
-
   const TABS = [
     { value: 'dashboard', label: 'Dashboard', icon: BarChart3 },
     { value: 'users', label: 'Users', icon: Users },
@@ -180,14 +161,14 @@ export default function AdminPage() {
   ];
 
   return (
-    <main className="bg-gray-100 min-h-screen p-4 sm:p-6 md:p-8">
+    <main className="bg-background-secondary min-h-screen p-4 sm:p-6 md:p-8">
       <div className="max-w-7xl mx-auto">
         <header className="mb-8">
           <h1 className="text-3xl font-heading font-bold">Admin Panel</h1>
-          <p className="text-muted-foreground">Welcome, {user.name}.</p>
+          <p className="text-muted-foreground">Welcome, Admin.</p>
         </header>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <Tabs defaultValue="dashboard">
           <TabsList className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 mb-6">
             {TABS.map(tab => (
               <TabsTrigger key={tab.value} value={tab.value} className="flex-1">

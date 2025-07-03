@@ -14,29 +14,27 @@ export default function BookAppointmentPage() {
   ];
 
   return (
-    <main>
-        <PageLayout
-            title="Book an Appointment"
-            subtitle="Schedule a confidential session with Pastor James Bell. Please select a date and time that works for you."
-            breadcrumbs={breadcrumbs}
-            variant="narrow"
-        >
-            <div className="rounded-lg overflow-hidden shadow-lg border">
-                <InlineWidget
-                    url={calendlyUrl}
-                    styles={{
-                        height: "800px",
-                    }}
-                    pageSettings={{
-                        backgroundColor: 'FFFFFF', // white
-                        hideEventTypeDetails: false,
-                        hideLandingPageDetails: false,
-                        primaryColor: 'FF9A00', // primary orange
-                        textColor: '070404' // darkest neutral
-                    }}
-                />
-            </div>
-        </PageLayout>
-    </main>
+    <PageLayout
+        title="Book an Appointment"
+        subtitle="Schedule a confidential session with Pastor James Bell. Please select a date and time that works for you."
+        breadcrumbs={breadcrumbs}
+        variant="narrow"
+    >
+        <div className="rounded-lg overflow-hidden shadow-lg border">
+            <InlineWidget
+                url={calendlyUrl}
+                styles={{
+                    height: "800px",
+                }}
+                pageSettings={{
+                    backgroundColor: 'FFFFFF',
+                    hideEventTypeDetails: false,
+                    hideLandingPageDetails: false,
+                    primaryColor: 'FF9A00',
+                    textColor: '070404'
+                }}
+            />
+        </div>
+    </PageLayout>
   );
 } 
