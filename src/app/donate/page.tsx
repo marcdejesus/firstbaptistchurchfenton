@@ -20,7 +20,7 @@ export default function DonatePage() {
                 <div className="mx-auto bg-primary/10 rounded-full h-16 w-16 flex items-center justify-center mb-4">
                     <CreditCard className="h-8 w-8 text-primary" />
                 </div>
-              <CardTitle>Give Online</CardTitle>
+              <CardTitle className="font-heading">Give Online</CardTitle>
               <CardDescription>
                 Click the button below to give securely through our online giving platform.
               </CardDescription>
@@ -41,15 +41,15 @@ export default function DonatePage() {
                 <div className="mx-auto bg-primary/10 rounded-full h-16 w-16 flex items-center justify-center mb-4">
                     <Mail className="h-8 w-8 text-primary" />
                 </div>
-              <CardTitle>Give by Mail</CardTitle>
+              <CardTitle className="font-heading">Give by Mail</CardTitle>
               <CardDescription>
                 If you prefer to give by mail, checks can be made out to:
               </CardDescription>
             </CardHeader>
-            <CardContent className="flex-grow flex flex-col justify-center">
-                <div className="text-lg font-semibold">First Baptist Church of Fenton</div>
-                <div className="text-muted-foreground">860 N. Leroy Street</div>
-                <div className="text-muted-foreground">Fenton, MI 48430</div>
+            <CardContent className="flex-grow flex flex-col justify-center text-lg">
+                <p className="font-semibold">First Baptist Church of Fenton</p>
+                <p className="text-muted-foreground">860 N. Leroy Street</p>
+                <p className="text-muted-foreground">Fenton, MI 48430</p>
             </CardContent>
           </Card>
 

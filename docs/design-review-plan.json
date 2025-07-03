@@ -1,0 +1,102 @@
+{
+  "pages": [
+    { "path": "src/app/page.tsx", "completion_status": true, "problem_report": [
+      "UNIVERSAL_LAYOUT: The page content is not wrapped in a `<main>` tag, which is required for semantic correctness and accessibility."
+    ], "solution_prompt": "Please wrap the main content of the `src/app/page.tsx` file in a `<main>` tag to ensure it follows the universal layout structure and improves semantic correctness." },
+    { "path": "src/app/about/page.tsx", "completion_status": true, "problem_report": [
+      "UNIVERSAL_LAYOUT: The page content is not wrapped in a `<main>` tag."
+    ], "solution_prompt": "Please wrap the main content of the `src/app/about/page.tsx` file in a `<main>` tag to ensure it follows the universal layout structure and improves semantic correctness." },
+    { "path": "src/app/about/beliefs/page.tsx", "completion_status": true, "problem_report": [
+      "UNIVERSAL_LAYOUT: The page incorrectly includes a standalone `<Header>` component.",
+      "UNIVERSAL_LAYOUT: The page content is not wrapped in a `<main>` tag.",
+      "TYPOGRAPHY_CONSISTENCY: The `<h2>` for 'Statement of Faith' uses `font-bold` instead of `font-heading` and does not match the h2 style.",
+      "TYPOGRAPHY_CONSISTENCY: The `<AccordionTrigger>` font size is `text-xl` but should be `text-2xl` to match the h3 style."
+    ], "solution_prompt": "Please refactor `src/app/about/beliefs/page.tsx` to remove the standalone `<Header>` component, wrap the page content in a `<main>` tag, and update the typography for the `<h2>` and `<AccordionTrigger>` elements to match the design guidelines." },
+    { "path": "src/app/about/history/page.tsx", "completion_status": true, "problem_report": [
+      "UNIVERSAL_LAYOUT: The page incorrectly includes a standalone `<Header>` component.",
+      "UNIVERSAL_LAYOUT: The page content is not wrapped in a `<main>` tag.",
+      "TYPOGRAPHY_CONSISTENCY: The intro paragraph's typography does not fully align with the `largeBody` style.",
+      "TYPOGRAPHY_CONSISTENCY: The `<CardTitle>` font size is `text-2xl` but should be `text-3xl` to align with the h3 style."
+    ], "solution_prompt": "Please refactor `src/app/about/history/page.tsx` to remove the standalone `<Header>`, wrap the content in a `<main>` tag, and update the typography for the intro paragraph and `<CardTitle>` elements to match the design guidelines." },
+    { "path": "src/app/about/staff/page.tsx", "completion_status": true, "problem_report": [
+      "UNIVERSAL_LAYOUT: The page content is not wrapped in a `<main>` tag.",
+      "TYPOGRAPHY_CONSISTENCY: The main `<h1>` uses `font-extrabold` and is missing `font-heading`.",
+      "TYPOGRAPHY_CONSISTENCY: `<CardTitle>` elements use `font-bold` instead of `font-heading`.",
+      "COMPONENT_CONSISTENCY: The native `<img>` tag is used instead of the `next/image` component.",
+      "COLOR_CONTRAST: The background color `bg-gray-50/50` is not a standard design token."
+    ], "solution_prompt": "Please refactor `src/app/about/staff/page.tsx` to wrap the content in a `<main>` tag, correct the typography for all headings, replace the `<img>` tag with the `next/image` component, and update the background to a standard color token." },
+    { "path": "src/app/admin/page.tsx", "completion_status": true, "problem_report": [
+      "UNIVERSAL_LAYOUT: The page content is not wrapped in a `<main>` tag.",
+      "TYPOGRAPHY_CONSISTENCY: Headings and titles do not consistently use the `font-heading` family.",
+      "COMPONENT_CONSISTENCY: A local, mocked `useAuth` hook is used instead of the centralized hook from `src/hooks/useAuth.ts`.",
+      "MOCK_DATA: The page uses mock data that should be removed."
+    ], "solution_prompt": "Please refactor `src/app/admin/page.tsx` to wrap the content in a `<main>` tag, update all headings to use `font-heading`, and replace the local `useAuth` hook with the one from `src/hooks/useAuth.ts` and remove the mock data." },
+    { "path": "src/app/blog/page.tsx", "completion_status": true, "problem_report": [
+      "UNIVERSAL_LAYOUT: The page content is not wrapped in a `<main>` tag.",
+      "TYPOGRAPHY_CONSISTENCY: The page uses a non-standard font (`font-lora`) instead of `font-heading`.",
+      "MOCK_DATA: The page is populated with mock blog posts that should be removed.",
+      "COMPONENT_CONSISTENCY: The page includes complex filtering and sorting logic that is no longer needed.",
+      "COLOR_CONTRAST: The page uses custom, non-standard colors for categories."
+    ], "solution_prompt": "Please refactor `src/app/blog/page.tsx` to remove all mock data, filtering logic, and non-standard styling. The page should be wrapped in a `<main>` tag and display a simple placeholder message indicating that blog articles are coming soon. All text should use the standard typography from the design system." },
+    { "path": "src/app/blog/[slug]/page.tsx", "completion_status": true, "problem_report": [
+      "COMPONENT_CONSISTENCY: This file was deleted as it is no longer needed after the main blog page was simplified."
+    ], "solution_prompt": "Delete the file `src/app/blog/[slug]/page.tsx`." },
+    { "path": "src/app/book-appointment/page.tsx", "completion_status": true, "problem_report": [
+      "UNIVERSAL_LAYOUT: The page content is not wrapped in a `<main>` tag.",
+      "TYPOGRAPHY_CONSISTENCY: The page uses a non-standard font (`font-lora`) and custom text colors.",
+      "COMPONENT_CONSISTENCY: The Calendly widget is configured with custom colors that do not match the design system."
+    ], "solution_prompt": "Please refactor `src/app/book-appointment/page.tsx` to wrap the content in a `<main>` tag, update the typography to use `font-heading` and standard text colors, and configure the Calendly widget to use the correct design system colors." },
+    { "path": "src/app/community/page.tsx", "completion_status": true, "problem_report": [
+        "UNIVERSAL_LAYOUT: The page content is not wrapped in a `<main>` tag.",
+        "TYPOGRAPHY_CONSISTENCY: Headings and titles use `font-bold` instead of the `font-heading` family.",
+        "COLOR_CONTRAST: The background color `bg-gray-50/50` is not a standard design token."
+    ], "solution_prompt": "Please refactor `src/app/community/page.tsx` to wrap the content in a `<main>` tag, update all headings to use the `font-heading` family, and set the background to a standard color token." },
+    { "path": "src/app/contact/page.tsx", "completion_status": true, "problem_report": [
+        "TYPOGRAPHY_CONSISTENCY: `<CardTitle>` elements should explicitly use the `font-heading` class for consistency.",
+        "COLOR_CONTRAST: Icons use `text-accent`, which is not a standard color token. It should be `text-primary`."
+    ], "solution_prompt": "Please refactor `src/app/contact/page.tsx` to add the `font-heading` class to all `<CardTitle>` elements and update the icon color to `text-primary`." },
+    { "path": "src/app/donate/page.tsx", "completion_status": true, "problem_report": [
+        "UNIVERSAL_LAYOUT: The page has a redundant `container` div that should be removed.",
+        "TYPOGRAPHY_CONSISTENCY: `<CardTitle>` elements should explicitly use the `font-heading` class.",
+        "TYPOGRAPHY_CONSISTENCY: The address text styling is inconsistent and should be standardized."
+    ], "solution_prompt": "Please refactor `src/app/donate/page.tsx` to remove the redundant `container` div, add the `font-heading` class to `<CardTitle>` elements, and standardize the text styling for the mailing address." },
+    { "path": "src/app/events/page.tsx", "completion_status": true, "problem_report": [
+        "UNIVERSAL_LAYOUT: The page content is not wrapped in a `<main>` tag and has a redundant `container` div.",
+        "TYPOGRAPHY_CONSISTENCY: Headings and titles do not consistently use the `font-heading` class.",
+        "COLOR_CONTRAST: The `<Alert>` component uses custom, non-standard colors.",
+        "MOCK_DATA: The page is populated with mock event data that should be removed.",
+        "COMPONENT_CONSISTENCY: The page has a complex layout that should be simplified to a placeholder."
+    ], "solution_prompt": "Please refactor `src/app/events/page.tsx` to remove all mock data, complex layout, and non-standard styling. The page should be wrapped in a `<main>` tag within a `PageLayout`, and display a simple placeholder message with a standard alert indicating that the full event calendar is coming soon." },
+    { "path": "src/app/faq/page.tsx", "completion_status": true, "problem_report": [
+        "TYPOGRAPHY_CONSISTENCY: The `<AccordionTrigger>` does not explicitly use the `font-heading` class."
+    ], "solution_prompt": "Please refactor `src/app/faq/page.tsx` to add the `font-heading` class to the `<AccordionTrigger>` to ensure consistent typography." },
+    { "path": "src/app/gallery/page.tsx", "completion_status": true, "problem_report": [
+        "UNIVERSAL_LAYOUT: The page is not wrapped in a `<main>` tag and does not use `PageLayout`.",
+        "MOCK_DATA: The page is entirely dependent on mock data and commented-out Firebase logic.",
+        "COMPONENT_CONSISTENCY: The page has an overly complex structure for a non-functional feature.",
+        "TYPOGRAPHY_CONSISTENCY: Headings do not use the `font-heading` family.",
+        "IMAGE_HANDLING: The `Image` component uses deprecated props."
+    ], "solution_prompt": "Please refactor `src/app/gallery/page.tsx` to remove all mock data, complex components, and non-standard styling. The page should be simplified to a placeholder within a `PageLayout` indicating that the gallery is coming soon." },
+    { "path": "src/app/login/page.tsx", "completion_status": true, "problem_report": [
+      "UNIVERSAL_LAYOUT: The page is not wrapped in a `<main>` tag or `PageLayout`.",
+      "TYPOGRAPHY_CONSISTENCY: The page uses a non-standard font (`font-lora`).",
+      "MOCK_DATA: The form contains mock authentication logic.",
+      "COMPONENT_CONSISTENCY: The page uses a custom-styled card for demo instructions instead of a standard `Alert`.",
+      "COLOR_CONTRAST: The demo login card uses non-standard colors."
+    ], "solution_prompt": "Please refactor `src/app/login/page.tsx` to use the `PageLayout`, remove the mock authentication and demo card, disable the form, and add a standard `Alert` to inform users that the login functionality is under development." },
+    { "path": "src/app/ministries/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/ministries/adults/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/ministries/children/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/ministries/youth/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/missions/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/next-steps/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/prayer/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/profile/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/register/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/sermons/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/visit/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/visit/what-to-expect/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/volunteer/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" },
+    { "path": "src/app/welcome/page.tsx", "completion_status": false, "problem_report": [], "solution_prompt": "" }
+  ]
+} 

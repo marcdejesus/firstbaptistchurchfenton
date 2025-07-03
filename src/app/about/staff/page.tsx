@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Mail, CalendarDays } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 const staffMembers = [
   {
@@ -79,10 +80,10 @@ const vision = {
 
 export default function StaffPage() {
   return (
-    <div className="bg-gray-50/50">
+    <main className="bg-gray-50">
       <div className="container mx-auto px-4 py-8 md:py-12">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">Meet Our Team</h1>
+          <h1 className="text-4xl font-bold font-heading tracking-tight lg:text-5xl">Meet Our Team</h1>
           <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
             Meet the team of pastors and leaders who are dedicated to serving our church and community.
           </p>
@@ -93,11 +94,11 @@ export default function StaffPage() {
             <Card key={staff.id} className="overflow-hidden shadow-lg border-2 border-gray-100">
                <div className="grid grid-cols-1 md:grid-cols-3">
                 <div className="md:col-span-1">
-                  <img src={staff.imageUrl} alt={staff.name} className="w-full h-full object-cover" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/300x400/E2E8F0/A0AEC0?text=Staff'; }} />
+                  <Image src={staff.imageUrl} alt={staff.name} width={400} height={500} className="w-full h-full object-cover" />
                 </div>
                 <div className="md:col-span-2 p-6 md:p-8 flex flex-col">
                   <CardHeader className="p-0">
-                    <CardTitle className="text-3xl font-bold">{staff.name}</CardTitle>
+                    <CardTitle className="text-3xl font-heading font-bold">{staff.name}</CardTitle>
                     <CardDescription className="font-semibold text-primary text-lg">{staff.title}</CardDescription>
                   </CardHeader>
                   <CardContent className="p-0 mt-6 space-y-4 text-muted-foreground">
@@ -126,7 +127,7 @@ export default function StaffPage() {
         <div className="mt-24 grid md:grid-cols-2 gap-16">
           <Card className="p-8">
             <CardHeader className="p-0 mb-4">
-              <CardTitle className="text-3xl font-bold">{organization.title}</CardTitle>
+              <CardTitle className="text-3xl font-heading font-bold">{organization.title}</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               <p className="text-muted-foreground mb-4">{organization.description}</p>
@@ -138,7 +139,7 @@ export default function StaffPage() {
           </Card>
            <Card className="p-8">
             <CardHeader className="p-0 mb-4">
-              <CardTitle className="text-3xl font-bold">{vision.title}</CardTitle>
+              <CardTitle className="text-3xl font-heading font-bold">{vision.title}</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
               <p className="text-muted-foreground mb-4">{vision.description}</p>
@@ -151,6 +152,6 @@ export default function StaffPage() {
         </div>
 
       </div>
-    </div>
+    </main>
   );
 } 

@@ -29,7 +29,7 @@ const aboutSections = [
 
 export default function AboutUsPage() {
   return (
-    <div className="bg-white">
+    <main className="bg-white">
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-heading font-bold tracking-tight text-gray-900">About Us</h1>
@@ -71,6 +71,6 @@ export default function AboutUsPage() {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 } 

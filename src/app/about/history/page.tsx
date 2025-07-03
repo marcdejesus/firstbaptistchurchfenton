@@ -4,7 +4,6 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { historyMilestones, historyIntro } from './content';
-import { Header } from '@/components/layout/Header';
 
 export default function HistoryPage() {
   const breadcrumbs = [
@@ -14,15 +13,15 @@ export default function HistoryPage() {
   ];
 
   return (
-    <>
-      <Header breadcrumbs={breadcrumbs} />
+    <main>
       <PageLayout
         title={historyIntro.title}
         subtitle={historyIntro.subtitle}
         variant="wide"
+        breadcrumbs={breadcrumbs}
       >
         <div className="mb-12 text-center">
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">{historyIntro.paragraph}</p>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-body leading-relaxed">{historyIntro.paragraph}</p>
         </div>
         <div className="relative">
           {/* The timeline vertical line */}
@@ -34,7 +33,7 @@ export default function HistoryPage() {
                 <div className="w-1/2 px-8">
                     <Card className="hover:shadow-lg transition-shadow duration-300">
                       <CardHeader>
-                        <CardTitle className="text-2xl">{milestone.title}</CardTitle>
+                        <CardTitle className="text-3xl font-heading">{milestone.title}</CardTitle>
                         <CardDescription className="text-md pt-1">{milestone.year}</CardDescription>
                       </CardHeader>
                       <CardContent>
@@ -50,6 +49,6 @@ export default function HistoryPage() {
           ))}
         </div>
       </PageLayout>
-    </>
+    </main>
   );
 } 

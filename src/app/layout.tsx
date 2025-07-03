@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Lora, Inter } from 'next/font/google';
+import { Cardo, Proza_Libre } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -9,15 +9,17 @@ import { ChurchStructuredData } from '@/components/seo/StructuredData';
 import { SkipLink } from '@/components/accessibility/FocusManager';
 import { ScrollToTop, MobilePerformanceProvider } from '@/components/mobile/MobileOptimizations';
 
-const lora = Lora({
+const cardo = Cardo({
   subsets: ['latin'],
-  variable: '--font-lora',
+  weight: ['400', '700'],
+  variable: '--font-heading',
   display: 'swap',
 });
 
-const inter = Inter({
+const prozaLibre = Proza_Libre({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-body',
   display: 'swap',
 });
 
@@ -97,17 +99,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lora.variable} ${inter.variable}`}>
+    <html lang="en" className={`${cardo.variable} ${prozaLibre.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <ChurchStructuredData />
       </head>
-      <body className="flex flex-col min-h-screen font-inter antialiased">
+      <body className="flex flex-col min-h-screen bg-background font-body antialiased">
         <SkipLink />
         <MobilePerformanceProvider>
           <UserProvider>
             <Header />
-            <main id="main-content" className="flex-grow container mx-auto px-4" tabIndex={-1}>
+            <main id="main-content" className="flex-grow" tabIndex={-1}>
               {children}
             </main>
             <Footer />

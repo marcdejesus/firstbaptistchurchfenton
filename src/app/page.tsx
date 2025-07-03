@@ -31,7 +31,7 @@ const Feature = ({ icon: Icon, title, description, href, cta }: {
 
 export default function Home() {
   return (
-    <div className="flex flex-col">
+    <main className="flex flex-col">
       
       {/* Hero Section */}
       <section className="bg-gray-50">
@@ -182,6 +182,6 @@ export default function Home() {
             </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }

@@ -63,7 +63,7 @@ export default function ContactPage() {
             <div className="space-y-8">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Get In Touch</CardTitle>
+                        <CardTitle className="font-heading">Get In Touch</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <InfoItem icon={Phone} label="Phone" value="(810) 629-6641" href="tel:810-629-6641" />
@@ -74,7 +74,7 @@ export default function ContactPage() {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Office Hours</CardTitle>
+                        <CardTitle className="font-heading">Office Hours</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-2">
                         <p><strong>Monday–Thursday:</strong> 9:00 AM – 4:00 PM</p>
@@ -85,7 +85,7 @@ export default function ContactPage() {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Connect With Us</CardTitle>
+                        <CardTitle className="font-heading">Connect With Us</CardTitle>
                     </CardHeader>
                     <CardContent className="flex space-x-4">
                         <SocialLink href="#" icon={Facebook} label="Facebook" />
@@ -99,7 +99,7 @@ export default function ContactPage() {
             <div>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Send us a Message</CardTitle>
+                        <CardTitle className="font-heading">Send us a Message</CardTitle>
                         <CardDescription>
                             We'll get back to you as soon as possible.
                         </CardDescription>
@@ -132,7 +132,7 @@ export default function ContactPage() {
 
 const InfoItem = ({ icon: Icon, label, value, href }: { icon: React.ElementType, label: string, value: string, href: string }) => (
     <div className="flex items-start space-x-4">
-        <Icon className="h-5 w-5 text-accent mt-1 flex-shrink-0" />
+        <Icon className="h-5 w-5 text-primary mt-1 flex-shrink-0" />
         <div>
             <p className="font-semibold">{label}</p>
             <a href={href} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">

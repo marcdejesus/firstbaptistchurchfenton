@@ -1,70 +1,46 @@
 import * as React from "react"
-import { Header } from "./Header"
-import { Footer } from "./Footer"
 import { Breadcrumbs, BreadcrumbItem } from "../ui/breadcrumbs"
 import { cn } from "@/lib/utils"
 
 export interface PageLayoutProps {
   children: React.ReactNode
   className?: string
-  showBreadcrumbs?: boolean
   breadcrumbs?: BreadcrumbItem[]
   title?: string
   subtitle?: string
-  variant?: "default" | "narrow" | "wide" | "hero"
+  variant?: "default" | "narrow" | "wide"
 }
 
 const PageLayout = React.forwardRef<HTMLDivElement, PageLayoutProps>(
   ({ 
     children, 
     className, 
-    showBreadcrumbs = false, 
-    breadcrumbs = [], 
+    breadcrumbs, 
     title, 
     subtitle,
     variant = "default"
   }, ref) => {
-    const contentClasses = cn(
-      "content-layout",
+    
+    const containerClasses = cn(
+      "container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16",
       {
-        "content-layout-narrow": variant === "narrow",
-        "content-layout-wide": variant === "wide",
-      }
-    )
+        "max-w-4xl": variant === "narrow",
+        "max-w-7xl": variant === "default",
+        "max-w-full px-0 sm:px-0 lg:px-0": variant === "wide",
+      },
+      className
+    );
 
     return (
-      <div ref={ref} className={cn("page-layout", className)}>
-        <main className="page-main">
-          {variant === "hero" ? (
-            <>
-              <section className="hero">
-                <div className="hero-content">
-                  {title && <h1 className="hero-title">{title}</h1>}
-                  {subtitle && <p className="hero-subtitle">{subtitle}</p>}
-                </div>
-              </section>
-              <div className={contentClasses}>
-                {children}
-              </div>
-            </>
-          ) : (
-            <div className={contentClasses}>
-              
-              {(title || subtitle) && (
-                <div className="section-header">
-                  {title && <h1 className="section-title">{title}</h1>}
-                  {subtitle && <p className="section-subtitle">{subtitle}</p>}
-                </div>
-              )}
-              
-              {children}
+      <div ref={ref} className={containerClasses}>
+          {(title || subtitle || breadcrumbs) && (
+            <div className="mb-12 text-center">
+              {breadcrumbs && <Breadcrumbs items={breadcrumbs} className="justify-center mb-4" />}
+              {title && <h1 className="text-4xl md:text-5xl font-heading font-bold">{title}</h1>}
+              {subtitle && <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">{subtitle}</p>}
             </div>
           )}
-        </main>
-
-        <footer className="page-footer">
-          <Footer />
-        </footer>
+          {children}
       </div>
     )
   }

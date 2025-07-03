@@ -10,7 +10,6 @@ import {
 import { PageLayout } from '@/components/layout/PageLayout';
 import { beliefsData, introduction, statementOfFaithNote } from './content';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Header } from '@/components/layout/Header';
 
 export default function BeliefsPage() {
   const breadcrumbs = [
@@ -20,12 +19,12 @@ export default function BeliefsPage() {
   ];
 
   return (
-    <>
-      <Header breadcrumbs={breadcrumbs} />
+    <main>
       <PageLayout
         title="Our Beliefs"
         subtitle="The theological foundations that guide our church"
         variant="narrow"
+        breadcrumbs={breadcrumbs}
       >
         <div className="space-y-12">
           <Card>
@@ -38,11 +37,11 @@ export default function BeliefsPage() {
           </Card>
 
           <div>
-            <h2 className="text-3xl font-bold text-center mb-8">Statement of Faith</h2>
+            <h2 className="text-4xl font-heading font-bold text-center mb-8">Statement of Faith</h2>
             <Accordion type="single" collapsible className="w-full" defaultValue='core-beliefs'>
               {beliefsData.map((belief) => (
                 <AccordionItem key={belief.id} value={belief.id}>
-                  <AccordionTrigger className="text-xl font-semibold hover:no-underline">
+                  <AccordionTrigger className="text-2xl font-semibold hover:no-underline">
                     {belief.title}
                   </AccordionTrigger>
                   <AccordionContent className="text-base text-muted-foreground leading-relaxed pt-4">
@@ -57,6 +56,6 @@ export default function BeliefsPage() {
           </div>
         </div>
       </PageLayout>
-    </>
+    </main>
   );
 } 
