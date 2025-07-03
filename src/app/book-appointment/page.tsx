@@ -4,8 +4,7 @@ import { InlineWidget } from "react-calendly";
 import { PageLayout } from "@/components/layout/PageLayout";
 
 export default function BookAppointmentPage() {
-  // TODO: Replace with Pastor Bell's actual Calendly link
-  const calendlyUrl = "https://calendly.com/fbc-fenton-james/30min";
+  const calendlyUrl = "https://calendly.com/pastorjbell206/45min";
   
   const breadcrumbs = [
     { label: "Home", href: "/" },
