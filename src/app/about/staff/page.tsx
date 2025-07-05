@@ -22,7 +22,7 @@ const staffMembers = [
       "James and Susanna have five wild and wonderful boys: Titus, Timothy, Tatum, Toby, and Theo. He's a devoted dad, a passionate leader, and a firm believer that the local church is still God's plan A for transforming the world.",
       "He also understands ministry pain — the unseen battles, betrayals, and burdens many pastors and families silently carry. This empathy drives his work with pastors around the world, creating safe places for leaders to rest, grow, and return to ministry with clarity and strength.",
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1550750632-4d4338d824a7?q=80&w=1974&auto=format&fit=crop', // Placeholder
+    imageUrl: '/placeholder.jpg', // Placeholder
     email: 'james@fbfenton.org',
     meetingLink: 'https://calendly.com/fbc-fenton-james/30min',
   },
@@ -32,9 +32,9 @@ const staffMembers = [
     title: 'Worship Leader',
     bio: [
       "Laurie has led worship at FBC since 2016. She brings a joyful, humble spirit to every service and works hard to point people to Christ through music.",
-      "She's married to Brent, and they have five kids: Noel, Annaleise, Lincoln, Aksel, and Krew.",
+      "She's married to Brent, and they have five kids: Noelle, Annellise, Lincoln, Aksel, and Crew.",
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1598387993441-a364f854c3e1?q=80&w=1974&auto=format&fit=crop', // Placeholder
+    imageUrl: '/placeholder.jpg', // Placeholder
     email: 'laurie@fbfenton.org',
   },
   {
@@ -45,7 +45,7 @@ const staffMembers = [
       "Cody came to faith as a teenager and felt called to ministry shortly after. He has a degree in Youth Ministry and leads all our children, youth, and family ministries.",
       "Cody and his wife Alyssa have three daughters: Audrey, Avery, and Addison. He's passionate about helping the next generation know and follow Jesus.",
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1610476485891-a86a34551158?q=80&w=1974&auto=format&fit=crop', // Placeholder
+    imageUrl: '/placeholder.jpg', // Placeholder
     email: 'cody@fbfenton.org',
   },
 ];
