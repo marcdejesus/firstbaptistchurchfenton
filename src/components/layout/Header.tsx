@@ -209,7 +209,7 @@ export function Header({ breadcrumbs }: HeaderProps) {
   );
 
   const headerClasses = cn(
-    "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+    "transition-all duration-300 border-b",
     {
       "bg-white/80 backdrop-blur-sm shadow-md": isScrolled || isMobile,
       "bg-transparent": !isScrolled && !isMobile,
