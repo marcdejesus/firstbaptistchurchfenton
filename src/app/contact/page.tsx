@@ -28,6 +28,10 @@ export default function ContactPage() {
                         <InfoItem icon={Phone} label="Phone" value="(810) 629-6641" href="tel:810-629-6641" />
                         <InfoItem icon={Mail} label="Email" value="info@fbfenton.org" href="mailto:info@fbfenton.org" />
                         <InfoItem icon={MapPin} label="Address" value="860 N. Leroy Street, Fenton, MI 48430" href={mapUrl} />
+                        <div className="flex space-x-2 pt-2">
+                            <SocialLink href="https://www.facebook.com/pg/FBCfenton" icon={Facebook} label="Facebook" />
+                            <SocialLink href="https://www.youtube.com/channel/UCo8E0MoXuz_E5BvaROleSDQ" icon={Youtube} label="YouTube" />
+                        </div>
                     </CardContent>
                 </Card>
 
@@ -39,17 +43,6 @@ export default function ContactPage() {
                         <p><strong>Monday–Thursday:</strong> 9:00 AM – 4:00 PM</p>
                         <p><strong>Friday:</strong> Closed</p>
                         <p><strong>Sunday:</strong> Open during service hours</p>
-                    </CardContent>
-                </Card>
-
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="font-heading">Connect With Us</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex space-x-4">
-                        <SocialLink href="#" icon={Facebook} label="Facebook" />
-                        <SocialLink href="#" icon={Instagram} label="Instagram" />
-                        <SocialLink href="#" icon={Youtube} label="YouTube" />
                     </CardContent>
                 </Card>
             </div>
