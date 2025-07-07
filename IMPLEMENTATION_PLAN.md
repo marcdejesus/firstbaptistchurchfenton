@@ -321,3 +321,95 @@ Body: 16px/1.5 Proza Libre Regular
 ### 🚀 Ready for Phase 7: Launch & Support
 
 The First Baptist Church Fenton website now has a complete, tested, and optimized design system implementation with comprehensive monitoring and feedback systems ready for production launch. 
+
+# Backend Implementation Plan
+
+This document outlines the plan to implement backend functionality for various sections of the website.
+
+## 1. Prerequisites & Setup
+
+-   **Database Choice**: Decide on a database. Given the existing Firebase setup (`src/lib/firebase.ts`), Firestore is a strong candidate. It's a NoSQL database that integrates well with Firebase Authentication and other Firebase services.
+-   **Authentication**: Solidify the authentication flow using Firebase Authentication. Implement sign-up, login, and session management for users and administrators.
+-   **Environment Variables**: Ensure all secret keys and configuration details are stored securely in `.env` files and that `env.example` is kept up to date.
+
+## 2. Admin Page (`/admin`)
+
+The admin page will be the central hub for managing website content.
+
+-   **Access Control**: Implement role-based access control (RBAC). Only users with an `admin` role should be able to access this page. This can be managed using Firebase Auth custom claims.
+-   **Dashboard**: Create a dashboard that provides an overview of the website's content (e.g., number of blog posts, prayer requests, volunteer signups).
+-   **Content Management**:
+    -   **Blog**: Admins should be able to create, read, update, and delete (CRUD) blog posts.
+    -   **Events**: Admins should have CRUD operations for church events.
+    -   **Photo Gallery**: Admins should be able to upload, manage, and delete photos in the gallery.
+    -   **User Management**: A simple interface to view and manage website users and their roles.
+
+## 3. Blog (`/blog`)
+
+The blog will feature articles and updates.
+
+-   **Backend**: Create API endpoints (or server actions) for:
+    -   Fetching all blog posts for the main blog page.
+    -   Fetching a single blog post by its slug for the `/[slug]` page.
+-   **Data Model (Firestore Collection: `posts`)**:
+    -   `title` (string)
+    -   `slug` (string)
+    -   `content` (string, potentially markdown or a rich text format)
+    -   `author` (string or reference to a `users` collection)
+    -   `createdAt` (timestamp)
+    -   `updatedAt` (timestamp)
+    -   `published` (boolean)
+-   **Frontend**:
+    -   The `/blog` page will fetch and display a list of all published posts.
+    -   The `/blog/[slug]` page will fetch and render a single post.
+
+## 4. Photo Gallery (`/gallery`)
+
+A page to display photos from church life and events.
+
+-   **Storage**: Use a cloud storage solution for images. Firebase Storage is a good option that integrates with the rest of the stack.
+-   **Backend**:
+    -   Create an API endpoint for fetching all photo URLs and metadata from storage.
+    -   Secure the upload process so only admins can add photos. This will be done from the admin panel.
+-   **Data Model (Firestore Collection: `galleryImages`)**:
+    -   `imageUrl` (string)
+    -   `caption` (string, optional)
+    -   `category` (string, e.g., "VBS 2024", "Missions Trip")
+    -   `uploadedAt` (timestamp)
+-   **Frontend**: The `/gallery` page will fetch the list of images and display them in a responsive grid or carousel.
+
+## 5. Contact Us (`/contact`)
+
+The contact page will have a form for visitors to send messages.
+
+-   **Backend**: The existing API route at `src/app/api/contact/route.ts` needs to be fully implemented.
+    -   It should receive the form data (name, email, message).
+    -   It should perform validation on the server side.
+    -   It can either:
+        1.  Store the message in a Firestore collection (`messages`).
+        2.  Send an email to the church office using a service like Nodemailer or a third-party API (e.g., SendGrid, Resend).
+-   **Data Model (Firestore Collection: `messages`)**:
+    -   `name` (string)
+    -   `email` (string)
+    -   `message` (string)
+    -   `submittedAt` (timestamp)
+    -   `isRead` (boolean)
+
+## 6. Events (`/events`)
+
+The events page will display upcoming church events. The existing calendar integration should be leveraged.
+
+-   **Backend**:
+    -   The routes at `src/app/api/calendar/` need to be robust. `events/route.ts` should fetch upcoming events from the designated Google Calendar.
+    -   The `church-events/route.ts` could be used for special events managed directly via the admin panel (if they aren't on the main calendar).
+    -   Implement caching to avoid hitting the Google Calendar API on every page load.
+-   **Data Model**: The event data will primarily come from the Google Calendar API. If custom events are added, they should follow a similar structure in a `customEvents` Firestore collection.
+-   **Frontend**: The `/events` page will fetch events from the API and display them in a calendar view or a list format.
+
+## Implementation Phasing
+
+1.  **Phase 1 (Foundation)**: Set up the database with Firestore and finalize the Firebase Authentication flow.
+2.  **Phase 2 (Content Creation)**: Implement backend and admin UI for Blog and Events. This will allow staff to start adding content.
+3.  **Phase 3 (User Interaction)**: Implement the Contact Us form and Prayer Request functionality.
+4.  **Phase 4 (Media)**: Build the Photo Gallery with image uploading capabilities.
+5.  **Phase 5 (Admin Polish)**: Flesh out the admin dashboard with more features and user management. 
