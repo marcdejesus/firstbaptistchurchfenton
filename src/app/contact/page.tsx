@@ -1,16 +1,92 @@
 "use client";
 
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Phone, Mail, Clock, Send, Facebook, Instagram, Youtube } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, Facebook, Youtube, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
+
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=860%20N%20Leroy%20St%2C%20Fenton%2C%20MI%2048430";
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+
+    // Validate form
+    if (!formData.name.trim()) {
+      setError('Please provide your name.');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!formData.email.trim()) {
+      setError('Please provide your email address.');
+      setIsLoading(false);
+      return;
+    }
+
+    if (!formData.message.trim()) {
+      setError('Please provide a message.');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      // Send contact form data to API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          message: formData.message.trim(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
+
+      setSuccess(true);
+
+      // Reset form after success
+      setTimeout(() => {
+        setFormData({
+          name: '',
+          email: '',
+          message: '',
+        });
+        setSuccess(false);
+      }, 5000);
+
+    } catch (error) {
+      setError('Failed to send message. Please try again or contact us directly.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
 
   return (
     <PageLayout
@@ -57,21 +133,68 @@ export default function ContactPage() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form className="space-y-6">
+                        {success && (
+                            <Alert className="mb-6">
+                                <CheckCircle className="h-4 w-4" />
+                                <AlertTitle>Message Sent!</AlertTitle>
+                                <AlertDescription>
+                                    Thank you for contacting us. We'll get back to you soon.
+                                </AlertDescription>
+                            </Alert>
+                        )}
+
+                        {error && (
+                            <Alert variant="destructive" className="mb-6">
+                                <AlertCircle className="h-4 w-4" />
+                                <AlertTitle>Error</AlertTitle>
+                                <AlertDescription>{error}</AlertDescription>
+                            </Alert>
+                        )}
+
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
                                 <Label htmlFor="name">Full Name</Label>
-                                <Input id="name" required disabled />
+                                <Input 
+                                    id="name" 
+                                    value={formData.name}
+                                    onChange={(e) => handleInputChange('name', e.target.value)}
+                                    required 
+                                    disabled={isLoading || success}
+                                    placeholder="Enter your full name"
+                                />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="email">Email Address</Label>
-                                <Input id="email" type="email" required disabled />
+                                <Input 
+                                    id="email" 
+                                    type="email" 
+                                    value={formData.email}
+                                    onChange={(e) => handleInputChange('email', e.target.value)}
+                                    required 
+                                    disabled={isLoading || success}
+                                    placeholder="Enter your email address"
+                                />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="message">Message</Label>
-                                <Textarea id="message" required rows={5} disabled />
+                                <Textarea 
+                                    id="message" 
+                                    value={formData.message}
+                                    onChange={(e) => handleInputChange('message', e.target.value)}
+                                    required 
+                                    rows={5} 
+                                    disabled={isLoading || success}
+                                    placeholder="Share your question, request, or message..."
+                                />
                             </div>
-                            <Button type="submit" className="w-full" disabled>
-                                Send Message <Send className="ml-2 h-4 w-4"/>
+                            <Button 
+                                type="submit" 
+                                className="w-full" 
+                                disabled={isLoading || success}
+                            >
+                                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                                {success ? 'Message Sent!' : 'Send Message'}
+                                <Send className="ml-2 h-4 w-4"/>
                             </Button>
                         </form>
                     </CardContent>
