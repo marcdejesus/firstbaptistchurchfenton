@@ -1,47 +1,49 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, ReactNode } from 'react';
+import { AuthService, SignUpData, SignInData } from '@/lib/auth';
+import { useAuth } from '@/hooks/useAuth';
 import type { User } from '@/types';
 
 interface UserContextType {
   user: User | null;
-  login: (userData: User) => void;
-  logout: () => void;
+  signUp: (data: SignUpData) => Promise<User>;
+  signIn: (data: SignInData) => Promise<User>;
+  signOut: () => Promise<void>;
+  sendPasswordReset: (email: string) => Promise<void>;
   isLoading: boolean;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // To handle initial state loading
+  const { user, loading: isLoading } = useAuth();
 
-  useEffect(() => {
-    // Simulate loading user from localStorage or an API
-    const storedUser = localStorage.getItem('fbcUser');
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error("Failed to parse stored user:", error);
-        localStorage.removeItem('fbcUser');
-      }
-    }
-    setIsLoading(false);
-  }, []);
-
-  const login = (userData: User) => {
-    setUser(userData);
-    localStorage.setItem('fbcUser', JSON.stringify(userData));
+  const signUp = async (data: SignUpData): Promise<User> => {
+    return await AuthService.signUp(data);
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('fbcUser');
+  const signIn = async (data: SignInData): Promise<User> => {
+    return await AuthService.signIn(data);
+  };
+
+  const signOut = async (): Promise<void> => {
+    await AuthService.signOut();
+  };
+
+  const sendPasswordReset = async (email: string): Promise<void> => {
+    await AuthService.sendPasswordReset(email);
   };
 
   return (
-    <UserContext.Provider value={{ user, login, logout, isLoading }}>
+    <UserContext.Provider value={{ 
+      user, 
+      signUp, 
+      signIn, 
+      signOut, 
+      sendPasswordReset, 
+      isLoading 
+    }}>
       {children}
     </UserContext.Provider>
   );

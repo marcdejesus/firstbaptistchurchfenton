@@ -172,7 +172,7 @@ const PrayerRequestForm = React.forwardRef<HTMLFormElement, PrayerRequestFormPro
         {formData.privacy !== "anonymous" && (
           <div className="prayer-request-field animate-slide-in-up">
             <label className="form-label" htmlFor="name">
-              Your Name {formData.privacy !== "anonymous" && <span className="text-error">*</span>}
+              Your Name {formData.privacy === "public" && <span className="text-error">*</span>}
             </label>
             <input
               id="name"

@@ -73,7 +73,7 @@ export interface HeaderProps {
 }
 
 export function Header({ breadcrumbs }: HeaderProps) {
-  const { user, logout } = useUser();
+  const { user, signOut } = useUser();
   const isMobile = useIsMobile();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
@@ -192,7 +192,7 @@ export function Header({ breadcrumbs }: HeaderProps) {
                     </Button>
                 ))}
                </div>
-               <Button variant="outline" className="w-full mt-4" onClick={() => { logout(); setIsMobileMenuOpen(false); }}>
+               <Button variant="outline" className="w-full mt-4" onClick={() => { signOut(); setIsMobileMenuOpen(false); }}>
                   <LogOut className="mr-2 h-4 w-4" />
                   Log Out
                </Button>
@@ -289,7 +289,7 @@ export function Header({ breadcrumbs }: HeaderProps) {
                       </DropdownMenuItem>
                     ))}
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={logout}>
+                    <DropdownMenuItem onClick={signOut}>
                       <LogOut className="mr-2 h-4 w-4" />
                       Log out
                     </DropdownMenuItem>
