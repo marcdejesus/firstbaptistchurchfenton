@@ -74,6 +74,20 @@ NEXTAUTH_URL=https://your-church-website.com
 # Update OAuth redirect URI
 GOOGLE_REDIRECT_URI=https://your-church-website.com/api/calendar/callback
 
+# Firebase Configuration (Required)
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+
+# Email Marketing (Optional but recommended)
+RESEND_API_KEY=your_resend_api_key
+
+# Analytics (Optional)
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+
 # Keep all other environment variables the same
 ```
 
@@ -86,6 +100,61 @@ GOOGLE_REDIRECT_URI=https://your-church-website.com/api/calendar/callback
 2. **Calendar API Quotas**
    - Monitor API usage in Google Cloud Console
    - Consider increasing quotas if needed for high traffic
+
+### Firebase Setup for Production
+
+1. **Create Firebase Project**
+   - Go to [Firebase Console](https://console.firebase.google.com)
+   - Create new project or use existing one
+   - Enable Authentication, Firestore, and Storage
+
+2. **Authentication Configuration**
+   ```bash
+   # Enable sign-in methods:
+   # - Email/Password
+   # - Google (optional)
+   # Add authorized domains in Authentication > Settings
+   ```
+
+3. **Firestore Security Rules**
+   ```javascript
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       // Users can read/write their own profile
+       match /users/{userId} {
+         allow read, write: if request.auth != null && request.auth.uid == userId;
+       }
+       
+       // Only admins can manage blog posts
+       match /blog-posts/{postId} {
+         allow read: if true;
+         allow write: if request.auth != null && 
+           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+       }
+       
+       // Events are readable by all, writable by admins
+       match /events/{eventId} {
+         allow read: if true;
+         allow write: if request.auth != null && 
+           get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+       }
+     }
+   }
+   ```
+
+4. **Storage Rules**
+   ```javascript
+   rules_version = '2';
+   service firebase.storage {
+     match /b/{bucket}/o {
+       match /{allPaths=**} {
+         allow read: if true;
+         allow write: if request.auth != null;
+       }
+     }
+   }
+   ```
 
 ### Performance Optimizations
 

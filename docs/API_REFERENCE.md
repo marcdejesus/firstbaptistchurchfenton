@@ -309,9 +309,215 @@ Sends a contact form message via email.
 }
 ```
 
+## 📝 Blog API (Planned)
+
+### Get Blog Posts
+
+**Endpoint**: `GET /api/blog/posts`
+
+**Query Parameters**:
+- `status` (optional): Filter by `published`, `draft`, or `scheduled`
+- `category` (optional): Filter by category slug
+- `limit` (optional): Number of posts to return (default: 10)
+- `offset` (optional): Number of posts to skip (default: 0)
+
+**Response**:
+```json
+{
+  "success": true,
+  "posts": [
+    {
+      "id": "post-id",
+      "title": "Blog Post Title",
+      "slug": "blog-post-title",
+      "excerpt": "Brief excerpt...",
+      "content": "Full post content...",
+      "featuredImage": "/uploads/image.jpg",
+      "author": {
+        "uid": "author-id",
+        "name": "Author Name"
+      },
+      "status": "published",
+      "publishDate": "2025-01-15T10:00:00Z",
+      "categories": ["announcements"],
+      "tags": ["community", "events"],
+      "seo": {
+        "metaTitle": "SEO Title",
+        "metaDescription": "SEO Description"
+      }
+    }
+  ],
+  "total": 25,
+  "hasMore": true
+}
+```
+
+### Create/Update Blog Post
+
+**Endpoint**: `POST /api/blog/posts` (Create) | `PUT /api/blog/posts/[id]` (Update)
+
+**Authentication**: Required (Admin role)
+
+**Request Body**:
+```json
+{
+  "title": "Post Title",
+  "content": "Full post content in markdown/HTML",
+  "excerpt": "Brief excerpt",
+  "featuredImage": "/uploads/image.jpg",
+  "status": "published",
+  "publishDate": "2025-01-15T10:00:00Z",
+  "categories": ["announcements"],
+  "tags": ["community", "events"],
+  "seo": {
+    "metaTitle": "SEO Title",
+    "metaDescription": "SEO Description"
+  }
+}
+```
+
+### Delete Blog Post
+
+**Endpoint**: `DELETE /api/blog/posts/[id]`
+
+**Authentication**: Required (Admin role)
+
+### Blog Categories
+
+**Endpoint**: `GET /api/blog/categories`
+
+**Response**:
+```json
+{
+  "categories": [
+    {
+      "id": "announcements",
+      "name": "Announcements",
+      "slug": "announcements",
+      "description": "Church announcements and updates"
+    }
+  ]
+}
+```
+
+## 👥 User Management API (Planned)
+
+### Get Users
+
+**Endpoint**: `GET /api/users`
+
+**Authentication**: Required (Admin role)
+
+**Query Parameters**:
+- `role` (optional): Filter by user role
+- `limit` (optional): Number of users to return
+- `search` (optional): Search by name or email
+
+**Response**:
+```json
+{
+  "users": [
+    {
+      "uid": "user-id",
+      "email": "user@example.com",
+      "displayName": "John Doe",
+      "role": "member",
+      "profile": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "phone": "555-123-4567",
+        "ministry": ["worship", "youth"],
+        "joinDate": "2025-01-01T00:00:00Z"
+      },
+      "lastLoginAt": "2025-01-15T10:00:00Z",
+      "createdAt": "2025-01-01T00:00:00Z"
+    }
+  ],
+  "total": 150
+}
+```
+
+### Update User Role
+
+**Endpoint**: `PUT /api/users/[uid]/role`
+
+**Authentication**: Required (Admin role)
+
+**Request Body**:
+```json
+{
+  "role": "admin" | "member" | "visitor"
+}
+```
+
+## 📧 Newsletter API (Planned)
+
+### Create Newsletter Campaign
+
+**Endpoint**: `POST /api/newsletter/campaigns`
+
+**Authentication**: Required (Admin role)
+
+**Request Body**:
+```json
+{
+  "subject": "Newsletter Subject",
+  "content": "Newsletter HTML content",
+  "recipients": "all" | "members" | "subscribers",
+  "scheduleDate": "2025-01-20T10:00:00Z"
+}
+```
+
+### Get Campaign Statistics
+
+**Endpoint**: `GET /api/newsletter/campaigns/[id]/stats`
+
+**Response**:
+```json
+{
+  "sent": 150,
+  "delivered": 148,
+  "opened": 75,
+  "clicked": 25,
+  "bounced": 2,
+  "openRate": "50.7%",
+  "clickRate": "16.9%"
+}
+```
+
+## 📊 Analytics API (Planned)
+
+### Get Site Analytics
+
+**Endpoint**: `GET /api/analytics/overview`
+
+**Authentication**: Required (Admin role)
+
+**Query Parameters**:
+- `period`: `7d`, `30d`, `90d`, or `1y`
+
+**Response**:
+```json
+{
+  "pageViews": 1250,
+  "uniqueVisitors": 890,
+  "eventRSVPs": 45,
+  "blogViews": 320,
+  "topPages": [
+    { "path": "/", "views": 450 },
+    { "path": "/events", "views": 280 }
+  ],
+  "deviceBreakdown": {
+    "mobile": 60,
+    "desktop": 35,
+    "tablet": 5
+  }
+}
+```
+
 ## 🔐 Authentication
 
-### Cookie-based Authentication
+### Cookie-based Authentication (Current)
 
 The calendar integration uses HTTP-only cookies for security:
 
@@ -324,6 +530,18 @@ The calendar integration uses HTTP-only cookies for security:
 - HTTP-only cookies prevent XSS attacks
 - Secure flag in production
 - SameSite protection
+
+### Firebase Authentication (Planned)
+
+Future authentication will use Firebase Auth with JWT tokens:
+
+**Headers Required**:
+- `Authorization: Bearer <firebase_jwt_token>`
+
+**User Roles**:
+- `admin`: Full access to all admin endpoints
+- `member`: Access to member features (RSVPs, profile)
+- `visitor`: Limited access (public content only)
 
 ## 📊 Response Formats
 
@@ -435,14 +653,58 @@ Track these metrics in production:
 
 ### Environment Variables
 
-See `env.example` for all required environment variables.
+The following environment variables are required for API functionality:
+
+#### Required
+```bash
+# Firebase Configuration
+NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+
+# Google Calendar Integration
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_SERVICE_ACCOUNT_EMAIL=service_account@project.iam.gserviceaccount.com
+GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----"
+CHURCH_CALENDAR_ID=calendar_id@group.calendar.google.com
+NEXT_PUBLIC_CHURCH_CALENDAR_ID=calendar_id@group.calendar.google.com
+
+# Email Configuration
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USER=your_email@gmail.com
+MAIL_PASS=your_app_password
+MAIL_FROM="Church Name <no-reply@church.org>"
+```
+
+#### Optional
+```bash
+# Development URLs
+NEXTAUTH_URL=http://localhost:9002
+GOOGLE_REDIRECT_URI=http://localhost:9002/api/calendar/callback
+
+# Email Marketing Service (for newsletters)
+RESEND_API_KEY=your_resend_api_key
+
+# Analytics
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+
+# Admin Configuration
+ADMIN_EMAIL=admin@yourchurch.org
+```
+
+See `env.example` for all required environment variables with detailed setup instructions.
 
 ### Google API Limits
 
 Monitor these limits:
-- Calendar API daily quota
-- Events per calendar
-- Requests per minute per user
+- Calendar API daily quota: 1,000,000 requests/day
+- Events per calendar: 25,000 events
+- Requests per minute per user: 600
 
 ---
 
