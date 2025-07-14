@@ -55,7 +55,12 @@ export class PrayerRequestsService extends BaseFirestoreService {
       updatedAt: Timestamp.now(),
     };
 
-    return await this.create(data);
+    // Filter out undefined values that Firestore doesn't accept
+    const filteredData = Object.fromEntries(
+      Object.entries(data).filter(([_, value]) => value !== undefined)
+    );
+
+    return await this.create(filteredData);
   }
 
   async getPrayerRequestById(requestId: string): Promise<PrayerRequest | null> {

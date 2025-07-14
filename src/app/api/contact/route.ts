@@ -100,9 +100,15 @@ export async function POST(request: NextRequest) {
       html: emailHtml,
     };
 
-    if (!process.env.MAIL_HOST) {
-        console.error("Mailer not configured. Check MAIL_HOST environment variable.");
-        return NextResponse.json({ error: 'The contact form is not fully configured. Please contact the church directly.' }, { status: 503 });
+    if (!process.env.MAIL_HOST || !process.env.MAIL_USER || !process.env.MAIL_PASS) {
+        console.error("Mailer not configured. Check MAIL_HOST, MAIL_USER, and MAIL_PASS environment variables.");
+        return NextResponse.json({ 
+          error: 'The contact form is not fully configured. Please contact the church directly at info@fbfenton.org or call (810) 629-2241.', 
+          fallbackContact: {
+            email: 'info@fbfenton.org',
+            phone: '(810) 629-2241'
+          }
+        }, { status: 503 });
     }
 
     await transporter.sendMail(mailOptions);

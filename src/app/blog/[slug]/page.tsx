@@ -11,9 +11,9 @@ import { blogService, type BlogPost } from '@/lib/firestore/blog';
 import Link from 'next/link';
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
@@ -25,7 +25,8 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   useEffect(() => {
     const loadPost = async () => {
       try {
-        const blogPost = await blogService.getPostBySlug(params.slug);
+        const resolvedParams = await params;
+        const blogPost = await blogService.getPostBySlug(resolvedParams.slug);
         
         if (!blogPost) {
           notFound();
@@ -54,7 +55,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     };
 
     loadPost();
-  }, [params.slug]);
+  }, [params]);
 
   const handleLike = async () => {
     if (!post) return;

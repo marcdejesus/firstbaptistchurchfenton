@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read access to all documents for development
+    // TODO: Implement proper security rules for production
+    
+    // Users collection - users can read/write their own documents
+    match /users/{userId} {
+      allow read, write: if request.auth != null;
+      allow create: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Blog posts - read access for published posts, write access for admins
+    match /blog_posts/{postId} {
+      allow read: if resource.data.status == 'published' || request.auth != null;
+      allow write: if request.auth != null && 
+        (request.auth.token.email == 'marcdejesusdev@gmail.com' || 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    // Blog categories - read access for all, write access for admins
+    match /blog_categories/{categoryId} {
+      allow read: if true;
+      allow write: if request.auth != null && 
+        (request.auth.token.email == 'marcdejesusdev@gmail.com' || 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    // Prayer requests - authenticated users can create, admins can manage
+    match /prayer_requests/{requestId} {
+      allow read: if request.auth != null && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+         resource.data.submitterUserId == request.auth.uid);
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && 
+        (request.auth.token.email == 'marcdejesusdev@gmail.com' || 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    // Events - read access for all, write access for admins
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if request.auth != null && 
+        (request.auth.token.email == 'marcdejesusdev@gmail.com' || 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+    
+    // RSVP responses - authenticated users can manage their own
+    match /rsvp_responses/{rsvpId} {
+      allow read, write: if request.auth != null && 
+        resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null;
+    }
+    
+    // Newsletter subscribers - allow creation, admin management
+    match /newsletter_subscribers/{subscriberId} {
+      allow create: if true; // Allow anonymous subscriptions
+      allow read, update, delete: if request.auth != null && 
+        (request.auth.token.email == 'marcdejesusdev@gmail.com' || 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+  }
+}

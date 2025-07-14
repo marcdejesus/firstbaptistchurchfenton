@@ -388,7 +388,7 @@ export default function AdminPage() {
           <CardContent>
             <div className="space-y-2 text-sm text-muted-foreground text-center">
               <p>Signed in as: <strong>{user.name}</strong></p>
-              <p>Role: <Badge variant="secondary">{user.role}</Badge></p>
+              <div>Role: <Badge variant="secondary">{user.role}</Badge></div>
             </div>
             <Button 
               className="w-full mt-4" 

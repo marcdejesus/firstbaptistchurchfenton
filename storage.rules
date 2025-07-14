@@ -1,0 +1,32 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Images uploads for blog posts and general content
+    match /images/{allPaths=**} {
+      allow read: if true; // Public read access
+      allow write: if request.auth != null && 
+        (request.auth.token.email == 'marcdejesusdev@gmail.com' || 
+         request.auth.uid in resource.metadata.allowedUsers);
+    }
+    
+    // User profile images
+    match /profiles/{userId}/{allPaths=**} {
+      allow read: if true; // Public read access for profile images
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Admin uploads
+    match /admin/{allPaths=**} {
+      allow read: if true; // Public read access
+      allow write: if request.auth != null && 
+        request.auth.token.email == 'marcdejesusdev@gmail.com';
+    }
+    
+    // General file uploads (require authentication)
+    match /uploads/{allPaths=**} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && 
+        request.resource.size < 5 * 1024 * 1024; // 5MB limit
+    }
+  }
+}
