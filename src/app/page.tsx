@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Link from 'next/link';
 import Image from "next/image";
-import { ArrowRight, Star, Church, Users, HeartHandshake } from "lucide-react";
+import { ArrowRight, Star, Church, Users, HeartHandshake, Clock, MapPin, Calendar } from "lucide-react";
+import { useNextEvent } from "@/hooks/useNextEvent";
 
 // A more focused feature card
 const Feature = ({ icon: Icon, title, description, href, cta }: {
@@ -30,6 +31,7 @@ const Feature = ({ icon: Icon, title, description, href, cta }: {
 );
 
 export default function Home() {
+  const { nextEvent, isLoading } = useNextEvent();
   return (
     <main className="flex flex-col">
       
@@ -44,9 +46,28 @@ export default function Home() {
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Come as you are and discover the hope, truth, and grace of Jesus Christ. We are a community of real people, with real struggles, following a real Savior.
               </p>
+              <div className="w-full max-w-xl mx-auto md:mx-0 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+                <div className="flex items-center gap-3 rounded-lg border border-border/60 bg-white/5 px-4 py-3">
+                  <Clock className="h-5 w-5 text-primary" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Sunday Service</p>
+                    <p className="font-medium">10:30 AM</p>
+                  </div>
+                </div>
+                <Link href="https://maps.google.com/?q=860+N.+Leroy+St.,+Fenton,+MI+48430" className="flex items-center gap-3 rounded-lg border border-border/60 bg-white/5 px-4 py-3 hover:bg-accent/10 transition-colors" target="_blank" rel="noopener noreferrer">
+                  <MapPin className="h-5 w-5 text-primary" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Location</p>
+                    <p className="font-medium">860 N. Leroy St., Fenton</p>
+                  </div>
+                </Link>
+              </div>
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
                 <Button size="lg" asChild>
                   <Link href="/visit">Plan Your Visit</Link>
+                </Button>
+                <Button size="lg" variant="secondary" asChild>
+                  <Link href="/welcome">I'm New</Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
                   <Link href="/sermons">Watch a Sermon</Link>
@@ -130,41 +151,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-20 md:py-28">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-12">
-          <div className="text-center max-w-3xl">
-            <h2 className="text-3xl sm:text-4xl font-heading font-bold">What Our Family Says</h2>
-          </div>
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-background-secondary border-border-light">
-                <Image src="https://t3.ftcdn.net/jpg/06/18/83/87/360_F_618838733_4urG25K25uXYj40p6o3HfYQd55nI0Rl0.jpg" alt="Testimonial author" width={80} height={80} className="rounded-full" />
-                <p className="text-muted-foreground italic">"This church has been a blessing to our family. The sense of community and the powerful sermons have truly deepened our faith."</p>
-                <div>
-                  <p className="font-semibold">The Johnson Family</p>
-                  <p className="text-sm text-muted-foreground">Members since 2021</p>
-                </div>
-            </Card>
-            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-background-secondary border-border-light">
-                <Image src="https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg" alt="Testimonial author" width={80} height={80} className="rounded-full" />
-                <p className="text-muted-foreground italic">"The youth ministry is fantastic! My kids love coming here and have grown so much in their spiritual walk."</p>
-                <div>
-                  <p className="font-semibold">Sarah L.</p>
-                  <p className="text-sm text-muted-foreground">Parent</p>
-                </div>
-            </Card>
-            <Card className="p-8 flex flex-col gap-6 text-center items-center bg-background-secondary border-border-light">
-                <Image src="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWspNNceUavTxoK6.jpg" alt="Testimonial author" width={80} height={80} className="rounded-full" />
-                <p className="text-muted-foreground italic">"A welcoming and authentic community. From the moment I first visited, I felt right at home."</p>
-                <div>
-                  <p className="font-semibold">Mark D.</p>
-                  <p className="text-sm text-muted-foreground">New Visitor</p>
-                </div>
-            </Card>
-          </div>
-        </div>
-      </section>
-      
       {/* Final CTA Section */}
       <section className="bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">

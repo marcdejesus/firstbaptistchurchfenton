@@ -22,11 +22,6 @@ export default function VisitPage() {
               <div>
                 <p className="font-semibold text-xl">First Baptist Church of Fenton</p>
                 <p className="text-muted-foreground text-lg">860 N. Leroy Street, Fenton, MI 48430</p>
-                <Button variant="link" className="px-0 text-lg" asChild>
-                  <a href="https://www.google.com/maps/dir/?api=1&destination=First+Baptist+Church+of+Fenton" target="_blank" rel="noopener noreferrer">
-                    View on Google Maps
-                  </a>
-                </Button>
               </div>
             </div>
           </div>
