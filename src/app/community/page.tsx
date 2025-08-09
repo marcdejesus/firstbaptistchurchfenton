@@ -31,16 +31,10 @@ const localOutreach = [
 ];
 
 export default function CommunityPage() {
-    const breadcrumbs = [
-        { label: "Home", href: "/" },
-        { label: "Community & Missions" },
-    ];
-
   return (
     <PageLayout
         title="Community & Missions"
         subtitle="Loving our neighbors—across the street and around the world."
-        breadcrumbs={breadcrumbs}
     >
         <div className="mb-16">
           <h2 className="text-4xl font-heading font-bold text-center mb-8">Local Outreach</h2>

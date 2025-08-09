@@ -25,7 +25,6 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { navigationCategories, MegaMenuDropdown, MegaMenuTrigger, userNavigation } from './MegaMenu';
 import { SearchBar } from './SearchBar';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Breadcrumbs, BreadcrumbItem } from '../ui/breadcrumbs';
 
 // Type definitions for navigation
 type NavItem = {
@@ -68,11 +67,7 @@ const enhancedMobileNavItems: (NavCategory | NavLink)[] = [
   }
 ];
 
-export interface HeaderProps {
-  breadcrumbs?: BreadcrumbItem[];
-}
-
-export function Header({ breadcrumbs }: HeaderProps) {
+export function Header() {
   const { user, logout } = useUser();
   const isMobile = useIsMobile();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -302,13 +297,6 @@ export function Header({ breadcrumbs }: HeaderProps) {
           </div>
         )}
       </div>
-      {breadcrumbs && breadcrumbs.length > 0 && (
-        <div className="bg-gray-100/50 border-t border-b border-gray-200/50">
-           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-              <Breadcrumbs items={breadcrumbs} />
-           </div>
-        </div>
-      )}
     </header>
   );
 }

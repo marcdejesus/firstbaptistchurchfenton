@@ -12,19 +12,12 @@ import { beliefsData, introduction, statementOfFaithNote } from './content';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function BeliefsPage() {
-  const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "About Us", href: "/about" },
-    { label: "Our Beliefs" },
-  ];
-
   return (
     <main>
       <PageLayout
         title="Our Beliefs"
         subtitle="The theological foundations that guide our church"
         variant="narrow"
-        breadcrumbs={breadcrumbs}
       >
         <div className="space-y-12">
           <Card>

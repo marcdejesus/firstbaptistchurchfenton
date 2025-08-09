@@ -65,16 +65,10 @@ const ministries: Ministry[] = [
 ];
 
 const MinistriesPage: React.FC = () => {
-  const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "Ministries" },
-  ];
-
   return (
     <PageLayout
       title="Our Ministries"
       subtitle="At First Baptist Church, we're committed to helping you grow in your faith journey through meaningful connections and purposeful community involvement."
-      breadcrumbs={breadcrumbs}
     >
       <div className="space-y-20">
         {ministries.map((ministry, index) => {

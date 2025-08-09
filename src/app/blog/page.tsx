@@ -5,16 +5,10 @@ import { BookOpen } from 'lucide-react';
 import { PageLayout } from '@/components/layout/PageLayout';
 
 export default function BlogPage() {
-  const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "Blog" },
-  ];
-
   return (
     <PageLayout
         title="From the Blog"
         subtitle="Articles, devotionals, and updates from our church leadership and community."
-        breadcrumbs={breadcrumbs}
     >
         <div className="text-center py-24 bg-background-secondary rounded-lg">
             <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-6" />

@@ -8,16 +8,10 @@ import { Calendar, Info } from 'lucide-react';
 import { PageLayout } from '@/components/layout/PageLayout';
 
 export default function EventsPage() {
-    const breadcrumbs = [
-        { label: "Home", href: "/" },
-        { label: "Events" },
-    ];
-
   return (
     <PageLayout
         title="Church Events"
         subtitle="Join us for fellowship, growth, and service."
-        breadcrumbs={breadcrumbs}
     >
         <Alert>
             <Info className="h-5 w-5" />

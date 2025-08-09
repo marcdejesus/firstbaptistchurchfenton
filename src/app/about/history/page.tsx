@@ -6,19 +6,12 @@ import { PageLayout } from '@/components/layout/PageLayout';
 import { historyMilestones, historyIntro, historyToday } from './content';
 
 export default function HistoryPage() {
-  const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "About Us", href: "/about" },
-    { label: "Our History" },
-  ];
-
   return (
     <main>
       <PageLayout
         title={historyIntro.title}
         subtitle={historyIntro.subtitle}
         variant="wide"
-        breadcrumbs={breadcrumbs}
       >
         <div className="mb-12 text-center">
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto font-body leading-relaxed">{historyIntro.paragraph}</p>

@@ -3,15 +3,9 @@ import { PageLayout } from '@/components/layout/PageLayout';
 import { Header } from '@/components/layout/Header';
 
 const ChildrensMinistryPage: FC = () => {
-  const breadcrumbs = [
-    { label: "Home", href: "/" },
-    { label: "Ministries", href: "/ministries" },
-    { label: "Children" },
-  ];
-
   return (
     <>
-      <Header breadcrumbs={breadcrumbs} />
+      <Header />
       <PageLayout
         title="Children's Ministry"
         subtitle="Information about our ministry for children."
