@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Mail, CalendarDays } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import Image from 'next/image';
 
 const staffMembers = [
   {
@@ -92,32 +91,27 @@ export default function StaffPage() {
         <div className="space-y-16">
           {staffMembers.map((staff) => (
             <Card key={staff.id} className="overflow-hidden shadow-lg border-2 border-gray-100">
-               <div className="grid grid-cols-1 md:grid-cols-3">
-                <div className="md:col-span-1">
-                  <Image src={staff.imageUrl} alt={staff.name} width={400} height={500} className="w-full h-full object-cover" />
-                </div>
-                <div className="md:col-span-2 p-6 md:p-8 flex flex-col">
-                  <CardHeader className="p-0">
-                    <CardTitle className="text-3xl font-heading font-bold">{staff.name}</CardTitle>
-                    <CardDescription className="font-semibold text-primary text-lg">{staff.title}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-0 mt-6 space-y-4 text-muted-foreground">
-                    {staff.bio.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
-                  </CardContent>
-                  <div className="mt-auto pt-6 flex items-center space-x-4">
-                    <Button asChild variant="outline">
-                      <Link href={`mailto:${staff.email}`} className="flex items-center">
-                         <Mail className="h-4 w-4 mr-2" /> Email
+              <div className="p-6 md:p-8 flex flex-col">
+                <CardHeader className="p-0">
+                  <CardTitle className="text-3xl font-heading font-bold">{staff.name}</CardTitle>
+                  <CardDescription className="font-semibold text-primary text-lg">{staff.title}</CardDescription>
+                </CardHeader>
+                <CardContent className="p-0 mt-6 space-y-4 text-muted-foreground">
+                  {staff.bio.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+                </CardContent>
+                <div className="mt-auto pt-6 flex items-center space-x-4">
+                  <Button asChild variant="outline">
+                    <Link href={`mailto:${staff.email}`} className="flex items-center">
+                      <Mail className="h-4 w-4 mr-2" /> Email
+                    </Link>
+                  </Button>
+                  {staff.meetingLink && (
+                    <Button asChild>
+                      <Link href={staff.meetingLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                        <CalendarDays className="h-4 w-4 mr-2" /> Schedule a Meeting
                       </Link>
                     </Button>
-                    {staff.meetingLink && (
-                      <Button asChild>
-                        <Link href={staff.meetingLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                          <CalendarDays className="h-4 w-4 mr-2" /> Schedule a Meeting
-                        </Link>
-                      </Button>
-                    )}
-                  </div>
+                  )}
                 </div>
               </div>
             </Card>
