@@ -23,7 +23,6 @@ import { cn } from '@/lib/utils';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { navigationCategories, MegaMenuDropdown, MegaMenuTrigger, userNavigation } from './MegaMenu';
-import { SearchBar } from './SearchBar';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Type definitions for navigation
@@ -96,17 +95,11 @@ export function Header() {
     setOpenMegaMenu(openMegaMenu === categoryId ? null : categoryId);
   };
 
-  const handleSearch = (query: string) => {
-    console.log('Search query:', query);
-    window.location.href = `/search?q=${encodeURIComponent(query)}`;
-  };
+  const handleSearch = (_query: string) => {};
 
   const renderMobileNav = () => (
     <div className="lg:hidden flex items-center space-x-2">
-      <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(!isSearchOpen)}>
-        {isSearchOpen ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
-        <span className="sr-only">Toggle search</span>
-      </Button>
+      
 
       <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
         <SheetTrigger asChild>
@@ -210,7 +203,7 @@ export function Header() {
     <header className={headerClasses} onClick={(e) => e.stopPropagation()}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex-shrink-0 flex items-center space-x-8">
+          <div className="flex-shrink-0 flex items-center">
             <Link href="/" className="flex-shrink-0">
               <div className="flex items-center space-x-3">
                 <Image src="/logo.svg" alt="FBC Fenton Logo" width={40} height={40} />
@@ -221,24 +214,25 @@ export function Header() {
                 </span>
               </div>
             </Link>
-            <nav className="hidden lg:flex items-center space-x-1">
-              {navigationCategories.map((category) => (
-                <div key={category.id} className="relative">
-                  <MegaMenuTrigger
-                    category={category}
-                    isOpen={openMegaMenu === category.id}
-                    onToggle={() => handleMegaMenuToggle(category.id)}
-                  />
-                  <MegaMenuDropdown
-                    category={category}
-                    isOpen={openMegaMenu === category.id}
-                    onClose={() => setOpenMegaMenu(null)}
-                  />
-                </div>
-              ))}
-            </nav>
           </div>
-          
+
+          <nav className="hidden lg:flex flex-1 justify-center items-center space-x-1">
+            {navigationCategories.map((category) => (
+              <div key={category.id} className="relative">
+                <MegaMenuTrigger
+                  category={category}
+                  isOpen={openMegaMenu === category.id}
+                  onToggle={() => handleMegaMenuToggle(category.id)}
+                />
+                <MegaMenuDropdown
+                  category={category}
+                  isOpen={openMegaMenu === category.id}
+                  onClose={() => setOpenMegaMenu(null)}
+                />
+              </div>
+            ))}
+          </nav>
+
           <div className="hidden lg:flex items-center space-x-4">
               <Button asChild variant="default" className="bg-accent hover:bg-accent-600">
                 <Link href="/donate">
@@ -246,11 +240,6 @@ export function Header() {
                   Give
                 </Link>
               </Button>
-              <SearchBar 
-                  onSearch={handleSearch}
-                  placeholder="Search..."
-                  className="w-56"
-              />
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -291,11 +280,7 @@ export function Header() {
           
           {renderMobileNav()}
         </div>
-        {isSearchOpen && isMobile && (
-          <div className="py-4 px-2">
-            <SearchBar onSearch={handleSearch} placeholder="Search our site..." autoFocus />
-          </div>
-        )}
+        
       </div>
     </header>
   );
