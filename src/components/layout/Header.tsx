@@ -197,12 +197,7 @@ export function Header({ breadcrumbs }: HeaderProps) {
                   Log Out
                </Button>
             </div>
-          ) : (
-            <div className="p-4 flex gap-2 border-t">
-              <Button asChild className="flex-1" onClick={() => setIsMobileMenuOpen(false)}><Link href="/login">Login</Link></Button>
-              <Button asChild variant="secondary" className="flex-1" onClick={() => setIsMobileMenuOpen(false)}><Link href="/register">Register</Link></Button>
-            </div>
-          )}
+          ) : null}
         </SheetContent>
       </Sheet>
     </div>
@@ -296,12 +291,7 @@ export function Header({ breadcrumbs }: HeaderProps) {
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
-            ) : (
-              <div className="flex items-center space-x-1">
-                <Button variant="ghost" asChild><Link href="/login">Login</Link></Button>
-                <Button asChild><Link href="/register">Register</Link></Button>
-              </div>
-            )}
+            ) : null}
           </div>
           
           {renderMobileNav()}

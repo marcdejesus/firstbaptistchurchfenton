@@ -55,7 +55,7 @@ export default function Home() {
             </div>
             <div className="mt-8 md:mt-0">
               <Image 
-                src="https://t4.ftcdn.net/jpg/02/14/74/17/360_F_214741783_rc2gf6sEFtvsN8tYK76kDEG9BzfjSN09.jpg"
+                src="/community.jpg"
                 alt="Welcoming church community"
                 width={600} 
                 height={600} 

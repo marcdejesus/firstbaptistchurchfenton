@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { 
   UserPlus, MapPin, Clock, ArrowRight, Monitor, Church, Book, History, 
   Users, HelpCircle, Mail, Heart, Calendar, HandHeart, MessageSquare, 
-  Globe, BookOpen, Play, FileText, Images, UserCircle, LogIn, Settings
+  Globe, BookOpen, Play, FileText, UserCircle, Settings
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import React from 'react';
@@ -144,12 +144,7 @@ export const navigationCategories = [
         description: "Spiritual insights and church updates",
         icon: FileText
       },
-      {
-        title: "Photo Gallery",
-        href: "/gallery",
-        description: "Memories from our community",
-        icon: Images
-      },
+      
       {
         title: "Book Appointment",
         href: "/book-appointment",
@@ -175,18 +170,7 @@ export const userNavigation = {
       requiresRole: "admin"
     }
   ],
-  unauthenticated: [
-    {
-      title: "Login",
-      href: "/login",
-      icon: LogIn
-    },
-    {
-      title: "Register",
-      href: "/register",
-      icon: UserPlus
-    }
-  ]
+  unauthenticated: []
 };
 
 interface MegaMenuDropdownProps {

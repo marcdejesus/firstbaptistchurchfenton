@@ -41,10 +41,10 @@ export function Footer() {
                   <span className="block text-sm">Church of Fenton</span>
                 </div>
               </Link>
-              <p className="text-sm text-gray-400 mb-4">
+              <p className="text-sm mb-4 text-white">
                 A community of faith, hope, and love.
               </p>
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 text-white">
                 <Link href="https://www.facebook.com/pg/FBCfenton" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                   <Facebook className="h-6 w-6 hover:text-accent transition-colors" />
                 </Link>
@@ -57,15 +57,15 @@ export function Footer() {
             {/* Footer Sections */}
             {footerSections.map((section) => (
               <div key={section.title} className="w-full sm:w-1/2 md:w-1/3 lg:w-auto">
-                <h3 className="font-semibold mb-4">{section.title}</h3>
+                <h3 className="font-semibold mb-4 text-white">{section.title}</h3>
                 <ul className="space-y-2">
                   {section.items.map((item) => (
-                    <li key={item.text} className="flex items-start">
-                      <item.icon className="w-5 h-5 mr-3 mt-1 text-accent" />
+                    <li key={item.text} className="flex items-start text-white">
+                      <item.icon className="w-5 h-5 mr-3 mt-1 text-white" />
                       {'href' in item && item.href ? (
-                        <a href={item.href} className="hover:text-accent transition-colors text-sm">{item.text}</a>
+                        <a href={item.href} className="text-white hover:text-accent transition-colors text-sm">{item.text}</a>
                       ) : (
-                        <span className="text-sm">{item.text}</span>
+                        <span className="text-sm text-white">{item.text}</span>
                       )}
                     </li>
                   ))}
@@ -76,10 +76,10 @@ export function Footer() {
         </div>
         
         {/* Bottom Bar */}
-        <div className="py-6 border-t border-gray-700 text-center text-sm text-gray-400">
-          <p>&copy; {new Date().getFullYear()} First Baptist Church of Fenton. All Rights Reserved.</p>
-           <p className="text-xs mt-2">
-                Website by <a href="https://dejesusdigitalsolutions.com" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">De Jesus Digital Solutions</a>
+        <div className="py-6 border-t border-gray-700 text-center text-sm text-white">
+          <p className="text-white">&copy; {new Date().getFullYear()} First Baptist Church of Fenton. All Rights Reserved.</p>
+           <p className="text-xs mt-2 text-white">
+                Website by <a href="https://dejesusdigitalsolutions.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">De Jesus Digital Solutions</a>
             </p>
         </div>
       </div>
