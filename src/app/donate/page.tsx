@@ -21,17 +21,15 @@ export default function DonatePage() {
               </div>
             <CardTitle className="font-heading">Give Online</CardTitle>
             <CardDescription>
-              Click the button below to give securely through our online giving platform.
+              Click the button below to give securely through our PayPal page.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex-grow flex flex-col justify-center">
             <Button asChild size="lg">
-              <Link href="#"> 
-                {/* Placeholder link as requested */}
-                Go to Giving Platform
+              <Link href="https://www.paypal.com/donate?token=6-wnb_Sj_MupmasvWZnxJSDO899HjDQcX5bp4X63zwZrAL0QI_VKxgXHkGaWENDHRxbNG4Yw5txQpqKA">
+                Donate
               </Link>
             </Button>
-              <p className="text-xs text-muted-foreground mt-2">Platform link coming soon</p>
           </CardContent>
         </Card>
 
