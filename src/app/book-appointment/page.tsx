@@ -10,22 +10,21 @@ export default function BookAppointmentPage() {
     <PageLayout
         title="Book an Appointment"
         subtitle="Schedule a confidential session with Pastor James Bell. Please select a date and time that works for you."
-        variant="narrow"
+        variant="wide"
     >
-        <div className="rounded-lg overflow-hidden shadow-lg border">
-            <InlineWidget
-                url={calendlyUrl}
-                styles={{
-                    height: "800px",
-                }}
-                pageSettings={{
-                    backgroundColor: 'FFFFFF',
-                    hideEventTypeDetails: false,
-                    hideLandingPageDetails: false,
-                    primaryColor: 'FF9A00',
-                    textColor: '070404'
-                }}
-            />
+        <div className="w-full">
+          <InlineWidget
+            url={calendlyUrl}
+            styles={{
+              width: "100%",
+              height: "1000px",
+            }}
+            pageSettings={{
+              hideEventTypeDetails: false,
+              hideLandingPageDetails: false,
+              primaryColor: 'FF9A00',
+            }}
+          />
         </div>
     </PageLayout>
   );
