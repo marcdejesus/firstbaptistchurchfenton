@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from "next/image";
 import { ArrowRight, Star, Church, Users, HeartHandshake, Clock, MapPin, Calendar } from "lucide-react";
 import { useNextEvent } from "@/hooks/useNextEvent";
+import { HeroSlideshowBackground } from "@/components/home/HeroSlideshowBackground";
 
 // A more focused feature card
 const Feature = ({ icon: Icon, title, description, href, cta }: {
@@ -35,53 +36,40 @@ export default function Home() {
   return (
     <main className="flex flex-col">
       
-      {/* Hero Section */}
-      <section className="bg-background-secondary">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="flex flex-col items-start gap-8 text-center md:text-left">
-              <h1 className="text-4xl sm:text-5xl font-heading font-bold leading-tight">
-                No matter where you've been, you're welcome here.
-              </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Come as you are and discover the hope, truth, and grace of Jesus Christ. We are a community of real people, with real struggles, following a real Savior.
-              </p>
-              <div className="w-full max-w-xl mx-auto md:mx-0 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-                <div className="flex items-center gap-3 rounded-lg border border-border/60 bg-white/5 px-4 py-3">
-                  <Clock className="h-5 w-5 text-primary" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Sunday Service</p>
-                    <p className="font-medium">10:30 AM</p>
-                  </div>
-                </div>
-                <Link href="https://maps.google.com/?q=860+N.+Leroy+St.,+Fenton,+MI+48430" className="flex items-center gap-3 rounded-lg border border-border/60 bg-white/5 px-4 py-3 hover:bg-accent/10 transition-colors" target="_blank" rel="noopener noreferrer">
-                  <MapPin className="h-5 w-5 text-primary" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Location</p>
-                    <p className="font-medium">860 N. Leroy St., Fenton</p>
-                  </div>
-                </Link>
-              </div>
-              <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
-                <Button size="lg" asChild>
-                  <Link href="/visit">Plan Your Visit</Link>
-                </Button>
-                <Button size="lg" variant="secondary" asChild>
-                  <Link href="/welcome">I'm New</Link>
-                </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <Link href="/sermons">Watch a Sermon</Link>
-                </Button>
-              </div>
+      {/* Hero Section - Centered with background slideshow */}
+      <section className="relative">
+        <HeroSlideshowBackground images={["/slideshow1.jpg", "/slideshow2.jpg"]} />
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36">
+          <div className="max-w-3xl mx-auto text-center text-white">
+            <h1 className="text-4xl sm:text-5xl font-heading font-bold leading-tight text-white">
+              No matter where you've been, you're welcome here.
+            </h1>
+            <p className="mt-6 text-lg text-white/90 leading-relaxed">
+              Come as you are and discover the hope, truth, and grace of Jesus Christ. We are a community of real people, with real struggles, following a real Savior.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <Button size="lg" asChild>
+                <Link href="/visit">Plan Your Visit</Link>
+              </Button>
+              <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10" asChild>
+                <Link href="/sermons">Watch a Sermon</Link>
+              </Button>
             </div>
-            <div className="mt-8 md:mt-0">
-              <Image 
-                src="/community.jpg"
-                alt="Welcoming church community"
-                width={600} 
-                height={600} 
-                className="rounded-lg object-cover mx-auto shadow-lg"
-              />
+          </div>
+        </div>
+        {/* Slim info bar */}
+        <div className="relative border-t border-white/15 bg-black/40 backdrop-blur-sm">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-white/90 text-sm">
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-primary" />
+                <span>Sunday Service: 10:30 AM</span>
+              </div>
+              <span className="hidden sm:block text-white/30">|</span>
+              <Link href="https://maps.google.com/?q=860+N.+Leroy+St.,+Fenton,+MI+48430" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-white">
+                <MapPin className="h-4 w-4 text-primary" />
+                <span>860 N. Leroy St., Fenton, MI</span>
+              </Link>
             </div>
           </div>
         </div>
