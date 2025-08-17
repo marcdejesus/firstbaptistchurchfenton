@@ -79,7 +79,7 @@ export function Footer() {
         <div className="py-6 border-t border-gray-700 text-center text-sm text-white">
           <p className="text-white">&copy; {new Date().getFullYear()} First Baptist Church of Fenton. All Rights Reserved.</p>
            <p className="text-xs mt-2 text-white">
-                Website by <a href="https://dejesusdigitalsolutions.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">De Jesus Digital Solutions</a>
+                Website by <a href="https://marcdejesusdev.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-accent transition-colors">Marc De Jesus</a>
             </p>
         </div>
       </div>
