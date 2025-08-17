@@ -22,10 +22,10 @@ export default async function SermonsPage() {
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-4xl sm:text-5xl font-heading font-bold text-center mb-8">Sermons</h1>
 
-      <section className="mb-10 rounded-xl bg-primary text-primary-foreground px-6 py-8 sm:py-10">
+      <section className="mb-10 rounded-xl bg-primary text-white px-6 py-8 sm:py-10">
         <div className="flex flex-col items-center text-center gap-3">
-          <h2 className="text-2xl sm:text-3xl font-heading font-bold">Join Our Live Service!</h2>
-          <p className="text-lg sm:text-xl">Sundays at 10:30 AM EDT</p>
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-white">Join Our Live Service!</h2>
+          <p className="text-lg sm:text-xl text-white">Sundays at 10:30 AM EDT</p>
           <Button asChild size="lg" variant="secondary" className="mt-2">
             <Link href={liveStreamUrl} target="_blank" rel="noopener noreferrer">
               Watch Live Now
