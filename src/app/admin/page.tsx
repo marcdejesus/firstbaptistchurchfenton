@@ -1,192 +1,101 @@
-"use client";
+import { Metadata } from 'next';
+import Dashboard from '@/components/admin/Dashboard';
+import type { DashboardStats } from '@/types/cms';
 
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Badge } from '@/components/ui/badge';
-import { 
-  Users, 
-  FileText, 
-  MessageSquare, 
-  Mail, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  Send,
-  BarChart3,
-  Calendar,
-  Settings,
-  Shield,
-  Loader2
-} from 'lucide-react';
+export const metadata: Metadata = {
+  title: 'Admin Dashboard | First Baptist Church Fenton',
+  description: 'Website administration dashboard for First Baptist Church Fenton',
+  robots: 'noindex, nofollow', // Prevent search engines from indexing admin pages
+};
 
-const PlaceholderContent = ({ title }: { title: string }) => (
-    <div className="flex items-center justify-center h-48 border-2 border-dashed rounded-lg">
-        <p className="text-muted-foreground">{title} - Data not available.</p>
-    </div>
-);
+// Mock data - replace with actual API calls
+async function getDashboardStats(): Promise<DashboardStats> {
+  // In a real implementation, this would fetch from your database
+  return {
+    totalBlogPosts: 25,
+    publishedPosts: 20,
+    draftPosts: 5,
+    totalMediaFiles: 150,
+    totalUsers: 3,
+    recentActivity: [
+      {
+        id: 1,
+        userId: 1,
+        userName: 'John Smith',
+        action: 'updated',
+        resourceType: 'page content',
+        resourceId: 1,
+        createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
+      },
+      {
+        id: 2,
+        userId: 2,
+        userName: 'Mary Johnson',
+        action: 'published',
+        resourceType: 'blog post',
+        resourceId: 5,
+        createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000), // 5 hours ago
+      },
+      {
+        id: 3,
+        userId: 1,
+        userName: 'John Smith',
+        action: 'uploaded',
+        resourceType: 'media file',
+        resourceId: 25,
+        createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
+      }
+    ],
+    upcomingScheduledPosts: [
+      {
+        id: 10,
+        uuid: 'post-10',
+        title: 'Preparing Our Hearts for Christmas',
+        slug: 'preparing-hearts-christmas',
+        status: 'scheduled' as const,
+        scheduledFor: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+        tags: [],
+        viewCount: 0,
+        isFeatured: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        id: 11,
+        uuid: 'post-11',
+        title: 'Youth Ministry Winter Retreat Recap',
+        slug: 'youth-winter-retreat-recap',
+        status: 'scheduled' as const,
+        scheduledFor: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+        tags: [],
+        viewCount: 0,
+        isFeatured: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+    ],
+    storageUsed: 250 * 1024 * 1024, // 250MB
+    storageLimit: 1024 * 1024 * 1024, // 1GB
+  };
+}
 
-const UserManagement = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle className="font-heading">Manage Users</CardTitle>
-            <CardDescription>View, edit roles, and approve members.</CardDescription>
-        </CardHeader>
-        <CardContent>
-            <PlaceholderContent title="User Management" />
-        </CardContent>
-    </Card>
-);
+// Mock user data - replace with actual authentication
+function getCurrentUser() {
+  return {
+    id: 1,
+    uuid: 'user-1',
+    email: 'admin@fbcfenton.org',
+    name: 'Admin User',
+    role: 'admin' as const,
+    isActive: true,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
+}
 
-const BlogManagement = () => (
-    <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-                <CardTitle className="font-heading">Manage Blog Posts</CardTitle>
-                <CardDescription>Create, edit, and publish articles.</CardDescription>
-            </div>
-            <Button disabled>Create New Post</Button>
-        </CardHeader>
-        <CardContent>
-            <PlaceholderContent title="Blog Management" />
-        </CardContent>
-    </Card>
-);
+export default async function AdminDashboardPage() {
+  const stats = await getDashboardStats();
+  const user = getCurrentUser();
 
-const PrayerManagement = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle className="font-heading">Manage Prayer Requests</CardTitle>
-            <CardDescription>Approve or delete prayer wall submissions.</CardDescription>
-        </CardHeader>
-        <CardContent>
-            <PlaceholderContent title="Prayer Requests" />
-        </CardContent>
-    </Card>
-);
-
-const NewsletterManagement = () => (
-    <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-                <CardTitle className="font-heading flex items-center">
-                    <Mail className="h-5 w-5 mr-2" />
-                    Newsletter Management
-                </CardTitle>
-                <CardDescription>Create and manage newsletter campaigns.</CardDescription>
-            </div>
-             <Button disabled>
-              <Plus className="h-4 w-4 mr-2" />
-              Create Newsletter
-            </Button>
-        </CardHeader>
-        <CardContent>
-            <PlaceholderContent title="Newsletter Management" />
-        </CardContent>
-    </Card>
-);
-
-const AnalyticsDashboard = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle className="font-heading">Analytics Dashboard</CardTitle>
-            <CardDescription>View website traffic and engagement.</CardDescription>
-        </CardHeader>
-        <CardContent>
-            <PlaceholderContent title="Analytics" />
-        </CardContent>
-    </Card>
-);
-
-const EventManagement = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle className="font-heading">Event Management</CardTitle>
-            <CardDescription>Create, edit, and manage church events.</CardDescription>
-        </CardHeader>
-        <CardContent>
-            <PlaceholderContent title="Event Management" />
-        </CardContent>
-    </Card>
-);
-
-const SiteSettings = () => (
-    <Card>
-        <CardHeader>
-            <CardTitle className="font-heading">Site Settings</CardTitle>
-            <CardDescription>Manage global site configurations.</CardDescription>
-        </CardHeader>
-        <CardContent>
-            <PlaceholderContent title="Site Settings" />
-        </CardContent>
-    </Card>
-);
-
-
-export default function AdminPage() {
-  const TABS = [
-    { value: 'dashboard', label: 'Dashboard', icon: BarChart3 },
-    { value: 'users', label: 'Users', icon: Users },
-    { value: 'blog', label: 'Blog', icon: FileText },
-    { value: 'prayer', label: 'Prayer Requests', icon: MessageSquare },
-    { value: 'newsletter', label: 'Newsletter', icon: Mail },
-    { value: 'events', label: 'Events', icon: Calendar },
-    { value: 'settings', label: 'Settings', icon: Settings },
-  ];
-
-  return (
-    <main className="bg-background-secondary min-h-screen p-4 sm:p-6 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        <header className="mb-8">
-          <h1 className="text-3xl font-heading font-bold">Admin Panel</h1>
-          <p className="text-muted-foreground">Welcome, Admin.</p>
-        </header>
-
-        <Tabs defaultValue="dashboard">
-          <TabsList className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 mb-6">
-            {TABS.map(tab => (
-              <TabsTrigger key={tab.value} value={tab.value} className="flex-1">
-                <tab.icon className="h-4 w-4 mr-2" />
-                {tab.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          
-          <TabsContent value="dashboard"><AnalyticsDashboard /></TabsContent>
-          <TabsContent value="users"><UserManagement /></TabsContent>
-          <TabsContent value="blog"><BlogManagement /></TabsContent>
-          <TabsContent value="prayer"><PrayerManagement /></TabsContent>
-          <TabsContent value="newsletter"><NewsletterManagement /></TabsContent>
-          <TabsContent value="events"><EventManagement /></TabsContent>
-          <TabsContent value="settings"><SiteSettings /></TabsContent>
-        </Tabs>
-      </div>
-    </main>
-  );
+  return <Dashboard stats={stats} userRole={user.role} />;
 }
