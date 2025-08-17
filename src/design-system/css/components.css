@@ -159,24 +159,24 @@ body, p, .text-regular {
   box-shadow: 0 0 0 var(--color-orange-peel-darker);
 }
 
-/* Secondary Button - Copper Rust */
+/* Secondary Button - White */
 .btn-secondary {
   background-color: var(--color-secondary);
-  color: var(--color-neutral-white);
-  border: 2px solid var(--color-copper-rust-dark);
-  box-shadow: 0 4px 0 var(--color-copper-rust-dark);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-border-medium);
+  box-shadow: 0 4px 0 var(--color-border-medium);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: var(--color-copper-rust-dark);
+  background-color: var(--color-neutral-lightest);
   transform: translateY(2px);
-  box-shadow: 0 2px 0 var(--color-copper-rust-darker);
+  box-shadow: 0 2px 0 var(--color-border-dark);
 }
 
 .btn-secondary:active:not(:disabled) {
-  background-color: var(--color-copper-rust-darker);
+  background-color: var(--color-neutral-lighter);
   transform: translateY(4px);
-  box-shadow: 0 0 0 var(--color-copper-rust-darker);
+  box-shadow: 0 0 0 var(--color-border-dark);
 }
 
 /* Outline Button */

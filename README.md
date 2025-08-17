@@ -6,7 +6,7 @@ A comprehensive design system for First Baptist Church Fenton's website, featuri
 
 This design system embodies the welcoming spirit of First Baptist Church Fenton through:
 
-- **Warm Color Palette**: Orange Peel and Copper Rust colors create a welcoming, community-focused atmosphere
+- **Warm Color Palette**: Orange Peel and White colors create a welcoming, community-focused atmosphere
 - **Classic Typography**: Cardo (headings) and Proza Libre (body) combine tradition with modern readability
 - **Accessible Design**: WCAG AA compliant colors and responsive typography
 - **Consistent Experience**: Unified components and patterns across all digital touchpoints
@@ -37,7 +37,7 @@ firstbaptistchurchfenton/
 
 ### Color System
 - **Orange Peel Palette**: Primary brand colors (#fb7c25 base)
-- **Copper Rust Palette**: Secondary accent colors (#924D4D base)
+- **White Palette**: Secondary accent colors (#FFFFFF base)
 - **Neutral Palette**: Comprehensive grayscale (#FFFFFF to #070404)
 - **4 Color Schemes**: Pre-defined combinations for different content areas
 
@@ -74,14 +74,14 @@ firstbaptistchurchfenton/
 
 ### Primary Colors
 - **Orange Peel Base** (#fb7c25): Primary actions, CTAs, brand elements
-- **Copper Rust Base** (#924D4D): Secondary accents, special sections
+- **White Base** (#FFFFFF): Secondary accents, special sections
 - **Neutral Darkest** (#070404): Primary text, high contrast elements
 
 ### Color Schemes
 1. **Scheme 1**: Main content areas (white background)
 2. **Scheme 2**: Featured sections (orange accent background)
 3. **Scheme 3**: Secondary content (light neutral background)
-4. **Scheme 4**: Special sections (copper rust accent background)
+4. **Scheme 4**: Special sections (white accent background)
 
 ## 📱 Responsive Design
 

@@ -159,22 +159,22 @@
         "darkest": { "value": "#070404", "description": "Neutral darkest" }
       },
       "orangePeel": {
-        "lightest": { "value": "#FEF7F0", "description": "Orange peel lightest" },
-        "lighter": { "value": "#FDE8D1", "description": "Orange peel lighter" },
-        "light": { "value": "#FCC08A", "description": "Orange peel light" },
-        "base": { "value": "#fb7c25", "description": "Orange peel base" },
-        "dark": { "value": "#E66A1A", "description": "Orange peel dark" },
-        "darker": { "value": "#C55A15", "description": "Orange peel darker" },
-        "darkest": { "value": "#9B4710", "description": "Orange peel darkest" }
+        "lightest": { "value": "#FDF6F0", "description": "Orange peel lightest" },
+        "lighter": { "value": "#F9E8D8", "description": "Orange peel lighter" },
+        "light": { "value": "#F4C99A", "description": "Orange peel light" },
+        "base": { "value": "#EB833E", "description": "Orange peel base" },
+        "dark": { "value": "#D66A2A", "description": "Orange peel dark" },
+        "darker": { "value": "#B85522", "description": "Orange peel darker" },
+        "darkest": { "value": "#8A421A", "description": "Orange peel darkest" }
       },
       "copperRust": {
-        "lightest": { "value": "#F1F5F9", "description": "Navy blue lightest" },
-        "lighter": { "value": "#E2E8F0", "description": "Navy blue lighter" },
-        "light": { "value": "#94A3B8", "description": "Navy blue light" },
-        "base": { "value": "#1f2937", "description": "Navy blue base" },
-        "dark": { "value": "#111827", "description": "Navy blue dark" },
-        "darker": { "value": "#0F172A", "description": "Navy blue darker" },
-        "darkest": { "value": "#020617", "description": "Navy blue darkest" }
+        "lightest": { "value": "#FFFFFF", "description": "White lightest" },
+        "lighter": { "value": "#FFFFFF", "description": "White lighter" },
+        "light": { "value": "#FFFFFF", "description": "White light" },
+        "base": { "value": "#FFFFFF", "description": "White base" },
+        "dark": { "value": "#FFFFFF", "description": "White dark" },
+        "darker": { "value": "#FFFFFF", "description": "White darker" },
+        "darkest": { "value": "#FFFFFF", "description": "White darkest" }
       }
     },
     "semantic": {

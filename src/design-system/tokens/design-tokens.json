@@ -168,13 +168,13 @@
         "darkest": { "value": "#9B4710", "description": "Orange peel darkest" }
       },
       "copperRust": {
-        "lightest": { "value": "#F4EDED", "description": "Copper rust lightest" },
-        "lighter": { "value": "#E9DBDB", "description": "Copper rust lighter" },
-        "light": { "value": "#B28282", "description": "Copper rust light" },
-        "base": { "value": "#924D4D", "description": "Copper rust base" },
-        "dark": { "value": "#743D3D", "description": "Copper rust dark" },
-        "darker": { "value": "#3A1E1E", "description": "Copper rust darker" },
-        "darkest": { "value": "#2B1717", "description": "Copper rust darkest" }
+        "lightest": { "value": "#FFFFFF", "description": "White lightest" },
+        "lighter": { "value": "#FFFFFF", "description": "White lighter" },
+        "light": { "value": "#FFFFFF", "description": "White light" },
+        "base": { "value": "#FFFFFF", "description": "White base" },
+        "dark": { "value": "#FFFFFF", "description": "White dark" },
+        "darker": { "value": "#FFFFFF", "description": "White darker" },
+        "darkest": { "value": "#FFFFFF", "description": "White darkest" }
       }
     },
     "semantic": {

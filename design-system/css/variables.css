@@ -31,13 +31,13 @@
   --color-orange-peel-darkest: #9B4710;
 
   /* Copper Rust */
-  --color-copper-rust-lightest: #F4EDED;
-  --color-copper-rust-lighter: #E9DBDB;
-  --color-copper-rust-light: #B28282;
-  --color-copper-rust-base: #924D4D;
-  --color-copper-rust-dark: #743D3D;
-  --color-copper-rust-darker: #3A1E1E;
-  --color-copper-rust-darkest: #2B1717;
+  --color-copper-rust-lightest: #FFFFFF;
+  --color-copper-rust-lighter: #FFFFFF;
+  --color-copper-rust-light: #FFFFFF;
+  --color-copper-rust-base: #FFFFFF;
+  --color-copper-rust-dark: #FFFFFF;
+  --color-copper-rust-darker: #FFFFFF;
+  --color-copper-rust-darkest: #FFFFFF;
 
   /* Semantic Colors */
   --color-primary: var(--color-orange-peel-base);
