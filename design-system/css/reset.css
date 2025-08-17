@@ -139,7 +139,7 @@ a {
 }
 
 a:focus-visible {
-  outline: 2px solid var(--color-primary, #FF9A00);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -170,7 +170,7 @@ label {
   20. Set focus styles for better accessibility
 */
 :focus-visible {
-  outline: 2px solid var(--color-primary, #FF9A00);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
@@ -182,6 +182,6 @@ button:focus {
 }
 
 button:focus-visible {
-  outline: 2px solid var(--color-primary, #FF9A00);
+  outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 } 

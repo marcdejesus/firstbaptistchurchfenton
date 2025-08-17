@@ -75,7 +75,7 @@ npm run genkit:watch
 
 The project uses a comprehensive design system:
 - **Typography**: Cardo (headings) + Proza Libre (body)
-- **Colors**: Orange Peel (#FF9A00) + Copper Rust (#924D4D) brand palette
+- **Colors**: Orange Peel (#fb7c25) + Copper Rust (#924D4D) brand palette
 - **Components**: Custom design system in `/design-system/` and shadcn/ui components
 - **CSS Architecture**: CSS custom properties with Tailwind utility classes
 

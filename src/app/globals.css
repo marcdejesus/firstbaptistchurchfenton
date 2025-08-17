@@ -19,7 +19,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 9%;
 
-    --primary: 24 89% 54%; /* Orange from design system */
+    --primary: 25 96% 56%; /* Orange from design system - #fb7c25 */
     --primary-foreground: 0 0% 100%; /* White text on orange */
 
     --secondary: 0 0% 96%; /* Light gray for secondary elements */
@@ -28,7 +28,7 @@
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 9%; /* Medium gray for muted text */
 
-    --accent: 24 89% 54%; /* Vibrant Orange from logo - approx #F27421 */
+    --accent: 25 96% 56%; /* Vibrant Orange from design system - #fb7c25 */
     --accent-foreground: 0 0% 100%; /* White text on orange */
 
     --destructive: 0 84% 60%; /* Red for destructive actions */
@@ -36,7 +36,7 @@
 
     --border: 0 0% 90%; /* Light gray for borders */
     --input: 0 0% 96%; /* Very light gray for input backgrounds */
-    --ring: 24 89% 58%; /* Brighter orange for focus rings */
+    --ring: 25 96% 64%; /* Brighter orange for focus rings */
 
     --radius: 0.5rem;
 
@@ -49,12 +49,12 @@
     /* Sidebar colors */
     --sidebar-background: 0 0% 98%; 
     --sidebar-foreground: 0 0% 15%;
-    --sidebar-primary: 24 89% 56%; /* Orange for active items in sidebar */
+    --sidebar-primary: 36 100% 56%; /* Orange for active items in sidebar */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 94%;
     --sidebar-accent-foreground: 0 0% 9%;
     --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 24 89% 58%; /* Orange for focus rings in sidebar */
+    --sidebar-ring: 36 100% 58%; /* Orange for focus rings in sidebar */
   }
 
   .dark {
@@ -67,7 +67,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 24 89% 58%; /* Brighter Orange for dark mode */
+    --primary: 25 96% 64%; /* Brighter Orange for dark mode */
     --primary-foreground: 0 0% 100%;
 
     --secondary: 0 0% 14.9%;
@@ -76,7 +76,7 @@
     --muted: 0 0% 14.9%;
     --muted-foreground: 0 0% 98%;
 
-    --accent: 24 89% 58%; /* Brighter Orange for dark mode */
+    --accent: 25 96% 64%; /* Brighter Orange for dark mode */
     --accent-foreground: 0 0% 100%; 
 
     --destructive: 0 62.8% 30.6%;
@@ -84,7 +84,7 @@
 
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
-    --ring: 24 89% 62%; /* Brighter Orange for focus rings in dark mode */
+    --ring: 25 96% 68%; /* Brighter Orange for focus rings in dark mode */
 
     --chart-1: 43 70% 50%;
     --chart-2: 30 60% 45%;
@@ -94,12 +94,12 @@
 
     --sidebar-background: 0 0% 2%;
     --sidebar-foreground: 0 0% 95%;
-    --sidebar-primary: 24 89% 60%; /* Orange for active items in sidebar (dark) */
+    --sidebar-primary: 25 96% 66%; /* Orange for active items in sidebar (dark) */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 10%;
     --sidebar-accent-foreground: 0 0% 95%;
     --sidebar-border: 0 0% 14.9%;
-    --sidebar-ring: 24 89% 62%; /* Orange for focus rings in sidebar (dark) */
+    --sidebar-ring: 25 96% 68%; /* Orange for focus rings in sidebar (dark) */
   }
 }
 

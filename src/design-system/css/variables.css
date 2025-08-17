@@ -22,13 +22,13 @@
   --color-neutral-darkest: #070404;
 
   /* Orange Peel */
-  --color-orange-peel-lightest: #FFF4E5;
-  --color-orange-peel-lighter: #FFEACC;
-  --color-orange-peel-light: #FFB84C;
-  --color-orange-peel-base: #FF9A00;
-  --color-orange-peel-dark: #CC7800;
-  --color-orange-peel-darker: #663D00;
-  --color-orange-peel-darkest: #4C2E00;
+  --color-orange-peel-lightest: #FEF7F0;
+  --color-orange-peel-lighter: #FDE8D1;
+  --color-orange-peel-light: #FCC08A;
+  --color-orange-peel-base: #fb7c25;
+  --color-orange-peel-dark: #E66A1A;
+  --color-orange-peel-darker: #C55A15;
+  --color-orange-peel-darkest: #9B4710;
 
   /* Copper Rust */
   --color-copper-rust-lightest: #F4EDED;

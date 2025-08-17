@@ -22,7 +22,7 @@ export default function BookAppointmentPage() {
             pageSettings={{
               hideEventTypeDetails: false,
               hideLandingPageDetails: false,
-              primaryColor: 'FF9A00',
+              primaryColor: 'fb7c25',
             }}
           />
         </div>

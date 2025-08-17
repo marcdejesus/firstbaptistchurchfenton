@@ -16,7 +16,7 @@
         },
         {
           "rule": "Text on a primary color background (semantic.primary, semantic.secondary) must be white (primitive.neutrals.white).",
-          "accentBackgrounds": ["#FF9A00", "#924D4D"],
+          "accentBackgrounds": ["#fb7c25", "#924D4D"],
           "expectedTextColor": "#FFFFFF"
         }
       ]

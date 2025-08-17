@@ -36,7 +36,7 @@ firstbaptistchurchfenton/
 - **Complete Hierarchy**: H1-H6 plus body text variations
 
 ### Color System
-- **Orange Peel Palette**: Primary brand colors (#FF9A00 base)
+- **Orange Peel Palette**: Primary brand colors (#fb7c25 base)
 - **Copper Rust Palette**: Secondary accent colors (#924D4D base)
 - **Neutral Palette**: Comprehensive grayscale (#FFFFFF to #070404)
 - **4 Color Schemes**: Pre-defined combinations for different content areas
@@ -73,7 +73,7 @@ firstbaptistchurchfenton/
 ## 🎨 Color Usage
 
 ### Primary Colors
-- **Orange Peel Base** (#FF9A00): Primary actions, CTAs, brand elements
+- **Orange Peel Base** (#fb7c25): Primary actions, CTAs, brand elements
 - **Copper Rust Base** (#924D4D): Secondary accents, special sections
 - **Neutral Darkest** (#070404): Primary text, high contrast elements
 
