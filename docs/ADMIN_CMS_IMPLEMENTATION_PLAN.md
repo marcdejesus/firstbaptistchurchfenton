@@ -222,8 +222,7 @@ DIRECT_URL="postgresql://username:password@hostname:port/database?sslmode=requir
 NEXTAUTH_SECRET="your-secret-here"
 NEXTAUTH_URL="http://localhost:9002"
 
-UPLOADTHING_SECRET="your-uploadthing-secret"
-UPLOADTHING_APP_ID="your-uploadthing-app-id"
+UPLOADTHING_TOKEN="your-uploadthing-token"
 
 # Google OAuth (optional)
 GOOGLE_CLIENT_ID="your-google-client-id"

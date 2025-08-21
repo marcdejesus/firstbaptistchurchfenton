@@ -30,7 +30,7 @@ import {
   UserPlus,
   X
 } from 'lucide-react';
-import { useUser } from '@/contexts/UserContext';
+import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 import { 
   DropdownMenu, 
@@ -62,7 +62,7 @@ export function EventCard({
   variant = 'default',
   showAttendees = false 
 }: EventCardProps) {
-  const { user } = useUser();
+  const { user } = useAuth();
   const { toast } = useToast();
   const [timeUntilEvent, setTimeUntilEvent] = useState<string>('');
   const [isAddingToCalendar, setIsAddingToCalendar] = useState(false);

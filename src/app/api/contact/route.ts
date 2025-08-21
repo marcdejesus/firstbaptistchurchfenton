@@ -62,7 +62,7 @@ async function sendContactEmail(formData: ContactFormData) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, message, subject } = await request.json();
+    const { name, email, message, subject: submittedSubject } = await request.json();
 
     if (!name || !email || !message) {
       return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
       data: {
         name,
         email,
-        subject: subject || 'General Inquiry',
+        subject: submittedSubject || 'General Inquiry',
         message,
       },
     });
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const subject = `New Contact Form Message from ${name}`;
+    const emailSubject = `New Contact Form Message from ${name}`;
 
     const emailHtml = `
       <h1>New Contact Form Submission</h1>
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
       from: process.env.MAIL_FROM || `"FBCF Website" <no-reply@fbfenton.org>`,
       to: 'info@fbfenton.org',
       replyTo: email,
-      subject: subject,
+      subject: emailSubject,
       html: emailHtml,
     };
 
