@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { prisma } from '@/lib/prisma';
 
 interface ContactFormData {
   firstName: string;
@@ -61,11 +62,21 @@ async function sendContactEmail(formData: ContactFormData) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, message } = await request.json();
+    const { name, email, message, subject } = await request.json();
 
     if (!name || !email || !message) {
       return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
     }
+
+    // Save contact submission to database
+    const savedSubmission = await prisma.contactSubmission.create({
+      data: {
+        name,
+        email,
+        subject: subject || 'General Inquiry',
+        message,
+      },
+    });
 
     const transporter = nodemailer.createTransport({
       host: process.env.MAIL_HOST,
@@ -107,7 +118,10 @@ export async function POST(request: NextRequest) {
 
     await transporter.sendMail(mailOptions);
 
-    return NextResponse.json({ message: 'Message sent successfully' });
+    return NextResponse.json({ 
+      message: 'Message sent successfully',
+      id: savedSubmission.id 
+    });
 
   } catch (error) {
     console.error("Error processing contact form: ", error);

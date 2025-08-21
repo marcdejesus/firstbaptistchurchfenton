@@ -1,13 +1,25 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { prisma } from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
-    const { name, email, request: prayerRequest, isConfidential } = await request.json();
+    const { name, email, phone, request: prayerRequest, isConfidential } = await request.json();
 
     if (!name || !email || !prayerRequest) {
       return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
     }
+
+    // Save prayer request to database
+    const savedRequest = await prisma.prayerRequest.create({
+      data: {
+        name,
+        email,
+        phone: phone || null,
+        message: prayerRequest,
+        isPublic: !isConfidential,
+      },
+    });
 
     // Configure Nodemailer transport
     // Note: Using environment variables for security.
@@ -56,7 +68,10 @@ export async function POST(request: Request) {
 
     await transporter.sendMail(mailOptions);
 
-    return NextResponse.json({ message: 'Prayer request submitted successfully' });
+    return NextResponse.json({ 
+      message: 'Prayer request submitted successfully',
+      id: savedRequest.id 
+    });
 
   } catch (error) {
     console.error("Error processing prayer request: ", error);

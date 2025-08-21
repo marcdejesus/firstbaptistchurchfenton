@@ -4,7 +4,7 @@ import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Toaster } from "@/components/ui/toaster";
-import { UserProvider } from '@/contexts/UserContext';
+import { SessionProvider } from '@/components/auth/SessionProvider';
 import { ChurchStructuredData } from '@/components/seo/StructuredData';
 import { SkipLink } from '@/components/accessibility/FocusManager';
 import { ScrollToTop, MobilePerformanceProvider } from '@/components/mobile/MobileOptimizations';
@@ -107,7 +107,7 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen bg-background font-body antialiased">
         <SkipLink />
         <MobilePerformanceProvider>
-          <UserProvider>
+          <SessionProvider>
             <Header />
             {/* Announcement Banner */}
             <div className="relative z-30 bg-accent text-white">
@@ -126,7 +126,7 @@ export default function RootLayout({
             <Footer />
             <ScrollToTop />
             <Toaster />
-          </UserProvider>
+          </SessionProvider>
         </MobilePerformanceProvider>
       </body>
     </html>

@@ -1,63 +1,130 @@
 "use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
+import { signIn, getSession } from 'next-auth/react';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Info } from 'lucide-react';
-import { PageLayout } from '@/components/layout/PageLayout';
-import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { Label } from '@/components/ui/label';
+import { useAuth } from '@/hooks/useAuth';
+import { useEffect } from 'react';
 
 export default function LoginPage() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const router = useRouter();
+  const { user } = useAuth();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user) {
+      router.push('/admin');
+    }
+  }, [user, router]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        setError('Invalid email or password');
+      } else {
+        // Redirect to admin panel
+        router.push('/admin');
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = () => {
+    signIn('google', { callbackUrl: '/admin' });
+  };
 
   return (
-    <PageLayout
-      title="Member Login"
-      subtitle="Access member features and church event registration."
-      variant="narrow"
-    >
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader className="text-center">
-          <CardTitle className="font-heading text-3xl">Welcome Back!</CardTitle>
-          <CardDescription>
-            Log in to your account below.
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl font-bold text-center">
+            Admin Login
+          </CardTitle>
+          <CardDescription className="text-center">
+            Sign in to manage your church website
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <Alert>
-            <Info className="h-4 w-4" />
-            <AlertTitle className="font-heading">Under Development</AlertTitle>
-            <AlertDescription>
-              The login functionality is currently being built. Please check back soon.
-            </AlertDescription>
-          </Alert>
-          <fieldset disabled className="space-y-6">
-            <div className="space-y-2">
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="you@example.com" />
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="admin@fbcfenton.org"
+                required
+              />
             </div>
-            <div className="space-y-2">
+            <div>
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" placeholder="••••••••" />
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
             </div>
-            <Button type="submit" className="w-full" disabled>
-              {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Log In
+            {error && (
+              <div className="text-red-600 text-sm text-center">{error}</div>
+            )}
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? 'Signing in...' : 'Sign In'}
             </Button>
-          </fieldset>
+          </form>
+          
+          <div className="mt-4">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-gray-300" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-white text-gray-500">Or</span>
+              </div>
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full mt-4"
+              onClick={handleGoogleSignIn}
+            >
+              Sign in with Google
+            </Button>
+          </div>
         </CardContent>
-        <CardFooter className="flex flex-col items-center space-y-2">
-          <p className="text-sm text-muted-foreground">
-            Don't have an account?{' '}
-            <Button variant="link" asChild className="p-0 h-auto">
-              <Link href="/register">Register here</Link>
-            </Button>
-          </p>
+        <CardFooter className="text-center text-sm text-gray-600">
+          <div className="w-full">
+            <p>Default admin credentials:</p>
+            <p className="font-mono text-xs mt-1">
+              admin@fbcfenton.org / admin123
+            </p>
+          </div>
         </CardFooter>
       </Card>
-    </PageLayout>
+    </div>
   );
 }

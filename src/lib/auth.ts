@@ -7,14 +7,8 @@ import bcrypt from 'bcryptjs'
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
-  session: {
-    strategy: 'jwt',
-  },
+  session: { strategy: 'jwt' },
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
     CredentialsProvider({
       name: 'credentials',
       credentials: {
@@ -22,28 +16,16 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null
-        }
+        if (!credentials?.email || !credentials?.password) return null
 
         const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
+          where: { email: credentials.email },
         })
 
-        if (!user || !user.passwordHash) {
-          return null
-        }
+        if (!user || !user.passwordHash) return null
 
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user.passwordHash
-        )
-
-        if (!isPasswordValid) {
-          return null
-        }
+        const isValid = await bcrypt.compare(credentials.password, user.passwordHash)
+        if (!isValid) return null
 
         return {
           id: user.uuid,
@@ -53,34 +35,16 @@ export const authOptions: NextAuthOptions = {
         }
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
   callbacks: {
-    async jwt({ token, user, account }) {
+    async jwt({ token, user }) {
       if (user) {
-        // User is signing in
-        if (account?.provider === 'google') {
-          // For Google OAuth, find or create user in our database
-          const dbUser = await prisma.user.upsert({
-            where: { email: user.email! },
-            update: {
-              name: user.name!,
-              lastLoginAt: new Date(),
-            },
-            create: {
-              email: user.email!,
-              name: user.name!,
-              role: 'VIEWER', // Default role for OAuth users
-              isActive: true,
-              lastLoginAt: new Date(),
-            },
-          })
-          token.role = dbUser.role
-          token.uuid = dbUser.uuid
-        } else {
-          // For credentials login
-          token.role = user.role
-          token.uuid = user.id
-        }
+        token.role = user.role
+        token.uuid = user.id
       }
       return token
     },

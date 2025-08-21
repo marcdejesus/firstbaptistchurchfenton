@@ -23,102 +23,112 @@ async function main() {
 
   console.log('✅ Created admin user:', adminUser.email)
 
-  // Create default blog categories
-  const categories = [
-    { name: 'Sermons', slug: 'sermons', description: 'Weekly sermon posts and messages', color: '#3B82F6' },
-    { name: 'Church News', slug: 'church-news', description: 'Updates and announcements from the church', color: '#10B981' },
-    { name: 'Community', slug: 'community', description: 'Stories and updates from our church community', color: '#F59E0B' },
-    { name: 'Events', slug: 'events', description: 'Upcoming events and activities', color: '#EF4444' },
-    { name: 'Faith & Life', slug: 'faith-life', description: 'Thoughts on faith, Christian living, and spiritual growth', color: '#8B5CF6' },
+  // Create default FAQ entries
+  const defaultFAQs = [
+    {
+      question: "What time do services start?",
+      answer: "Our Sunday morning worship service begins at 10:30 AM. We also have various ministries throughout the week - check our events calendar for specific times.",
+      order: 1
+    },
+    {
+      question: "What should I wear to church?",
+      answer: "Come as you are! We believe that God cares more about your heart than your appearance. You'll see people in everything from jeans to suits, and all are welcome.",
+      order: 2
+    },
+    {
+      question: "Do you have programs for children?",
+      answer: "Yes! We have age-appropriate programs for children during our worship service, including nursery care for infants and toddlers, and children's ministry for school-age kids.",
+      order: 3
+    },
+    {
+      question: "How can I get involved?",
+      answer: "There are many ways to get involved! You can join a ministry, volunteer for events, participate in small groups, or simply attend our services and fellowship events. Contact us to learn more!",
+      order: 4
+    }
   ]
 
-  for (const [index, category] of categories.entries()) {
-    await prisma.blogCategory.upsert({
-      where: { slug: category.slug },
+  for (const faq of defaultFAQs) {
+    await prisma.fAQ.upsert({
+      where: { id: faq.order },
       update: {},
       create: {
-        ...category,
-        displayOrder: index + 1,
+        ...faq,
+        createdBy: adminUser.id,
       },
     })
   }
 
-  console.log('✅ Created blog categories')
+  console.log('✅ Created default FAQs')
 
-  // Create default system settings
-  const systemSettings = [
-    { group: 'site', key: 'site_title', value: 'First Baptist Church Fenton', type: 'STRING', isPublic: true },
-    { group: 'site', key: 'site_description', value: 'Growing in Faith, Sharing God\'s Love', type: 'STRING', isPublic: true },
-    { group: 'site', key: 'contact_email', value: '', type: 'STRING', isPublic: false },
-    { group: 'site', key: 'contact_phone', value: '', type: 'STRING', isPublic: false },
-    { group: 'site', key: 'facebook_url', value: '', type: 'STRING', isPublic: true },
-    { group: 'site', key: 'youtube_url', value: '', type: 'STRING', isPublic: true },
-    { group: 'media', key: 'max_file_size', value: '10485760', type: 'NUMBER', isPublic: false },
-    { group: 'media', key: 'allowed_file_types', value: '["image/jpeg", "image/png", "image/webp", "image/gif"]', type: 'JSON', isPublic: false },
-    { group: 'blog', key: 'posts_per_page', value: '10', type: 'NUMBER', isPublic: false },
-    { group: 'calendar', key: 'google_calendar_id', value: '', type: 'STRING', isPublic: false },
-    { group: 'calendar', key: 'events_to_show', value: '5', type: 'NUMBER', isPublic: true },
-  ]
+  // Create default donate settings
+  await prisma.donateSettings.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      donateUrl: 'https://tithe.ly/give?c=1234567',
+      description: 'Your generous gifts help us serve our community and spread God\'s love. Thank you for your support!',
+      isActive: true,
+    },
+  })
 
-  for (const setting of systemSettings) {
-    await prisma.systemSetting.upsert({
-      where: { 
-        settingGroup_settingKey: { 
-          settingGroup: setting.group, 
-          settingKey: setting.key 
-        }
-      },
-      update: {},
-      create: {
-        settingGroup: setting.group,
-        settingKey: setting.key,
-        settingValue: setting.value,
-        settingType: setting.type as any,
-        isPublic: setting.isPublic,
-        updatedById: adminUser.id,
-      },
-    })
-  }
+  console.log('✅ Created donate settings')
 
-  console.log('✅ Created system settings')
+  // Create sample staff member
+  await prisma.staffMember.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      name: 'Pastor John Smith',
+      position: 'Lead Pastor',
+      description: 'Pastor John has been serving our congregation for over 10 years, bringing passion for God\'s word and love for our community.',
+      email: 'pastor@fbcfenton.org',
+      order: 1,
+      createdBy: adminUser.id,
+    },
+  })
 
-  // Create default editable areas
-  const editableAreas = [
-    // Home Page
-    { pageSlug: 'home', areaKey: 'hero_title', areaLabel: 'Hero Section Title', contentType: 'TEXT', defaultValue: 'No matter where you\'ve been, you\'re welcome here.', helpText: 'Main headline that visitors see first' },
-    { pageSlug: 'home', areaKey: 'hero_description', areaLabel: 'Hero Section Description', contentType: 'TEXT', defaultValue: 'Come as you are and discover the hope, truth, and grace of Jesus Christ. We are a community of real people, with real struggles, following a real Savior.', helpText: 'Supporting text under the main headline' },
-    { pageSlug: 'home', areaKey: 'service_time', areaLabel: 'Sunday Service Time', contentType: 'TEXT', defaultValue: 'Sunday Service: 10:30 AM', helpText: 'When your main worship service takes place' },
-    { pageSlug: 'home', areaKey: 'church_address', areaLabel: 'Church Address', contentType: 'TEXT', defaultValue: '860 N. Leroy St., Fenton, MI', helpText: 'Your church\'s physical address' },
-    
-    // About Page
-    { pageSlug: 'about', areaKey: 'page_title', areaLabel: 'About Page Title', contentType: 'TEXT', defaultValue: 'About First Baptist Church Fenton', helpText: 'Main page title' },
-    { pageSlug: 'about', areaKey: 'mission_statement', areaLabel: 'Mission Statement', contentType: 'HTML', defaultValue: '', helpText: 'Your church\'s mission statement' },
-    
-    // Contact Page
-    { pageSlug: 'contact', areaKey: 'office_phone', areaLabel: 'Office Phone Number', contentType: 'TEXT', defaultValue: '', helpText: 'Main church office phone number' },
-    { pageSlug: 'contact', areaKey: 'office_email', areaLabel: 'Office Email', contentType: 'TEXT', defaultValue: '', helpText: 'Main church office email address' },
-  ]
+  console.log('✅ Created sample staff member')
 
-  for (const [index, area] of editableAreas.entries()) {
-    await prisma.editableArea.upsert({
-      where: { 
-        pageSlug_areaKey: { 
-          pageSlug: area.pageSlug, 
-          areaKey: area.areaKey 
-        }
-      },
-      update: {},
-      create: {
-        ...area,
-        contentType: area.contentType as any,
-        displayOrder: index + 1,
-      },
-    })
-  }
+  // Create sample ministry
+  await prisma.ministry.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      name: 'Youth Ministry',
+      description: 'Our youth ministry serves students in grades 6-12, providing a safe place to grow in faith, build friendships, and have fun!',
+      targetAudience: 'Youth',
+      meetingTime: 'Wednesdays at 7:00 PM',
+      contactEmail: 'youth@fbcfenton.org',
+      order: 1,
+      createdBy: adminUser.id,
+    },
+  })
 
-  console.log('✅ Created editable areas')
+  console.log('✅ Created sample ministry')
+
+  // Create sample mission partner
+  await prisma.missionPartner.upsert({
+    where: { id: 1 },
+    update: {},
+    create: {
+      name: 'Local Food Bank',
+      description: 'We partner with the local food bank to provide meals for families in need in our community.',
+      location: 'Fenton, MI',
+      type: 'LOCAL',
+      createdBy: adminUser.id,
+    },
+  })
+
+  console.log('✅ Created sample mission partner')
 
   console.log('🎉 Database seed completed successfully!')
+  console.log(`
+📧 Admin Login Credentials:
+   Email: admin@fbcfenton.org
+   Password: admin123
+   
+⚠️  IMPORTANT: Change the admin password immediately after first login!
+  `)
 }
 
 main()

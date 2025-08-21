@@ -16,7 +16,8 @@ import {
 import { 
     UserCircle, LogOut, Menu as MenuIcon, Search, HandCoins, X, LucideProps
 } from 'lucide-react';
-import { useUser } from '@/contexts/UserContext';
+import { useAuth } from '@/hooks/useAuth';
+import { signOut } from 'next-auth/react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import React from 'react';
 import { cn } from '@/lib/utils';
@@ -67,7 +68,8 @@ const enhancedMobileNavItems: (NavCategory | NavLink)[] = [
 ];
 
 export function Header() {
-  const { user, logout } = useUser();
+  const { user } = useAuth();
+  const logout = () => signOut({ callbackUrl: '/' });
   const isMobile = useIsMobile();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
@@ -162,7 +164,7 @@ export function Header() {
             <div className="p-4 border-t">
                <div className="flex items-center mb-4">
                  <Avatar className="h-10 w-10 mr-3">
-                   <AvatarImage src={user.avatarUrl || `https://placehold.co/100x100.png`} alt={user.name} />
+                   <AvatarImage src={`https://placehold.co/100x100.png`} alt={user.name} />
                    <AvatarFallback>{user.name.substring(0, 1).toUpperCase()}</AvatarFallback>
                  </Avatar>
                  <div>
@@ -171,14 +173,20 @@ export function Header() {
                  </div>
                </div>
                <div className="space-y-1">
-                {userNavigation.authenticated.map((item) => (
+                {userNavigation.authenticated.map((item) => {
+                  // Check if item requires admin role
+                  if (item.requiresRole === 'admin' && user?.role !== 'ADMIN') {
+                    return null;
+                  }
+                  return (
                     <Button key={item.href} asChild variant="ghost" className="justify-start w-full" onClick={() => setIsMobileMenuOpen(false)}>
                       <Link href={item.href}>
                         <item.icon className="mr-3 h-5 w-5" />
                         {item.title}
                       </Link>
                     </Button>
-                ))}
+                  );
+                })}
                </div>
                <Button variant="outline" className="w-full mt-4" onClick={() => { logout(); setIsMobileMenuOpen(false); }}>
                   <LogOut className="mr-2 h-4 w-4" />
@@ -245,7 +253,7 @@ export function Header() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                     <Avatar className="h-9 w-9">
-                      <AvatarImage src={user.avatarUrl || `https://placehold.co/100x100.png`} alt={user.name} />
+                      <AvatarImage src={`https://placehold.co/100x100.png`} alt={user.name} />
                       <AvatarFallback>{user.name.substring(0, 1).toUpperCase()}</AvatarFallback>
                     </Avatar>
                   </Button>
@@ -259,14 +267,20 @@ export function Header() {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    {userNavigation.authenticated.map((item) => (
-                      <DropdownMenuItem key={item.href} asChild>
-                        <Link href={item.href}>
-                          <item.icon className="mr-2 h-4 w-4" />
-                          {item.title}
-                        </Link>
-                      </DropdownMenuItem>
-                    ))}
+                    {userNavigation.authenticated.map((item) => {
+                      // Check if item requires admin role
+                      if (item.requiresRole === 'admin' && user?.role !== 'ADMIN') {
+                        return null;
+                      }
+                      return (
+                        <DropdownMenuItem key={item.href} asChild>
+                          <Link href={item.href}>
+                            <item.icon className="mr-2 h-4 w-4" />
+                            {item.title}
+                          </Link>
+                        </DropdownMenuItem>
+                      );
+                    })}
                     <DropdownMenuSeparator />
                     <DropdownMenuItem onClick={logout}>
                       <LogOut className="mr-2 h-4 w-4" />

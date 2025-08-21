@@ -1,23 +1,14 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
-import { getAuth } from 'firebase/auth';
+// This file has been migrated from Firebase to Neon PostgreSQL + Prisma
+// Database operations are now handled through Prisma Client
+// Import { prisma } from './prisma' for database operations
 
-// Firebase configuration is loaded from environment variables
-// See .env.local.example for a list of required variables
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
-};
+import { prisma } from './prisma'
 
-// Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-const db = getFirestore(app);
-const storage = getStorage(app);
-const auth = getAuth(app);
+// Re-export prisma as db for backward compatibility with existing code
+export const db = prisma
 
-export { app, db, storage, auth }; 
+// Note: Firebase auth and storage have been replaced
+// - Authentication: Now handled by NextAuth.js (see /api/auth/[...nextauth])
+// - Storage: Will be handled by UploadThing for file uploads
+
+export { prisma } 
