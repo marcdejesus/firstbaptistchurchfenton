@@ -13,13 +13,13 @@ import React from 'react';
 // Enhanced navigation structure based on the design system
 export const navigationCategories = [
   {
-    id: "im-new",
-    label: "I'm New",
+    id: "new-here",
+    label: "New Here?",
     icon: UserPlus,
     description: "For first-time visitors and newcomers to FBC",
     items: [
       {
-        title: "Plan Your Visit",
+        title: "Visit",
         href: "/visit",
         description: "Everything you need to know for your first visit",
         icon: MapPin
@@ -31,39 +31,51 @@ export const navigationCategories = [
         icon: Clock
       },
       {
-        title: "Next Steps",
-        href: "/next-steps",
-        description: "Your journey of faith starts here",
-        icon: ArrowRight
-      },
-      {
         title: "Watch Online",
         href: "/sermons",
         description: "Watch our latest sermon or browse the archives",
         icon: Monitor
-      }
-    ]
-  },
-  {
-    id: "about",
-    label: "About Us",
-    icon: Church,
-    description: "Learn about our church, beliefs, and team",
-    items: [
+      },
       {
-        title: "Our Beliefs",
+        title: "Events",
+        href: "/events",
+        description: "Upcoming church events and activities",
+        icon: Calendar
+      },
+      {
+        title: "Beliefs",
         href: "/about/beliefs",
         description: "What we believe and why it matters",
         icon: Book
       },
       {
-        title: "Our History",
+        title: "FAQ",
+        href: "/faq",
+        description: "Frequently asked questions",
+        icon: HelpCircle
+      }
+    ]
+  },
+  {
+    id: "about",
+    label: "About",
+    icon: Church,
+    description: "Learn about our church, beliefs, and team",
+    items: [
+      {
+        title: "Beliefs",
+        href: "/about/beliefs",
+        description: "What we believe and why it matters",
+        icon: Book
+      },
+      {
+        title: "History",
         href: "/about/history", 
         description: "Our story and heritage in Fenton",
         icon: History
       },
       {
-        title: "Leadership Team",
+        title: "Leadership",
         href: "/about/staff",
         description: "Meet our pastors and staff",
         icon: Users
@@ -75,10 +87,16 @@ export const navigationCategories = [
         icon: HelpCircle
       },
       {
-        title: "Contact Us",
+        title: "Contact",
         href: "/contact",
         description: "Get in touch with us",
         icon: Mail
+      },
+      {
+        title: "Missions",
+        href: "/missions",
+        description: "Local and global mission opportunities",
+        icon: Globe
       }
     ]
   },
@@ -101,10 +119,10 @@ export const navigationCategories = [
         icon: Calendar
       },
       {
-        title: "Community",
-        href: "/community",
-        description: "Connect with our church family",
-        icon: Users
+        title: "Book an Appointment",
+        href: "/book-appointment",
+        description: "Schedule time with our pastoral team",
+        icon: UserCircle
       },
       {
         title: "Volunteer",
@@ -119,10 +137,10 @@ export const navigationCategories = [
         icon: MessageSquare
       },
       {
-        title: "Missions",
-        href: "/missions",
-        description: "Local and global mission opportunities",
-        icon: Globe
+        title: "Blog",
+        href: "/blog",
+        description: "Spiritual insights and church updates",
+        icon: FileText
       }
     ]
   },
@@ -133,23 +151,40 @@ export const navigationCategories = [
     description: "Spiritual growth and learning materials",
     items: [
       {
+        title: "Blog",
+        href: "/blog",
+        description: "Spiritual insights and church updates",
+        icon: FileText
+      },
+      {
         title: "Sermons",
         href: "/sermons",
         description: "Watch or listen to past messages",
         icon: Play
       },
       {
-        title: "Blog Articles",
-        href: "/blog",
-        description: "Spiritual insights and church updates",
-        icon: FileText
-      },
-      
-      {
-        title: "Book Appointment",
+        title: "Book an Appointment",
         href: "/book-appointment",
         description: "Schedule time with our pastoral team",
+        icon: UserCircle
+      },
+      {
+        title: "Events",
+        href: "/events",
+        description: "Upcoming church events and activities",
         icon: Calendar
+      },
+      {
+        title: "Contact",
+        href: "/contact",
+        description: "Get in touch with us",
+        icon: Mail
+      },
+      {
+        title: "Donate",
+        href: "/donate",
+        description: "Support our ministry and mission",
+        icon: Heart
       }
     ]
   }
