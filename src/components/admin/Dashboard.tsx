@@ -17,21 +17,50 @@ import {
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import type { DashboardStats, QuickAction } from '@/types/cms';
+interface QuickAction {
+  title: string;
+  description: string;
+  href: string;
+  icon: string;
+  color: string;
+}
+
+interface DashboardStats {
+  totalBlogPosts: number;
+  publishedPosts: number;
+  draftPosts: number;
+  totalUsers: number;
+  totalFAQs?: number;
+  totalStaffMembers?: number;
+  totalMinistries?: number;
+  totalMissionPartners?: number;
+  recentActivity: any[];
+  recentContactSubmissions?: any[];
+  recentPrayerRequests?: any[];
+  storageUsed: number;
+  storageLimit: number;
+}
 
 interface DashboardProps {
   stats: DashboardStats;
-  userRole: 'admin' | 'editor' | 'viewer';
+  userRole: 'ADMIN' | 'EDITOR' | 'VIEWER';
 }
 
 export function Dashboard({ stats, userRole }: DashboardProps) {
   const quickActions: QuickAction[] = [
     {
-      title: 'Edit Homepage',
-      description: 'Update homepage content and images',
-      href: '/admin/content/home',
+      title: 'Manage FAQ',
+      description: 'Update frequently asked questions',
+      href: '/admin/faq',
       icon: 'Edit3',
       color: 'bg-blue-500'
+    },
+    {
+      title: 'Homepage Slideshow',
+      description: 'Update homepage slideshow images',
+      href: '/admin/home/slideshow',
+      icon: 'Upload',
+      color: 'bg-purple-500'
     },
     {
       title: 'Write Blog Post',
@@ -39,13 +68,6 @@ export function Dashboard({ stats, userRole }: DashboardProps) {
       href: '/admin/blog/new',
       icon: 'PlusCircle',
       color: 'bg-green-500'
-    },
-    {
-      title: 'Upload Photos',
-      description: 'Add new images to the media library',
-      href: '/admin/media/upload',
-      icon: 'Upload',
-      color: 'bg-purple-500'
     },
     {
       title: 'View Website',
@@ -131,13 +153,15 @@ export function Dashboard({ stats, userRole }: DashboardProps) {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Photos & Media</CardTitle>
-              <Image className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">Content Items</CardTitle>
+              <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.totalMediaFiles}</div>
+              <div className="text-2xl font-bold">
+                {(stats.totalFAQs || 0) + (stats.totalStaffMembers || 0) + (stats.totalMinistries || 0)}
+              </div>
               <p className="text-xs text-muted-foreground mt-2">
-                {formatFileSize(stats.storageUsed)} used
+                FAQ, Staff, Ministries
               </p>
             </CardContent>
           </Card>
@@ -157,13 +181,15 @@ export function Dashboard({ stats, userRole }: DashboardProps) {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Upcoming Posts</CardTitle>
+              <CardTitle className="text-sm font-medium">Recent Submissions</CardTitle>
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stats.upcomingScheduledPosts.length}</div>
+              <div className="text-2xl font-bold">
+                {(stats.recentContactSubmissions?.length || 0) + (stats.recentPrayerRequests?.length || 0)}
+              </div>
               <p className="text-xs text-muted-foreground mt-2">
-                Scheduled for publication
+                Contact & Prayer requests
               </p>
             </CardContent>
           </Card>
@@ -206,33 +232,35 @@ export function Dashboard({ stats, userRole }: DashboardProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Scheduled Posts</CardTitle>
+            <CardTitle>Recent Prayer Requests</CardTitle>
             <CardDescription>
-              Blog posts scheduled for future publication
+              Latest prayer requests from church members
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {stats.upcomingScheduledPosts.length > 0 ? (
-                stats.upcomingScheduledPosts.slice(0, 5).map((post) => (
-                  <div key={post.id} className="flex items-start space-x-3">
+              {stats.recentPrayerRequests && stats.recentPrayerRequests.length > 0 ? (
+                stats.recentPrayerRequests.slice(0, 3).map((request, index) => (
+                  <div key={request.id || index} className="flex items-start space-x-3">
                     <Calendar className="h-4 w-4 text-muted-foreground mt-1" />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium">{post.title}</p>
+                      <p className="text-sm font-medium">{request.name}</p>
+                      <p className="text-xs text-muted-foreground line-clamp-2">
+                        {request.message?.substring(0, 100)}...
+                      </p>
                       <p className="text-xs text-muted-foreground">
-                        Scheduled for {post.scheduledFor?.toLocaleDateString()} at{' '}
-                        {post.scheduledFor?.toLocaleTimeString()}
+                        {new Date(request.createdAt).toLocaleDateString()}
                       </p>
                     </div>
-                    <Link href={`/admin/blog/${post.id}/edit`}>
+                    <Link href="/admin/communications/prayer">
                       <Button variant="ghost" size="sm">
-                        Edit
+                        View
                       </Button>
                     </Link>
                   </div>
                 ))
               ) : (
-                <p className="text-sm text-muted-foreground">No scheduled posts</p>
+                <p className="text-sm text-muted-foreground">No recent prayer requests</p>
               )}
             </div>
           </CardContent>

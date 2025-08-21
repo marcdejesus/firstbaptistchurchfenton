@@ -97,7 +97,8 @@ export default function LoginPage() {
             </Button>
           </form>
           
-          <div className="mt-4">
+          {/* Google sign-in temporarily disabled for debugging */}
+          {/* <div className="mt-4">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
@@ -114,7 +115,7 @@ export default function LoginPage() {
             >
               Sign in with Google
             </Button>
-          </div>
+          </div> */}
         </CardContent>
         <CardFooter className="text-center text-sm text-gray-600">
           <div className="w-full">

@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 import AdminLayout from '@/components/admin/AdminLayout';
-import type { User } from '@/types/cms';
 
 export const metadata: Metadata = {
   title: {
@@ -12,25 +14,29 @@ export const metadata: Metadata = {
   robots: 'noindex, nofollow', // Prevent search engines from indexing admin pages
 };
 
-// Mock authentication check - replace with actual authentication logic
-async function getCurrentUser(): Promise<User | null> {
-  // In a real implementation, this would:
-  // 1. Check for authentication cookies/tokens
-  // 2. Validate the session
-  // 3. Fetch user data from database
-  // 4. Return null if not authenticated
+async function getCurrentUser() {
+  const session = await getServerSession(authOptions);
   
-  // For now, return a mock admin user
-  return {
-    id: 1,
-    uuid: 'user-1',
-    email: 'admin@fbcfenton.org',
-    name: 'Admin User',
-    role: 'admin',
-    isActive: true,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  };
+  if (!session?.user?.email) {
+    return null;
+  }
+
+  // Fetch full user data from database
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+    select: {
+      id: true,
+      uuid: true,
+      email: true,
+      name: true,
+      role: true,
+      isActive: true,
+      createdAt: true,
+      updatedAt: true,
+    }
+  });
+
+  return user;
 }
 
 export default async function AdminRootLayout({
@@ -42,12 +48,17 @@ export default async function AdminRootLayout({
 
   // Redirect to login if not authenticated
   if (!user) {
-    redirect('/admin/login');
+    redirect('/login?callbackUrl=/admin');
+  }
+
+  // Check if user has admin access
+  if (!['ADMIN', 'EDITOR'].includes(user.role)) {
+    redirect('/unauthorized');
   }
 
   // Redirect if user is not active
   if (!user.isActive) {
-    redirect('/admin/unauthorized');
+    redirect('/unauthorized');
   }
 
   return <AdminLayout user={user}>{children}</AdminLayout>;

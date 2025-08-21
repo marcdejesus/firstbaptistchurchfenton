@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import { 
   LayoutDashboard, 
   FileText, 
@@ -19,7 +20,7 @@ import {
   Eye
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarInitials } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { 
   DropdownMenu,
   DropdownMenuContent,
@@ -28,7 +29,17 @@ import {
   DropdownMenuSeparator
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
-import type { User } from '@/types/cms';
+// User type from our Prisma User model
+interface User {
+  id: number;
+  uuid: string;
+  email: string;
+  name: string;
+  role: 'ADMIN' | 'EDITOR' | 'VIEWER';
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 interface AdminLayoutProps {
   children: React.ReactNode;
@@ -41,7 +52,7 @@ interface NavigationItem {
   icon: React.ComponentType<{ className?: string }>;
   badge?: string;
   children?: NavigationItem[];
-  requiredRole?: 'admin' | 'editor' | 'viewer';
+  requiredRole?: 'ADMIN' | 'EDITOR' | 'VIEWER';
 }
 
 export function AdminLayout({ children, user }: AdminLayoutProps) {
@@ -56,56 +67,60 @@ export function AdminLayout({ children, user }: AdminLayoutProps) {
       icon: LayoutDashboard
     },
     {
-      title: 'Website Content',
+      title: 'Content Management',
       href: '/admin/content',
       icon: FileText,
       children: [
-        { title: 'Homepage', href: '/admin/content/home', icon: Home },
-        { title: 'About Page', href: '/admin/content/about', icon: FileText },
-        { title: 'Contact Page', href: '/admin/content/contact', icon: FileText },
-        { title: 'Visit Page', href: '/admin/content/visit', icon: FileText },
-        { title: 'Ministries', href: '/admin/content/ministries', icon: FileText }
+        { title: 'FAQ', href: '/admin/faq', icon: HelpCircle },
+        { title: 'Homepage Slideshow', href: '/admin/home/slideshow', icon: Image },
+        { title: 'Current Series', href: '/admin/home/series', icon: FileText },
+        { title: 'Donate Settings', href: '/admin/donate', icon: Settings }
       ]
     },
     {
-      title: 'Photos & Media',
-      href: '/admin/media',
-      icon: Image,
-      children: [
-        { title: 'Media Library', href: '/admin/media', icon: Image },
-        { title: 'Upload Files', href: '/admin/media/upload', icon: Image }
-      ]
-    },
-    {
-      title: 'Blog Posts',
+      title: 'Blog Management',
       href: '/admin/blog',
       icon: FileText,
       children: [
         { title: 'All Posts', href: '/admin/blog', icon: FileText },
-        { title: 'Write New Post', href: '/admin/blog/new', icon: FileText },
-        { title: 'Categories', href: '/admin/blog/categories', icon: FileText }
+        { title: 'Write New Post', href: '/admin/blog/new', icon: FileText }
       ]
     },
     {
-      title: 'Calendar Setup',
-      href: '/admin/calendar',
-      icon: Calendar,
+      title: 'People & Ministry',
+      href: '/admin/people',
+      icon: Users,
       children: [
-        { title: 'Google Calendar', href: '/admin/calendar/google', icon: Calendar },
-        { title: 'Display Settings', href: '/admin/calendar/display', icon: Calendar }
+        { title: 'Staff/Leadership', href: '/admin/leadership', icon: Users },
+        { title: 'Ministries', href: '/admin/ministries', icon: FileText },
+        { title: 'Mission Partners', href: '/admin/missions', icon: Calendar }
+      ]
+    },
+    {
+      title: 'Media Library',
+      href: '/admin/media',
+      icon: Image
+    },
+    {
+      title: 'Communications',
+      href: '/admin/communications',
+      icon: FileText,
+      children: [
+        { title: 'Contact Submissions', href: '/admin/communications/contact', icon: FileText },
+        { title: 'Prayer Requests', href: '/admin/communications/prayer', icon: FileText }
       ]
     },
     {
       title: 'Users',
       href: '/admin/users',
       icon: Users,
-      requiredRole: 'admin'
+      requiredRole: 'ADMIN'
     },
     {
       title: 'Settings',
       href: '/admin/settings',
       icon: Settings,
-      requiredRole: 'admin'
+      requiredRole: 'ADMIN'
     }
   ];
 
@@ -131,10 +146,10 @@ export function AdminLayout({ children, user }: AdminLayoutProps) {
     return pathname.startsWith(href);
   };
 
-  const hasPermission = (requiredRole?: 'admin' | 'editor' | 'viewer'): boolean => {
+  const hasPermission = (requiredRole?: 'ADMIN' | 'EDITOR' | 'VIEWER'): boolean => {
     if (!requiredRole) return true;
     
-    const roleHierarchy = { admin: 3, editor: 2, viewer: 1 };
+    const roleHierarchy = { ADMIN: 3, EDITOR: 2, VIEWER: 1 };
     return roleHierarchy[user.role] >= roleHierarchy[requiredRole];
   };
 
@@ -290,7 +305,7 @@ export function AdminLayout({ children, user }: AdminLayoutProps) {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/' })}>
               <LogOut className="h-4 w-4 mr-2" />
               Sign Out
             </DropdownMenuItem>

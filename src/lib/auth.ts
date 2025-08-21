@@ -6,8 +6,9 @@ import { prisma } from './prisma'
 import bcrypt from 'bcryptjs'
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  // Note: We use JWT strategy without adapter for credentials provider
   session: { strategy: 'jwt' },
+  debug: process.env.NODE_ENV === 'development',
   providers: [
     CredentialsProvider({
       name: 'credentials',
@@ -16,29 +17,48 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null
+        console.log('🔐 NextAuth authorize called with:', credentials?.email)
+        
+        if (!credentials?.email || !credentials?.password) {
+          console.log('❌ Missing credentials')
+          return null
+        }
 
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-        })
+        try {
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email },
+          })
 
-        if (!user || !user.passwordHash) return null
+          console.log('👤 User found:', !!user, user?.email)
 
-        const isValid = await bcrypt.compare(credentials.password, user.passwordHash)
-        if (!isValid) return null
+          if (!user || !user.passwordHash) {
+            console.log('❌ No user or no password hash')
+            return null
+          }
 
-        return {
-          id: user.uuid,
-          email: user.email,
-          name: user.name,
-          role: user.role,
+          const isValid = await bcrypt.compare(credentials.password, user.passwordHash)
+          console.log('🔑 Password valid:', isValid)
+
+          if (!isValid) return null
+
+          console.log('✅ Login successful for:', user.email)
+          return {
+            id: user.uuid,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+          }
+        } catch (error) {
+          console.error('💥 Auth error:', error)
+          return null
         }
       },
     }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
+    // Google OAuth disabled for now - enable when you have credentials
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_CLIENT_ID!,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    // }),
   ],
   callbacks: {
     async jwt({ token, user }) {
