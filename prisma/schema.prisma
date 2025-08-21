@@ -28,7 +28,7 @@ model User {
   ministries      Ministry[]
   missionPartners MissionPartner[]
   faqs            FAQ[]
-  volunteerSignups VolunteerSignup[]
+
   prayerRequests  PrayerRequest[]
   contactSubmissions ContactSubmission[]
   
@@ -169,20 +169,7 @@ model MissionPartner {
   @@map("mission_partners")
 }
 
-// Keep existing models for current functionality
-model VolunteerSignup {
-  id            Int             @id @default(autoincrement())
-  opportunityId String          @map("opportunity_id")
-  userId        Int             @map("user_id")
-  message       String?
-  status        VolunteerStatus @default(PENDING)
-  createdAt     DateTime        @default(now()) @map("created_at")
-  updatedAt     DateTime        @updatedAt @map("updated_at")
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("volunteer_signups")
-}
 
 model PrayerRequest {
   id        Int      @id @default(autoincrement())
@@ -235,8 +222,3 @@ enum MissionType {
   INTERNATIONAL
 }
 
-enum VolunteerStatus {
-  PENDING
-  CONFIRMED
-  DECLINED
-}

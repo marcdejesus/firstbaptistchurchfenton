@@ -102,7 +102,7 @@ export default function VolunteerPage() {
         </p>
         <div className="mt-8 flex flex-wrap justify-center items-center gap-4">
             <Button size="lg" asChild>
-                <Link href="/contact">Fill out an Interest Form</Link>
+                <Link href="/contact?subject=Volunteer Interest&message=Hi! I'm interested in volunteering at FBC Fenton. I'd like to learn more about serving opportunities.">Fill out an Interest Form</Link>
             </Button>
             <span className="text-muted-foreground font-semibold">OR</span>
             <Button size="lg" variant="outline" asChild>
