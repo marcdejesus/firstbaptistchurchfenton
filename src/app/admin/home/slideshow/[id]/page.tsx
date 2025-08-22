@@ -4,11 +4,13 @@ import { prisma } from '@/lib/prisma';
 import { SlideshowForm } from '@/components/admin/SlideshowForm';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  if (params.id === 'new') {
+  const { id } = await params;
+  
+  if (id === 'new') {
     return {
       title: 'New Slide | Admin Dashboard',
       description: 'Create a new slideshow slide',
@@ -16,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const slide = await getSlide(params.id);
+  const slide = await getSlide(id);
   if (!slide) {
     return {
       title: 'Slide Not Found | Admin Dashboard',
@@ -46,8 +48,9 @@ async function getSlide(id: string) {
 }
 
 export default async function SlideshowEditPage({ params }: Props) {
-  const slide = await getSlide(params.id);
-  const isNew = params.id === 'new';
+  const { id } = await params;
+  const slide = await getSlide(id);
+  const isNew = id === 'new';
 
   if (!isNew && !slide) {
     notFound();

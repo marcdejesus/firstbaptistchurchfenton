@@ -36,9 +36,9 @@ export default async function SlideshowAdminPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Homepage Slideshow</h1>
+          <h1 className="text-3xl font-bold">Hero Background Images</h1>
           <p className="text-muted-foreground">
-            Manage the images and content shown in your homepage slideshow
+            Manage the background images that cycle in your homepage hero section
           </p>
         </div>
         <Button asChild>
@@ -84,9 +84,9 @@ export default async function SlideshowAdminPage() {
       {/* Slideshow List */}
       <Card>
         <CardHeader>
-          <CardTitle>All Slides</CardTitle>
+          <CardTitle>Hero Background Images</CardTitle>
           <CardDescription>
-            Manage the order and visibility of homepage slideshow images
+            Manage the background images that cycle behind your homepage hero text
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -204,9 +204,10 @@ export default async function SlideshowAdminPage() {
         </CardHeader>
         <CardContent className="text-blue-700 space-y-2">
           <p>• Use high-quality images with a 16:9 aspect ratio (1920x1080px recommended)</p>
-          <p>• Keep titles short and impactful for better readability</p>
-          <p>• Use the order field to control which slides appear first</p>
-          <p>• Test your slideshow on mobile devices to ensure it looks good</p>
+          <p>• These images will appear behind the hero text with a dark overlay</p>
+          <p>• Choose images that look good with white text overlaid</p>
+          <p>• Images cycle automatically every 7 seconds</p>
+          <p>• Use the order field to control the sequence</p>
         </CardContent>
       </Card>
     </div>

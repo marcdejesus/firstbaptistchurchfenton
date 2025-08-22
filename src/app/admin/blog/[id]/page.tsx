@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
-import { FAQForm } from '@/components/admin/FAQForm';
+import { BlogForm } from '@/components/admin/BlogForm';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -12,54 +12,54 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   
   if (id === 'new') {
     return {
-      title: 'New FAQ | Admin Dashboard',
-      description: 'Create a new frequently asked question',
+      title: 'New Blog Post | Admin Dashboard',
+      description: 'Create a new blog post',
       robots: 'noindex, nofollow',
     };
   }
 
-  const faq = await getFAQ(id);
-  if (!faq) {
+  const post = await getBlogPost(id);
+  if (!post) {
     return {
-      title: 'FAQ Not Found | Admin Dashboard',
+      title: 'Blog Post Not Found | Admin Dashboard',
       robots: 'noindex, nofollow',
     };
   }
 
   return {
-    title: `Edit FAQ: ${faq.question} | Admin Dashboard`,
-    description: 'Edit frequently asked question',
+    title: `Edit Post: ${post.title} | Admin Dashboard`,
+    description: 'Edit blog post',
     robots: 'noindex, nofollow',
   };
 }
 
-async function getFAQ(id: string) {
+async function getBlogPost(id: string) {
   if (id === 'new') return null;
 
   try {
-    const faq = await prisma.fAQ.findUnique({
+    const post = await prisma.blogPost.findUnique({
       where: { id: parseInt(id) },
       include: {
-        user: {
+        author: {
           select: {
             name: true,
           }
         }
       }
     });
-    return faq;
+    return post;
   } catch (error) {
-    console.error('Error fetching FAQ:', error);
+    console.error('Error fetching blog post:', error);
     return null;
   }
 }
 
-export default async function FAQEditPage({ params }: Props) {
+export default async function BlogEditPage({ params }: Props) {
   const { id } = await params;
-  const faq = await getFAQ(id);
+  const post = await getBlogPost(id);
   const isNew = id === 'new';
 
-  if (!isNew && !faq) {
+  if (!isNew && !post) {
     notFound();
   }
 
@@ -67,17 +67,17 @@ export default async function FAQEditPage({ params }: Props) {
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">
-          {isNew ? 'Create New FAQ' : 'Edit FAQ'}
+          {isNew ? 'Create New Blog Post' : 'Edit Blog Post'}
         </h1>
         <p className="text-muted-foreground">
           {isNew
-            ? 'Add a new frequently asked question to help your visitors'
-            : 'Update the question and answer to keep information current'
+            ? 'Write and publish a new blog post or article'
+            : 'Update the blog post content and settings'
           }
         </p>
       </div>
 
-      <FAQForm faq={faq} isNew={isNew} />
+      <BlogForm post={post} isNew={isNew} />
     </div>
   );
 }
