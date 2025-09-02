@@ -5,7 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2, Eye, EyeOff, Calendar } from 'lucide-react';
+import { Edit, Trash2, Eye, EyeOff, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -34,19 +34,11 @@ export default async function SeriesAdminPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold">Current Series</h1>
-          <p className="text-muted-foreground">
-            Manage the current sermon series displayed on your homepage
-          </p>
-        </div>
-        <Button asChild>
-          <Link href="/admin/home/series/new">
-            <Plus className="h-4 w-4 mr-2" />
-            Add Series
-          </Link>
-        </Button>
+      <div>
+        <h1 className="text-3xl font-bold">Current Series</h1>
+        <p className="text-muted-foreground">
+          Manage the current sermon series displayed on your homepage
+        </p>
       </div>
 
       {/* Stats */}
@@ -177,14 +169,8 @@ export default async function SeriesAdminPage() {
               </div>
               <h3 className="text-lg font-medium mb-2">No series yet</h3>
               <p className="text-muted-foreground mb-4">
-                Get started by creating your first sermon series.
+                The current series will be displayed here once configured.
               </p>
-              <Button asChild>
-                <Link href="/admin/home/series/new">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Your First Series
-                </Link>
-              </Button>
             </div>
           )}
         </CardContent>

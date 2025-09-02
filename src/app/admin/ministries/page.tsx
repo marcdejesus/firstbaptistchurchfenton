@@ -1,42 +1,37 @@
-import { Metadata } from 'next';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+"use client";
+
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Plus, Edit, Trash2, Eye, EyeOff, Heart, Mail, Clock } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-export const metadata: Metadata = {
-  title: 'Ministries | Admin Dashboard',
-  description: 'Manage church ministries and programs',
-  robots: 'noindex, nofollow',
-};
+export default function MinistriesAdminPage() {
+  const router = useRouter();
+  const [ministries, setMinistries] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-async function getMinistries() {
-  try {
-    const ministries = await prisma.ministry.findMany({
-      orderBy: { order: 'asc' },
-      include: {
-        user: {
-          select: {
-            name: true,
-          }
+  // Fetch ministries on component mount
+  useEffect(() => {
+    const fetchMinistries = async () => {
+      try {
+        const response = await fetch('/api/admin/ministries');
+        if (response.ok) {
+          const data = await response.json();
+          setMinistries(data);
         }
+      } catch (error) {
+        console.error('Error fetching ministries:', error);
+      } finally {
+        setIsLoading(false);
       }
-    });
-    return ministries;
-  } catch (error) {
-    console.error('Error fetching ministries:', error);
-    return [];
-  }
-}
-
-export default async function MinistriesAdminPage() {
-  const session = await getServerSession(authOptions);
-  const ministries = await getMinistries();
+    };
+    
+    fetchMinistries();
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -107,7 +102,12 @@ export default async function MinistriesAdminPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {ministries.length > 0 ? (
+          {isLoading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+              <p className="text-muted-foreground mt-2">Loading ministries...</p>
+            </div>
+          ) : ministries.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {ministries.map((ministry, index) => (
                 <div
@@ -203,6 +203,26 @@ export default async function MinistriesAdminPage() {
                         variant="ghost"
                         size="sm"
                         className={ministry.isActive ? "text-gray-500" : "text-green-600"}
+                        onClick={async () => {
+                          try {
+                            const response = await fetch(`/api/admin/ministries/${ministry.id}`, {
+                              method: 'PUT',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ ...ministry, isActive: !ministry.isActive })
+                            });
+                            if (response.ok) {
+                              setMinistries(prev => 
+                                prev.map(m => 
+                                  m.id === ministry.id 
+                                    ? { ...m, isActive: !m.isActive }
+                                    : m
+                                )
+                              );
+                            }
+                          } catch (error) {
+                            console.error('Error toggling ministry status:', error);
+                          }
+                        }}
                       >
                         {ministry.isActive ? (
                           <EyeOff className="h-4 w-4" />
@@ -210,7 +230,25 @@ export default async function MinistriesAdminPage() {
                           <Eye className="h-4 w-4" />
                         )}
                       </Button>
-                      <Button variant="ghost" size="sm" className="text-red-600">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-red-600"
+                        onClick={async () => {
+                          if (confirm('Are you sure you want to delete this ministry?')) {
+                            try {
+                              const response = await fetch(`/api/admin/ministries/${ministry.id}`, {
+                                method: 'DELETE'
+                              });
+                              if (response.ok) {
+                                setMinistries(prev => prev.filter(m => m.id !== ministry.id));
+                              }
+                            } catch (error) {
+                              console.error('Error deleting ministry:', error);
+                            }
+                          }
+                        }}
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>

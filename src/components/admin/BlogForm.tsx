@@ -171,13 +171,7 @@ export function BlogForm({ post, isNew }: BlogFormProps) {
     });
   };
 
-  const handleImageUpload = (url: string, key: string) => {
-    setFormData(prev => ({ ...prev, thumbnailUrl: url, thumbnailKey: key }));
-  };
 
-  const handleImageRemove = () => {
-    setFormData(prev => ({ ...prev, thumbnailUrl: '', thumbnailKey: '' }));
-  };
 
   return (
     <div className="space-y-6">
@@ -267,15 +261,18 @@ export function BlogForm({ post, isNew }: BlogFormProps) {
             <div className="space-y-2">
               <Label>Thumbnail Image</Label>
               <ImageUpload
-                value={formData.thumbnailUrl}
-                onChange={handleImageUpload}
-                onRemove={handleImageRemove}
-                endpoint="imageUploader"
-                disabled={isLoading}
+                title="Blog Thumbnail"
+                description="Optional: Upload a thumbnail image for the blog post."
+                uploadType="imageUploader"
+                currentImage={formData.thumbnailUrl ? { url: formData.thumbnailUrl, key: formData.thumbnailKey || '' } : null}
+                onImageChange={(image) => {
+                  if (image) {
+                    setFormData(prev => ({ ...prev, thumbnailUrl: image.url, thumbnailKey: image.key }));
+                  } else {
+                    setFormData(prev => ({ ...prev, thumbnailUrl: '', thumbnailKey: '' }));
+                  }
+                }}
               />
-              <p className="text-sm text-muted-foreground">
-                Optional: Upload a thumbnail image for the blog post.
-              </p>
             </div>
 
             {/* Status */}

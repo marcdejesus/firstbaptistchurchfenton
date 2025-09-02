@@ -3,27 +3,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { 
-  LayoutDashboard, 
   FileText, 
-  Image, 
   Calendar,
-  Users,
-  Settings,
-  PlusCircle,
-  Edit3,
-  Upload,
-  Eye
+  Users
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-interface QuickAction {
-  title: string;
-  description: string;
-  href: string;
-  icon: string;
-  color: string;
-}
+
 
 interface DashboardStats {
   totalBlogPosts: number;
@@ -34,6 +21,7 @@ interface DashboardStats {
   totalStaffMembers?: number;
   totalMinistries?: number;
   totalMissionPartners?: number;
+  activeAnnouncement?: any;
   recentActivity: any[];
   recentContactSubmissions?: any[];
   recentPrayerRequests?: any[];
@@ -47,47 +35,6 @@ interface DashboardProps {
 }
 
 export function Dashboard({ stats, userRole }: DashboardProps) {
-  const quickActions: QuickAction[] = [
-    {
-      title: 'Manage FAQ',
-      description: 'Update frequently asked questions',
-      href: '/admin/faq',
-      icon: 'Edit3',
-      color: 'bg-blue-500'
-    },
-    {
-      title: 'Homepage Slideshow',
-      description: 'Update homepage slideshow images',
-      href: '/admin/home/slideshow',
-      icon: 'Upload',
-      color: 'bg-purple-500'
-    },
-    {
-      title: 'Write Blog Post',
-      description: 'Create a new blog post or article',
-      href: '/admin/blog/new',
-      icon: 'PlusCircle',
-      color: 'bg-green-500'
-    },
-    {
-      title: 'View Website',
-      description: 'See how your changes look on the live site',
-      href: '/',
-      icon: 'Eye',
-      color: 'bg-orange-500'
-    }
-  ];
-
-  const getIcon = (iconName: string) => {
-    const icons = {
-      Edit3: Edit3,
-      PlusCircle: PlusCircle,
-      Upload: Upload,
-      Eye: Eye
-    };
-    const IconComponent = icons[iconName as keyof typeof icons] || Edit3;
-    return <IconComponent className="h-6 w-6" />;
-  };
 
   const formatFileSize = (bytes: number): string => {
     if (bytes === 0) return '0 Bytes';
@@ -99,40 +46,6 @@ export function Dashboard({ stats, userRole }: DashboardProps) {
 
   return (
     <div className="space-y-8">
-      {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-lg p-6 border border-primary/20">
-        <h1 className="text-3xl font-heading font-bold text-primary mb-2">
-          Welcome to Your Website Dashboard
-        </h1>
-        <p className="text-lg text-muted-foreground">
-          Manage your church website content easily and safely. All changes can be previewed before going live.
-        </p>
-      </div>
-
-      {/* Quick Actions */}
-      <div>
-        <h2 className="text-2xl font-heading font-bold mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {quickActions.map((action, index) => (
-            <Link key={index} href={action.href}>
-              <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-                <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className={`${action.color} text-white p-3 rounded-lg`}>
-                      {getIcon(action.icon)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-lg mb-1">{action.title}</h3>
-                      <p className="text-sm text-muted-foreground">{action.description}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </div>
-
       {/* Statistics Overview */}
       <div>
         <h2 className="text-2xl font-heading font-bold mb-4">Website Overview</h2>
@@ -179,17 +92,19 @@ export function Dashboard({ stats, userRole }: DashboardProps) {
             </CardContent>
           </Card>
 
+
+
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Recent Submissions</CardTitle>
-              <Calendar className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">Announcement</CardTitle>
+              <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">
-                {(stats.recentContactSubmissions?.length || 0) + (stats.recentPrayerRequests?.length || 0)}
+              <div className="text-2xl font-bold text-green-600">
+                {stats.activeAnnouncement ? 'Active' : 'None'}
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                Contact & Prayer requests
+                {stats.activeAnnouncement ? 'Banner is showing' : 'No active banner'}
               </p>
             </CardContent>
           </Card>

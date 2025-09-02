@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,103 +8,99 @@ datasource db {
 }
 
 model User {
-  id           Int       @id @default(autoincrement())
-  uuid         String    @unique @default(uuid())
-  email        String    @unique
-  name         String
-  role         Role      @default(EDITOR)
-  passwordHash String?   @map("password_hash")
-  isActive     Boolean   @default(true) @map("is_active")
-  lastLoginAt  DateTime? @map("last_login_at")
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime  @updatedAt @map("updated_at")
+  id                  Int                  @id @default(autoincrement())
+  uuid                String               @unique @default(uuid())
+  email               String               @unique
+  name                String
+  role                Role                 @default(EDITOR)
+  passwordHash        String?              @map("password_hash")
+  isActive            Boolean              @default(true) @map("is_active")
+  lastLoginAt         DateTime?            @map("last_login_at")
+  createdAt           DateTime             @default(now()) @map("created_at")
+  updatedAt           DateTime             @updatedAt @map("updated_at")
+  announcementBanners AnnouncementBanner[]
+  blogPosts           BlogPost[]
+  contactSubmissions  ContactSubmission[]
+  faqs                FAQ[]
+  ministries          Ministry[]
+  missionPartners     MissionPartner[]
+  prayerRequests      PrayerRequest[]
+  staffMembers        StaffMember[]
 
-  // Relations
-  blogPosts       BlogPost[]
-  staffMembers    StaffMember[]
-  ministries      Ministry[]
-  missionPartners MissionPartner[]
-  faqs            FAQ[]
-
-  prayerRequests  PrayerRequest[]
-  contactSubmissions ContactSubmission[]
-  
   @@map("users")
 }
 
 model FAQ {
   id        Int      @id @default(autoincrement())
   question  String
-  answer    String   @db.Text
+  answer    String
   order     Int      @default(0)
   isActive  Boolean  @default(true) @map("is_active")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   createdBy Int?     @map("created_by")
-  
-  user User? @relation(fields: [createdBy], references: [id])
-  
+  user      User?    @relation(fields: [createdBy], references: [id])
+
   @@map("faqs")
 }
 
 model HomeSlideshow {
-  id          Int      @id @default(autoincrement())
-  title       String?
-  subtitle    String?
-  imageUrl    String   @map("image_url")
-  imageKey    String   @map("image_key") // UploadThing file key
-  linkUrl     String?  @map("link_url")
-  linkText    String?  @map("link_text")
-  order       Int      @default(0)
-  isActive    Boolean  @default(true) @map("is_active")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  
+  id        Int      @id @default(autoincrement())
+  title     String?
+  subtitle  String?
+  imageUrl  String   @map("image_url")
+  imageKey  String   @map("image_key")
+  linkUrl   String?  @map("link_url")
+  linkText  String?  @map("link_text")
+  order     Int      @default(0)
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
   @@map("home_slideshow")
 }
 
 model CurrentSeries {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
-  description String   @db.Text
-  imageUrl    String   @map("image_url")
-  imageKey    String   @map("image_key") // UploadThing file key
-  startDate   DateTime @map("start_date")
+  description String
+  imageUrl    String    @map("image_url")
+  imageKey    String    @map("image_key")
+  startDate   DateTime  @map("start_date")
   endDate     DateTime? @map("end_date")
-  isActive    Boolean  @default(true) @map("is_active")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
   @@map("current_series")
 }
 
 model DonateSettings {
   id          Int      @id @default(autoincrement())
   donateUrl   String   @map("donate_url")
-  description String?  @db.Text
+  description String?
   isActive    Boolean  @default(true) @map("is_active")
   updatedAt   DateTime @updatedAt @map("updated_at")
-  
+
   @@map("donate_settings")
 }
 
 model BlogPost {
-  id           Int         @id @default(autoincrement())
-  uuid         String      @unique @default(uuid())
+  id           Int        @id @default(autoincrement())
+  uuid         String     @unique @default(uuid())
   title        String
-  slug         String      @unique
+  slug         String     @unique
   excerpt      String?
-  content      String      @db.Text
-  thumbnailUrl String?     @map("thumbnail_url")
-  thumbnailKey String?     @map("thumbnail_key") // UploadThing file key
-  status       PostStatus  @default(DRAFT)
-  publishedAt  DateTime?   @map("published_at")
-  createdAt    DateTime    @default(now()) @map("created_at")
-  updatedAt    DateTime    @updatedAt @map("updated_at")
-  authorId     Int         @map("author_id")
-  
-  author User @relation(fields: [authorId], references: [id])
-  
+  content      String
+  thumbnailUrl String?    @map("thumbnail_url")
+  thumbnailKey String?    @map("thumbnail_key")
+  status       PostStatus @default(DRAFT)
+  publishedAt  DateTime?  @map("published_at")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+  authorId     Int        @map("author_id")
+  author       User       @relation(fields: [authorId], references: [id])
+
   @@map("blog_posts")
 }
 
@@ -115,75 +108,69 @@ model StaffMember {
   id          Int      @id @default(autoincrement())
   name        String
   position    String
-  description String?  @db.Text
+  description String?
   email       String?
   photoUrl    String?  @map("photo_url")
-  photoKey    String?  @map("photo_key") // UploadThing file key
+  photoKey    String?  @map("photo_key")
   order       Int      @default(0)
   isActive    Boolean  @default(true) @map("is_active")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
   createdBy   Int?     @map("created_by")
-  
-  user User? @relation(fields: [createdBy], references: [id])
-  
+  user        User?    @relation(fields: [createdBy], references: [id])
+
   @@map("staff_members")
 }
 
 model Ministry {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String   @db.Text
-  imageUrl    String?  @map("image_url")
-  imageKey    String?  @map("image_key") // UploadThing file key
-  targetAudience String? @map("target_audience") // Adults, Youth, Children
-  meetingTime String?  @map("meeting_time")
-  contactEmail String? @map("contact_email")
-  order       Int      @default(0)
-  isActive    Boolean  @default(true) @map("is_active")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  createdBy   Int?     @map("created_by")
-  
-  user User? @relation(fields: [createdBy], references: [id])
-  
+  id             Int      @id @default(autoincrement())
+  name           String
+  description    String
+  imageUrl       String?  @map("image_url")
+  imageKey       String?  @map("image_key")
+  targetAudience String?  @map("target_audience")
+  meetingTime    String?  @map("meeting_time")
+  contactEmail   String?  @map("contact_email")
+  order          Int      @default(0)
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  createdBy      Int?     @map("created_by")
+  user           User?    @relation(fields: [createdBy], references: [id])
+
   @@map("ministries")
 }
 
 model MissionPartner {
-  id          Int      @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   name        String
-  description String   @db.Text
+  description String
   location    String?
   website     String?
-  imageUrl    String?  @map("image_url")
-  imageKey    String?  @map("image_key") // UploadThing file key
-  type        MissionType @default(LOCAL) // LOCAL, INTERNATIONAL
-  isActive    Boolean  @default(true) @map("is_active")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  createdBy   Int?     @map("created_by")
-  
-  user User? @relation(fields: [createdBy], references: [id])
-  
+  imageUrl    String?     @map("image_url")
+  imageKey    String?     @map("image_key")
+  type        MissionType @default(LOCAL)
+  isActive    Boolean     @default(true) @map("is_active")
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  createdBy   Int?        @map("created_by")
+  user        User?       @relation(fields: [createdBy], references: [id])
+
   @@map("mission_partners")
 }
 
-
-
 model PrayerRequest {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String?
-  phone     String?
-  message   String
-  isPublic  Boolean  @default(false) @map("is_public")
-  isAnswered Boolean @default(false) @map("is_answered")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  createdBy Int?     @map("created_by")
-
-  user User? @relation(fields: [createdBy], references: [id])
+  id         Int      @id @default(autoincrement())
+  name       String
+  email      String?
+  phone      String?
+  message    String
+  isPublic   Boolean  @default(false) @map("is_public")
+  isAnswered Boolean  @default(false) @map("is_answered")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  createdBy  Int?     @map("created_by")
+  user       User?    @relation(fields: [createdBy], references: [id])
 
   @@map("prayer_requests")
 }
@@ -198,13 +185,25 @@ model ContactSubmission {
   isRead    Boolean  @default(false) @map("is_read")
   createdAt DateTime @default(now()) @map("created_at")
   createdBy Int?     @map("created_by")
-
-  user User? @relation(fields: [createdBy], references: [id])
+  user      User?    @relation(fields: [createdBy], references: [id])
 
   @@map("contact_submissions")
 }
 
-// Enums
+model AnnouncementBanner {
+  id              Int      @id @default(autoincrement())
+  message         String
+  isActive        Boolean  @default(true) @map("is_active")
+  backgroundColor String?  @map("background_color")
+  textColor       String?  @map("text_color")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  createdBy       Int?     @map("created_by")
+  user            User?    @relation(fields: [createdBy], references: [id])
+
+  @@map("announcement_banners")
+}
+
 enum Role {
   ADMIN
   EDITOR
@@ -221,4 +220,3 @@ enum MissionType {
   LOCAL
   INTERNATIONAL
 }
-

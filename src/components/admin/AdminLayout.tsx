@@ -74,6 +74,7 @@ export function AdminLayout({ children, user }: AdminLayoutProps) {
         { title: 'FAQ', href: '/admin/faq', icon: HelpCircle },
         { title: 'Homepage Slideshow', href: '/admin/home/slideshow', icon: Image },
         { title: 'Current Series', href: '/admin/home/series', icon: FileText },
+        { title: 'Announcement Banner', href: '/admin/announcement', icon: FileText },
         { title: 'Donate Settings', href: '/admin/donate', icon: Settings }
       ]
     },
@@ -96,11 +97,7 @@ export function AdminLayout({ children, user }: AdminLayoutProps) {
         { title: 'Mission Partners', href: '/admin/missions', icon: Calendar }
       ]
     },
-    {
-      title: 'Media Library',
-      href: '/admin/media',
-      icon: Image
-    },
+
     {
       title: 'Communications',
       href: '/admin/communications',

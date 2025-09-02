@@ -145,13 +145,7 @@ export function SlideshowForm({ slide, isNew }: SlideshowFormProps) {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleImageUpload = (url: string, key: string) => {
-    setFormData(prev => ({ ...prev, imageUrl: url, imageKey: key }));
-  };
 
-  const handleImageRemove = () => {
-    setFormData(prev => ({ ...prev, imageUrl: '', imageKey: '' }));
-  };
 
   return (
     <div className="space-y-6">
@@ -180,15 +174,18 @@ export function SlideshowForm({ slide, isNew }: SlideshowFormProps) {
             <div className="space-y-2">
               <Label>Slide Image *</Label>
               <ImageUpload
-                value={formData.imageUrl}
-                onChange={handleImageUpload}
-                onRemove={handleImageRemove}
-                endpoint="slideshowUploader"
-                disabled={isLoading}
+                title="Slide Image"
+                description="Upload a high-quality image for your slideshow. Recommended size: 1920x1080px."
+                uploadType="slideshowUploader"
+                currentImage={formData.imageUrl ? { url: formData.imageUrl, key: formData.imageKey } : null}
+                onImageChange={(image) => {
+                  if (image) {
+                    setFormData(prev => ({ ...prev, imageUrl: image.url, imageKey: image.key }));
+                  } else {
+                    setFormData(prev => ({ ...prev, imageUrl: '', imageKey: '' }));
+                  }
+                }}
               />
-              <p className="text-sm text-muted-foreground">
-                Upload a high-quality image for your slideshow. Recommended size: 1920x1080px.
-              </p>
             </div>
 
             {/* Title */}

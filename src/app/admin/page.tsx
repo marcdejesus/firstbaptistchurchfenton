@@ -22,6 +22,7 @@ async function getDashboardStats() {
       totalStaffMembers,
       totalMinistries,
       totalMissionPartners,
+      activeAnnouncement,
       recentContactSubmissions,
       recentPrayerRequests
     ] = await Promise.all([
@@ -33,6 +34,7 @@ async function getDashboardStats() {
       prisma.staffMember.count({ where: { isActive: true } }),
       prisma.ministry.count({ where: { isActive: true } }),
       prisma.missionPartner.count({ where: { isActive: true } }),
+      prisma.announcementBanner.findFirst({ where: { isActive: true } }),
       prisma.contactSubmission.findMany({
         take: 5,
         orderBy: { createdAt: 'desc' },
@@ -65,6 +67,7 @@ async function getDashboardStats() {
       totalStaffMembers,
       totalMinistries,
       totalMissionPartners,
+      activeAnnouncement,
       recentActivity,
       recentContactSubmissions,
       recentPrayerRequests,
