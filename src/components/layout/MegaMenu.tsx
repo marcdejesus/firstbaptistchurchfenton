@@ -37,10 +37,10 @@ export const navigationCategories = [
         icon: Monitor
       },
       {
-        title: "Events",
-        href: "/events",
-        description: "Upcoming church events and activities",
-        icon: Calendar
+        title: "Next-steps",
+        href: "/next-steps",
+        description: "Take your next steps in faith and community",
+        icon: ArrowRight
       },
       {
         title: "Beliefs",
