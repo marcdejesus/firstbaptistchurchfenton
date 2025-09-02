@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { utapi } from "@/utils/uploadthing";
 
 interface Props {
   params: { id: string };
@@ -50,7 +49,7 @@ export async function PUT(request: Request, { params }: Props) {
     }
 
     const body = await request.json();
-    const { title, subtitle, imageUrl, imageKey, linkUrl, linkText, order, isActive } = body;
+    const { imageUrl, imageKey, order, isActive } = body;
 
     if (!imageUrl || !imageKey) {
       return NextResponse.json({ error: "Image is required" }, { status: 400 });
@@ -65,34 +64,22 @@ export async function PUT(request: Request, { params }: Props) {
       return NextResponse.json({ error: "Slide not found" }, { status: 404 });
     }
 
-    // If the image has changed, delete the old one from UploadThing
-    if (existingSlide.imageKey !== imageKey && existingSlide.imageKey) {
-      try {
-        await utapi.deleteFiles([existingSlide.imageKey]);
-      } catch (error) {
-        console.error('Error deleting old image:', error);
-        // Continue with update even if old image deletion fails
-      }
-    }
-
+    // Update image, order, and active status fields
     const slide = await prisma.homeSlideshow.update({
       where: { id: slideId },
       data: {
-        title: title?.trim() || null,
-        subtitle: subtitle?.trim() || null,
         imageUrl: imageUrl.trim(),
         imageKey: imageKey.trim(),
-        linkUrl: linkUrl?.trim() || null,
-        linkText: linkText?.trim() || null,
-        order: order || 0,
-        isActive: isActive ?? true,
+        order: order || existingSlide.order,
+        isActive: isActive ?? existingSlide.isActive,
+        updatedAt: new Date(),
       }
     });
 
     return NextResponse.json(slide);
   } catch (error) {
-    console.error('Error updating slide:', error);
-    return NextResponse.json({ error: "Failed to update slide" }, { status: 500 });
+    console.error('Error updating slide image:', error);
+    return NextResponse.json({ error: "Failed to update slide image" }, { status: 500 });
   }
 }
 
@@ -118,15 +105,8 @@ export async function DELETE(request: Request, { params }: Props) {
       return NextResponse.json({ error: "Slide not found" }, { status: 404 });
     }
 
-    // Delete the image from UploadThing
-    if (existingSlide.imageKey) {
-      try {
-        await utapi.deleteFiles([existingSlide.imageKey]);
-      } catch (error) {
-        console.error('Error deleting image from UploadThing:', error);
-        // Continue with database deletion even if file deletion fails
-      }
-    }
+    // Note: Image deletion from UploadThing is handled by the frontend
+    // when updating images, so we don't need to handle it here
 
     // Delete from database
     await prisma.homeSlideshow.delete({

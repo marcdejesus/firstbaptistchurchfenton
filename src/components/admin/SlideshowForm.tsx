@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/hooks/use-toast';
 import { ImageUpload } from '@/components/admin/ImageUpload';
@@ -65,12 +64,20 @@ export function SlideshowForm({ slide, isNew }: SlideshowFormProps) {
       const url = isNew ? '/api/admin/slideshow' : `/api/admin/slideshow/${slide?.id}`;
       const method = isNew ? 'POST' : 'PUT';
 
+      // For existing slides, send image, order, and active status
+      const requestBody = isNew ? formData : {
+        imageUrl: formData.imageUrl,
+        imageKey: formData.imageKey,
+        order: formData.order,
+        isActive: formData.isActive,
+      };
+
       const response = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(requestBody),
       });
 
       if (response.ok) {
@@ -161,12 +168,12 @@ export function SlideshowForm({ slide, isNew }: SlideshowFormProps) {
       <Card>
         <CardHeader>
           <CardTitle>{isNew ? 'Create New Slide' : 'Edit Slide'}</CardTitle>
-          <CardDescription>
-            {isNew
-              ? 'Fill in the details below to create a new slideshow slide.'
-              : 'Update the slide content and settings below.'
-            }
-          </CardDescription>
+                  <CardDescription>
+          {isNew
+            ? 'Fill in the details below to create a new slideshow slide.'
+            : 'Update the slide image, order, and active status.'
+          }
+        </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -186,70 +193,6 @@ export function SlideshowForm({ slide, isNew }: SlideshowFormProps) {
                   }
                 }}
               />
-            </div>
-
-            {/* Title */}
-            <div className="space-y-2">
-              <Label htmlFor="title">Title</Label>
-              <Input
-                id="title"
-                value={formData.title}
-                onChange={(e) => handleChange('title', e.target.value)}
-                placeholder="Enter slide title..."
-                disabled={isLoading}
-              />
-              <p className="text-sm text-muted-foreground">
-                Optional: A prominent title displayed on the slide.
-              </p>
-            </div>
-
-            {/* Subtitle */}
-            <div className="space-y-2">
-              <Label htmlFor="subtitle">Subtitle</Label>
-              <Textarea
-                id="subtitle"
-                value={formData.subtitle}
-                onChange={(e) => handleChange('subtitle', e.target.value)}
-                placeholder="Enter slide subtitle or description..."
-                rows={3}
-                disabled={isLoading}
-              />
-              <p className="text-sm text-muted-foreground">
-                Optional: A subtitle or description displayed below the title.
-              </p>
-            </div>
-
-            {/* Link Section */}
-            <div className="space-y-4">
-              <Label className="text-base font-medium">Call to Action Link (Optional)</Label>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="linkText">Link Text</Label>
-                  <Input
-                    id="linkText"
-                    value={formData.linkText}
-                    onChange={(e) => handleChange('linkText', e.target.value)}
-                    placeholder="Learn More"
-                    disabled={isLoading}
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="linkUrl">Link URL</Label>
-                  <Input
-                    id="linkUrl"
-                    value={formData.linkUrl}
-                    onChange={(e) => handleChange('linkUrl', e.target.value)}
-                    placeholder="/about"
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-              
-              <p className="text-sm text-muted-foreground">
-                Add a button that links to another page. Both fields must be filled to show the button.
-              </p>
             </div>
 
             {/* Order */}
