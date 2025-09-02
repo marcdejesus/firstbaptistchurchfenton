@@ -4,23 +4,9 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Globe } from 'lucide-react';
+import { Globe, ExternalLink, MapPin } from 'lucide-react';
 import { PageLayout } from '@/components/layout/PageLayout';
-
-const missionPartners = [
-  {
-    location: 'Pakistan',
-    description: 'Supporting indigenous pastors and church planters with resources, biblical training, and encouragement in one of the most spiritually challenging regions in the world.',
-  },
-  {
-    location: 'India',
-    description: 'Partnering with a growing network of pastors who are planting churches, making disciples, and spreading the gospel in both urban and remote areas.',
-  },
-  {
-    location: 'Thailand',
-    description: 'Training tribal leaders and pastors to strengthen local churches and reach unreached people groups through biblical education and ongoing mentoring.',
-  }
-];
+import { useMissionPartners } from '@/hooks/useMissionPartners';
 
 // A simple component to represent the world map
 // In a real application, this could be an interactive map library like react-simple-maps
@@ -37,6 +23,41 @@ const WorldMap = () => (
 );
 
 export default function MissionsPage() {
+  const { missionPartners, loading, error } = useMissionPartners();
+
+  if (loading) {
+    return (
+      <PageLayout
+        title="Global Missions"
+        subtitle="We are passionate about making disciples of all nations by equipping local leaders to reach their own communities. Our approach is simple: train and support national pastors and leaders already doing the work."
+      >
+        <div className="mt-16">
+          <h2 className="text-3xl font-heading font-bold text-center mb-10">Our Partners in the Field</h2>
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-2 text-muted-foreground">Loading mission partners...</p>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
+
+  if (error) {
+    return (
+      <PageLayout
+        title="Global Missions"
+        subtitle="We are passionate about making disciples of all nations by equipping local leaders to reach their own communities. Our approach is simple: train and support national pastors and leaders already doing the work."
+      >
+        <div className="mt-16">
+          <h2 className="text-3xl font-heading font-bold text-center mb-10">Our Partners in the Field</h2>
+          <div className="text-center py-8">
+            <p className="text-red-600">Error loading mission partners. Please try again later.</p>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
+
   return (
     <PageLayout
       title="Global Missions"
@@ -44,21 +65,51 @@ export default function MissionsPage() {
     >
       <div className="mt-16">
         <h2 className="text-3xl font-heading font-bold text-center mb-10">Our Partners in the Field</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {missionPartners.map((partner) => (
-            <Card key={partner.location} className="flex flex-col hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="flex items-center space-x-3">
+        {missionPartners.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {missionPartners.map((partner) => (
+              <Card key={partner.id} className="flex flex-col hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex items-center space-x-3">
                     <Globe className="h-6 w-6 text-primary" />
-                    <CardTitle className="text-2xl font-heading">{partner.location}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="flex-grow">
-                <p className="text-muted-foreground">{partner.description}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                    <CardTitle className="text-2xl font-heading">
+                      {partner.name}
+                    </CardTitle>
+                  </div>
+                  {partner.location && (
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      {partner.location}
+                    </div>
+                  )}
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <p className="text-muted-foreground">{partner.description}</p>
+                  {partner.website && (
+                    <div className="mt-4">
+                      <Button variant="outline" size="sm" asChild>
+                        <a href={partner.website} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Visit Website
+                        </a>
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <div className="text-gray-400 mb-4">
+              <Globe className="h-16 w-16 mx-auto" />
+            </div>
+            <h3 className="text-lg font-medium mb-2">No mission partners yet</h3>
+            <p className="text-muted-foreground">
+              Check back soon for updates on our global mission partnerships.
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="mt-16 text-center bg-background-primary p-8 rounded-lg shadow-inner border">

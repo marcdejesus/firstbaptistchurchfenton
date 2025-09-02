@@ -1,42 +1,142 @@
-import { Metadata } from 'next';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2, Eye, EyeOff, Globe, MapPin, ExternalLink } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, EyeOff, Globe, MapPin, ExternalLink, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast } from '@/hooks/use-toast';
 
-export const metadata: Metadata = {
-  title: 'Mission Partners | Admin Dashboard',
-  description: 'Manage mission partners and outreach programs',
-  robots: 'noindex, nofollow',
-};
-
-async function getMissionPartners() {
-  try {
-    const partners = await prisma.missionPartner.findMany({
-      orderBy: { createdAt: 'desc' },
-      include: {
-        user: {
-          select: {
-            name: true,
-          }
-        }
-      }
-    });
-    return partners;
-  } catch (error) {
-    console.error('Error fetching mission partners:', error);
-    return [];
-  }
+interface MissionPartner {
+  id: number;
+  name: string;
+  description: string;
+  location: string | null;
+  website: string | null;
+  imageUrl: string | null;
+  imageKey: string | null;
+  type: 'LOCAL' | 'INTERNATIONAL';
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  user?: {
+    name: string;
+  };
 }
 
-export default async function MissionsAdminPage() {
-  const session = await getServerSession(authOptions);
-  const partners = await getMissionPartners();
+export default function MissionsAdminPage() {
+  const [partners, setPartners] = useState<MissionPartner[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState<number | null>(null);
+  const [deleting, setDeleting] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetchMissionPartners();
+  }, []);
+
+  const fetchMissionPartners = async () => {
+    try {
+      const response = await fetch('/api/admin/mission-partners');
+      if (!response.ok) {
+        throw new Error('Failed to fetch mission partners');
+      }
+      const data = await response.json();
+      setPartners(data);
+    } catch (error) {
+      console.error('Error fetching mission partners:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to fetch mission partners',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleActiveStatus = async (id: number, currentStatus: boolean) => {
+    setUpdating(id);
+    try {
+      const partner = partners.find(p => p.id === id);
+      if (!partner) return;
+
+      const response = await fetch(`/api/admin/mission-partners/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...partner,
+          isActive: !currentStatus,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update mission partner');
+      }
+
+      setPartners(prev => prev.map(p => 
+        p.id === id ? { ...p, isActive: !currentStatus } : p
+      ));
+
+      toast({
+        title: 'Status Updated',
+        description: `Mission partner is now ${!currentStatus ? 'active' : 'hidden'}`,
+      });
+    } catch (error) {
+      console.error('Error updating mission partner:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update mission partner status',
+        variant: 'destructive',
+      });
+    } finally {
+      setUpdating(null);
+    }
+  };
+
+  const deleteMissionPartner = async (id: number) => {
+    if (!confirm('Are you sure you want to delete this mission partner? This action cannot be undone.')) {
+      return;
+    }
+
+    setDeleting(id);
+    try {
+      const response = await fetch(`/api/admin/mission-partners/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete mission partner');
+      }
+
+      setPartners(prev => prev.filter(p => p.id !== id));
+
+      toast({
+        title: 'Mission Partner Deleted',
+        description: 'Mission partner has been removed successfully',
+      });
+    } catch (error) {
+      console.error('Error deleting mission partner:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to delete mission partner',
+        variant: 'destructive',
+      });
+    } finally {
+      setDeleting(null);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -197,15 +297,29 @@ export default async function MissionsAdminPage() {
                         variant="ghost"
                         size="sm"
                         className={partner.isActive ? "text-gray-500" : "text-green-600"}
+                        onClick={() => toggleActiveStatus(partner.id, partner.isActive)}
+                        disabled={updating === partner.id}
                       >
-                        {partner.isActive ? (
+                        {updating === partner.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : partner.isActive ? (
                           <EyeOff className="h-4 w-4" />
                         ) : (
                           <Eye className="h-4 w-4" />
                         )}
                       </Button>
-                      <Button variant="ghost" size="sm" className="text-red-600">
-                        <Trash2 className="h-4 w-4" />
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-red-600"
+                        onClick={() => deleteMissionPartner(partner.id)}
+                        disabled={deleting === partner.id}
+                      >
+                        {deleting === partner.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Trash2 className="h-4 w-4" />
+                        )}
                       </Button>
                     </div>
                   </div>
