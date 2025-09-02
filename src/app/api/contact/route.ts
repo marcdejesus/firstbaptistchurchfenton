@@ -1,130 +1,85 @@
 import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
 import { prisma } from '@/lib/prisma';
-
-interface ContactFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  message: string;
-}
-
-// Helper function to send contact form email
-async function sendContactEmail(formData: ContactFormData) {
-  try {
-    if (!process.env.MAIL_HOST) {
-      console.error("Mailer not configured. Check MAIL_HOST environment variable.");
-      return { success: false, message: 'The contact form is not fully configured. Please contact the church directly.' };
-    }
-
-    const transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: parseInt(process.env.MAIL_PORT || '587', 10),
-      secure: (process.env.MAIL_PORT === '465'),
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS,
-      },
-    });
-
-    const subject = `New Contact Form Message from ${formData.firstName} ${formData.lastName}`;
-
-    const emailHtml = `
-      <h1>New Contact Form Submission</h1>
-      <p>A new message has been submitted through the church website's contact form.</p>
-      <hr>
-      <h2>Details:</h2>
-      <ul>
-        <li><strong>From:</strong> ${formData.firstName} ${formData.lastName}</li>
-        <li><strong>Email:</strong> <a href="mailto:${formData.email}">${formData.email}</a></li>
-      </ul>
-      <h2>Message:</h2>
-      <p style="white-space: pre-wrap;">${formData.message}</p>
-    `;
-
-    const mailOptions = {
-      from: process.env.MAIL_FROM || `"FBCF Website" <no-reply@fbfenton.org>`,
-      to: 'info@fbfenton.org',
-      replyTo: formData.email,
-      subject: subject,
-      html: emailHtml,
-    };
-
-    await transporter.sendMail(mailOptions);
-
-    return { success: true, message: 'Message sent successfully' };
-
-  } catch (error) {
-    console.error("Error processing contact form: ", error);
-    return { success: false, message: 'An error occurred while sending your message.' };
-  }
-}
+import { emailService } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, email, message, subject: submittedSubject } = await request.json();
+    const { name, email, message, subject: submittedSubject, phone } = await request.json();
 
     if (!name || !email || !message) {
-      return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing required fields: name, email, and message are required.' }, { status: 400 });
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: 'Please provide a valid email address.' }, { status: 400 });
     }
 
     // Save contact submission to database
     const savedSubmission = await prisma.contactSubmission.create({
       data: {
-        name,
-        email,
-        subject: submittedSubject || 'General Inquiry',
-        message,
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        subject: submittedSubject?.trim() || 'General Inquiry',
+        message: message.trim(),
+        phone: phone?.trim() || null,
       },
     });
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: parseInt(process.env.MAIL_PORT || '587', 10),
-      secure: (process.env.MAIL_PORT === '465'),
-      auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS,
-      },
-    });
+    console.log(`Contact form submission saved to database with ID: ${savedSubmission.id}`);
 
-    const emailSubject = `New Contact Form Message from ${name}`;
-
-    const emailHtml = `
-      <h1>New Contact Form Submission</h1>
-      <p>A new message has been submitted through the church website's contact form.</p>
-      <hr>
-      <h2>Details:</h2>
-      <ul>
-        <li><strong>From:</strong> ${name}</li>
-        <li><strong>Email:</strong> <a href="mailto:${email}">${email}</a></li>
-      </ul>
-      <h2>Message:</h2>
-      <p style="white-space: pre-wrap;">${message}</p>
-    `;
-
-    const mailOptions = {
-      from: process.env.MAIL_FROM || `"FBCF Website" <no-reply@fbfenton.org>`,
-      to: 'info@fbfenton.org',
-      replyTo: email,
-      subject: emailSubject,
-      html: emailHtml,
-    };
-
-    if (!process.env.MAIL_HOST) {
-        console.error("Mailer not configured. Check MAIL_HOST environment variable.");
-        return NextResponse.json({ error: 'The contact form is not fully configured. Please contact the church directly.' }, { status: 503 });
+    // Check if email service is configured
+    if (!emailService.isConfigured()) {
+      console.error("Email service not configured. Check GOOGLE_SMTP_USER/MAIL_USER and GOOGLE_SMTP_PASSWORD/MAIL_PASS environment variables.");
+      return NextResponse.json({ 
+        message: 'Your message has been saved, but email notifications are not configured. Please contact the church directly.',
+        id: savedSubmission.id,
+        warning: 'Email not sent - service not configured'
+      }, { status: 202 });
     }
 
-    await transporter.sendMail(mailOptions);
+    // Send notification email to church
+    const notificationResult = await emailService.sendContactFormNotification({
+      name: savedSubmission.name,
+      email: savedSubmission.email,
+      subject: savedSubmission.subject,
+      message: savedSubmission.message,
+      phone: savedSubmission.phone,
+      submissionId: savedSubmission.id,
+    });
+
+    // Send auto-reply to user
+    const autoReplyResult = await emailService.sendAutoReply('contact', savedSubmission.email, savedSubmission.name);
+
+    if (!notificationResult.success) {
+      console.error('Failed to send notification email:', notificationResult.error);
+      // Still return success since the form was saved to database
+      return NextResponse.json({ 
+        message: 'Your message has been received and saved. However, there was an issue sending the notification email.',
+        id: savedSubmission.id,
+        warning: 'Notification email failed'
+      }, { status: 202 });
+    }
+
+    if (!autoReplyResult.success) {
+      console.warn('Failed to send auto-reply email:', autoReplyResult.error);
+    }
+
+    console.log(`Contact form emails sent successfully. Notification: ${notificationResult.messageId}, Auto-reply: ${autoReplyResult.messageId}`);
 
     return NextResponse.json({ 
-      message: 'Message sent successfully',
-      id: savedSubmission.id 
+      message: 'Thank you for your message! We have received it and will get back to you within 24-48 hours.',
+      id: savedSubmission.id,
+      emailSent: true
     });
 
   } catch (error) {
-    console.error("Error processing contact form: ", error);
-    return NextResponse.json({ error: 'An error occurred while sending your message.' }, { status: 500 });
+    console.error("Error processing contact form:", error);
+    
+    // Return a generic error message to avoid exposing internal details
+    return NextResponse.json({ 
+      error: 'We encountered an issue while processing your message. Please try again or contact us directly.' 
+    }, { status: 500 });
   }
-} 
+}

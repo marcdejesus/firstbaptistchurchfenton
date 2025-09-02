@@ -1,16 +1,75 @@
 "use client";
 
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Phone, Mail, Clock, Send, Facebook, Instagram, Youtube } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { MapPin, Phone, Mail, Clock, Send, Facebook, Instagram, Youtube, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import Link from "next/link";
 
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
+
 export default function ContactPage() {
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=860%20N%20Leroy%20St%2C%20Fenton%2C%20MI%2048430";
+  
+  const [formData, setFormData] = useState<FormData>({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage(result.error || 'Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <PageLayout
@@ -57,21 +116,95 @@ export default function ContactPage() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form className="space-y-6">
+                        {submitStatus === 'success' && (
+                            <Alert className="mb-6 border-green-200 bg-green-50">
+                                <CheckCircle className="h-4 w-4 text-green-600" />
+                                <AlertDescription className="text-green-800">
+                                    Thank you for your message! We've received it and will get back to you within 24-48 hours.
+                                </AlertDescription>
+                            </Alert>
+                        )}
+                        
+                        {submitStatus === 'error' && (
+                            <Alert className="mb-6 border-red-200 bg-red-50">
+                                <AlertCircle className="h-4 w-4 text-red-600" />
+                                <AlertDescription className="text-red-800">
+                                    {errorMessage}
+                                </AlertDescription>
+                            </Alert>
+                        )}
+
+                        <form onSubmit={handleSubmit} className="space-y-6">
                             <div className="space-y-2">
-                                <Label htmlFor="name">Full Name</Label>
-                                <Input id="name" required disabled />
+                                <Label htmlFor="name">Full Name *</Label>
+                                <Input 
+                                    id="name" 
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    required 
+                                    disabled={isSubmitting}
+                                />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="email">Email Address</Label>
-                                <Input id="email" type="email" required disabled />
+                                <Label htmlFor="email">Email Address *</Label>
+                                <Input 
+                                    id="email" 
+                                    name="email"
+                                    type="email" 
+                                    value={formData.email}
+                                    onChange={handleInputChange}
+                                    required 
+                                    disabled={isSubmitting}
+                                />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="message">Message</Label>
-                                <Textarea id="message" required rows={5} disabled />
+                                <Label htmlFor="phone">Phone Number</Label>
+                                <Input 
+                                    id="phone" 
+                                    name="phone"
+                                    type="tel" 
+                                    value={formData.phone}
+                                    onChange={handleInputChange}
+                                    disabled={isSubmitting}
+                                />
                             </div>
-                            <Button type="submit" className="w-full" disabled>
-                                Send Message <Send className="ml-2 h-4 w-4"/>
+                            <div className="space-y-2">
+                                <Label htmlFor="subject">Subject</Label>
+                                <Input 
+                                    id="subject" 
+                                    name="subject"
+                                    value={formData.subject}
+                                    onChange={handleInputChange}
+                                    placeholder="General Inquiry"
+                                    disabled={isSubmitting}
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="message">Message *</Label>
+                                <Textarea 
+                                    id="message" 
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleInputChange}
+                                    required 
+                                    rows={5} 
+                                    disabled={isSubmitting}
+                                    placeholder="How can we help you?"
+                                />
+                            </div>
+                            <Button type="submit" className="w-full" disabled={isSubmitting}>
+                                {isSubmitting ? (
+                                    <>
+                                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                        Sending Message...
+                                    </>
+                                ) : (
+                                    <>
+                                        Send Message
+                                        <Send className="ml-2 h-4 w-4"/>
+                                    </>
+                                )}
                             </Button>
                         </form>
                     </CardContent>
