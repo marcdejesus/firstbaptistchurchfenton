@@ -117,14 +117,6 @@ export default function LoginPage() {
             </Button>
           </div> */}
         </CardContent>
-        <CardFooter className="text-center text-sm text-gray-600">
-          <div className="w-full">
-            <p>Default admin credentials:</p>
-            <p className="font-mono text-xs mt-1">
-              admin@fbcfenton.org / admin123
-            </p>
-          </div>
-        </CardFooter>
       </Card>
     </div>
   );
