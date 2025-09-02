@@ -1,42 +1,142 @@
-import { Metadata } from 'next';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2, Eye, EyeOff, Users, Mail } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, EyeOff, Users, Mail, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { toast } from '@/hooks/use-toast';
 
-export const metadata: Metadata = {
-  title: 'Staff & Leadership | Admin Dashboard',
-  description: 'Manage staff members and leadership team',
-  robots: 'noindex, nofollow',
-};
-
-async function getStaffMembers() {
-  try {
-    const staff = await prisma.staffMember.findMany({
-      orderBy: { order: 'asc' },
-      include: {
-        user: {
-          select: {
-            name: true,
-          }
-        }
-      }
-    });
-    return staff;
-  } catch (error) {
-    console.error('Error fetching staff members:', error);
-    return [];
-  }
+interface StaffMember {
+  id: number;
+  name: string;
+  position: string;
+  description: string | null;
+  email: string | null;
+  photoUrl: string | null;
+  photoKey: string | null;
+  order: number;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+  user?: {
+    name: string;
+  };
 }
 
-export default async function LeadershipAdminPage() {
-  const session = await getServerSession(authOptions);
-  const staff = await getStaffMembers();
+export default function LeadershipAdminPage() {
+  const [staff, setStaff] = useState<StaffMember[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState<number | null>(null);
+  const [deleting, setDeleting] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetchStaffMembers();
+  }, []);
+
+  const fetchStaffMembers = async () => {
+    try {
+      const response = await fetch('/api/admin/staff');
+      if (!response.ok) {
+        throw new Error('Failed to fetch staff members');
+      }
+      const data = await response.json();
+      setStaff(data);
+    } catch (error) {
+      console.error('Error fetching staff members:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to fetch staff members',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggleActiveStatus = async (id: number, currentStatus: boolean) => {
+    setUpdating(id);
+    try {
+      const staffMember = staff.find(s => s.id === id);
+      if (!staffMember) return;
+
+      const response = await fetch(`/api/admin/staff/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...staffMember,
+          isActive: !currentStatus,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update staff member');
+      }
+
+      setStaff(prev => prev.map(s => 
+        s.id === id ? { ...s, isActive: !currentStatus } : s
+      ));
+
+      toast({
+        title: 'Status Updated',
+        description: `Staff member is now ${!currentStatus ? 'active' : 'hidden'}`,
+      });
+    } catch (error) {
+      console.error('Error updating staff member:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update staff member status',
+        variant: 'destructive',
+      });
+    } finally {
+      setUpdating(null);
+    }
+  };
+
+  const deleteStaffMember = async (id: number) => {
+    if (!confirm('Are you sure you want to delete this staff member? This action cannot be undone.')) {
+      return;
+    }
+
+    setDeleting(id);
+    try {
+      const response = await fetch(`/api/admin/staff/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete staff member');
+      }
+
+      setStaff(prev => prev.filter(s => s.id !== id));
+
+      toast({
+        title: 'Staff Member Deleted',
+        description: 'Staff member has been removed successfully',
+      });
+    } catch (error) {
+      console.error('Error deleting staff member:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to delete staff member',
+        variant: 'destructive',
+      });
+    } finally {
+      setDeleting(null);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -171,15 +271,29 @@ export default async function LeadershipAdminPage() {
                         variant="ghost"
                         size="sm"
                         className={member.isActive ? "text-gray-500" : "text-green-600"}
+                        onClick={() => toggleActiveStatus(member.id, member.isActive)}
+                        disabled={updating === member.id}
                       >
-                        {member.isActive ? (
+                        {updating === member.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : member.isActive ? (
                           <EyeOff className="h-4 w-4" />
                         ) : (
                           <Eye className="h-4 w-4" />
                         )}
                       </Button>
-                      <Button variant="ghost" size="sm" className="text-red-600">
-                        <Trash2 className="h-4 w-4" />
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-red-600"
+                        onClick={() => deleteStaffMember(member.id)}
+                        disabled={deleting === member.id}
+                      >
+                        {deleting === member.id ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Trash2 className="h-4 w-4" />
+                        )}
                       </Button>
                     </div>
                   </div>

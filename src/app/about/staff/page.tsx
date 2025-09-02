@@ -5,49 +5,22 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Mail, CalendarDays } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { useStaff } from '@/hooks/useStaff';
 
-const staffMembers = [
-  {
-    id: 'pastor-james-bell',
-    name: 'Pastor James – Lead Teaching Pastor',
-    title: 'Lead Teaching Pastor',
-    bio: [
-      "James Bell serves as the Lead Teaching Pastor of First Baptist Church of Fenton. His journey to faith is one marked by skepticism, struggle, and grace. Raised by a single mother and having grown up without a father, James carried deep wounds and questions about God, purpose, and identity. By the time he reached college, he identified as an atheist — hardened by pain, resistant to religion, and searching for truth in all the wrong places.",
-      "That all began to change after an head injury landed him in the hospital. A Christian visited him there — not with judgment, but with presence and compassion. That conversation led to months of honest dialogue, raw questions, and finally, a radical encounter with the gospel of Jesus Christ. What started as curiosity became conviction. James gave his life to Christ and was never the same.",
-      "After surrendering to the call of ministry, he and his wife, Susanna, moved to North Carolina to serve the homeless, lead inner-city ministries, and begin formal theological training. It was during that season God gave them a growing burden for broken people, burned-out believers, and spiritually dry churches — especially in James's hometown region.",
-      "In 2016, Pastor James became the Lead Teaching Pastor of FBC Fenton, where he has faithfully preached God's Word, shepherded the church through revitalization, and led a movement focused on gospel clarity, authentic relationships, and global mission.",
-      "He is known for his bold, raw, and transparent preaching, blending theological depth with real-life application. He doesn't shy away from hard conversations. His messages are marked by vulnerability, honesty, and a deep conviction that Jesus is still in the business of healing the broken and building His church.",
-      "James is also the President of the Board at the Center of Hope, founder of the Pastors Connection Network, and leader of several regional and international ministry initiatives training pastors in Pakistan, India, and Thailand.",
-      "James and Susanna have five wild and wonderful boys: Titus, Timothy, Tatum, Toby, and Theo. He's a devoted dad, a passionate leader, and a firm believer that the local church is still God's plan A for transforming the world.",
-      "He also understands ministry pain — the unseen battles, betrayals, and burdens many pastors and families silently carry. This empathy drives his work with pastors around the world, creating safe places for leaders to rest, grow, and return to ministry with clarity and strength.",
-    ],
-    imageUrl: '/placeholder.jpg', // Placeholder
-    email: 'james@fbfenton.org',
-    meetingLink: 'https://calendly.com/fbc-fenton-james/30min',
-  },
-  {
-    id: 'laurie-campau',
-    name: 'Laurie Campau',
-    title: 'Worship Leader',
-    bio: [
-      "Laurie has led worship at FBC since 2016. She brings a joyful, humble spirit to every service and works hard to point people to Christ through music.",
-      "She's married to Brent, and they have five kids: Noelle, Annellise, Lincoln, Aksel, and Crew.",
-    ],
-    imageUrl: '/placeholder.jpg', // Placeholder
-    email: 'laurie@fbfenton.org',
-  },
-  {
-    id: 'pastor-cody',
-    name: 'Pastor Cody',
-    title: 'Families Pastor',
-    bio: [
-      "Cody came to faith as a teenager and felt called to ministry shortly after. He has a degree in Youth Ministry and leads all our children, youth, and family ministries.",
-      "Cody and his wife Alyssa have three daughters: Audrey, Avery, and Addison. He's passionate about helping the next generation know and follow Jesus.",
-    ],
-    imageUrl: '/placeholder.jpg', // Placeholder
-    email: 'cody@fbfenton.org',
-  },
-];
+// Helper function to split description into paragraphs
+const splitDescriptionIntoParagraphs = (description: string): string[] => {
+  // Split by double line breaks or periods followed by spaces
+  return description.split(/(?<=\.)\s+/).filter(para => para.trim().length > 0);
+};
+
+// Helper function to generate meeting link based on staff member
+const getMeetingLink = (name: string, email: string): string | null => {
+  const lowerName = name.toLowerCase();
+  if (lowerName.includes('james') || lowerName.includes('pastor')) {
+    return 'https://calendly.com/fbc-fenton-james/30min';
+  }
+  return null;
+};
 
 const organization = {
   title: "How We're Organized",
@@ -78,6 +51,64 @@ const vision = {
 };
 
 export default function StaffPage() {
+  const { staffMembers, loading, error } = useStaff();
+
+  if (loading) {
+    return (
+      <main className="bg-gray-50">
+        <div className="container mx-auto px-4 py-8 md:py-12">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold font-heading tracking-tight lg:text-5xl">Meet Our Team</h1>
+            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+              Meet the team of pastors and leaders who are dedicated to serving our church and community.
+            </p>
+          </div>
+          <div className="text-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+            <p className="mt-4 text-muted-foreground">Loading staff information...</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main className="bg-gray-50">
+        <div className="container mx-auto px-4 py-8 md:py-12">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold font-heading tracking-tight lg:text-5xl">Meet Our Team</h1>
+            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+              Meet the team of pastors and leaders who are dedicated to serving our church and community.
+            </p>
+          </div>
+          <div className="text-center py-20">
+            <p className="text-destructive text-lg">Error loading staff information: {error}</p>
+            <p className="mt-2 text-muted-foreground">Please try refreshing the page.</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  if (!staffMembers || staffMembers.length === 0) {
+    return (
+      <main className="bg-gray-50">
+        <div className="container mx-auto px-4 py-8 md:py-12">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold font-heading tracking-tight lg:text-5xl">Meet Our Team</h1>
+            <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
+              Meet the team of pastors and leaders who are dedicated to serving our church and community.
+            </p>
+          </div>
+          <div className="text-center py-20">
+            <p className="text-muted-foreground text-lg">No staff information available at the moment.</p>
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="bg-gray-50">
       <div className="container mx-auto px-4 py-8 md:py-12">
@@ -89,33 +120,40 @@ export default function StaffPage() {
         </div>
 
         <div className="space-y-16">
-          {staffMembers.map((staff) => (
-            <Card key={staff.id} className="overflow-hidden shadow-lg border-2 border-gray-100">
-              <div className="p-6 md:p-8 flex flex-col">
-                <CardHeader className="p-0">
-                  <CardTitle className="text-3xl font-heading font-bold">{staff.name}</CardTitle>
-                  <CardDescription className="font-semibold text-primary text-lg">{staff.title}</CardDescription>
-                </CardHeader>
-                <CardContent className="p-0 mt-6 space-y-4 text-muted-foreground">
-                  {staff.bio.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
-                </CardContent>
-                <div className="mt-auto pt-6 flex items-center space-x-4">
-                  <Button asChild variant="outline">
-                    <Link href={`mailto:${staff.email}`} className="flex items-center">
-                      <Mail className="h-4 w-4 mr-2" /> Email
-                    </Link>
-                  </Button>
-                  {staff.meetingLink && (
-                    <Button asChild>
-                      <Link href={staff.meetingLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                        <CalendarDays className="h-4 w-4 mr-2" /> Schedule a Meeting
-                      </Link>
-                    </Button>
-                  )}
+          {staffMembers.map((staff) => {
+            const bio = staff.description ? splitDescriptionIntoParagraphs(staff.description) : [];
+            const meetingLink = getMeetingLink(staff.name, staff.email || '');
+
+            return (
+              <Card key={staff.id} className="overflow-hidden shadow-lg border-2 border-gray-100">
+                <div className="p-6 md:p-8 flex flex-col">
+                  <CardHeader className="p-0">
+                    <CardTitle className="text-3xl font-heading font-bold">{staff.name}</CardTitle>
+                    <CardDescription className="font-semibold text-primary text-lg">{staff.position}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-0 mt-6 space-y-4 text-muted-foreground">
+                    {bio.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+                  </CardContent>
+                  <div className="mt-auto pt-6 flex items-center space-x-4">
+                    {staff.email && (
+                      <Button asChild variant="outline">
+                        <Link href={`mailto:${staff.email}`} className="flex items-center">
+                          <Mail className="h-4 w-4 mr-2" /> Email
+                        </Link>
+                      </Button>
+                    )}
+                    {meetingLink && (
+                      <Button asChild>
+                        <Link href={meetingLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                          <CalendarDays className="h-4 w-4 mr-2" /> Schedule a Meeting
+                        </Link>
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </Card>
-          ))}
+              </Card>
+            );
+          })}
         </div>
 
         <div className="mt-24 grid md:grid-cols-2 gap-16">
