@@ -7,6 +7,7 @@ import Image from "next/image";
 import { ArrowRight, Star, Church, Users, HeartHandshake, Clock, MapPin, Calendar } from "lucide-react";
 import { useNextEvent } from "@/hooks/useNextEvent";
 import { HeroSlideshowBackground } from "@/components/home/HeroSlideshowBackground";
+import { useHomepageData } from "@/hooks/useHomepageData";
 
 // A more focused feature card
 const Feature = ({ icon: Icon, title, description, href, cta }: {
@@ -33,12 +34,23 @@ const Feature = ({ icon: Icon, title, description, href, cta }: {
 
 export default function Home() {
   const { nextEvent, isLoading } = useNextEvent();
+  const { data: homepageData, isLoading: homepageLoading } = useHomepageData();
+  
   return (
     <main className="flex flex-col">
       
       {/* Hero Section - Centered with background slideshow */}
       <section className="relative">
-        <HeroSlideshowBackground images={["/slideshow1.jpg", "/slideshow2.jpg"]} />
+        {homepageLoading ? (
+          // Loading state for slideshow
+          <div className="absolute inset-0 -z-10 bg-gray-800">
+            <div className="absolute inset-0 bg-black/55" />
+          </div>
+        ) : (
+          <HeroSlideshowBackground 
+            slideshowItems={homepageData.slideshow} 
+          />
+        )}
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36">
           <div className="max-w-3xl mx-auto text-center text-white">
             <h1 className="text-4xl sm:text-5xl font-heading font-bold leading-tight text-white">
@@ -111,33 +123,37 @@ export default function Home() {
       </section>
       
       {/* Latest Sermon Section */}
-      <section className="bg-background-secondary py-20 md:py-28">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {homepageData.currentSeries && (
+        <section className="bg-background-secondary py-20 md:py-28">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="flex flex-col items-start gap-6">
-                    <span className="text-primary font-semibold">CURRENT SERIES</span>
-                    <h2 className="text-3xl sm:text-4xl font-heading font-bold">Dive Deeper into God's Word</h2>
-                    <p className="text-lg text-muted-foreground">
-                        Our messages are designed to be practical, engaging, and faithful to Scripture. Watch the latest one now or browse our archive to find a series that speaks to you.
-                    </p>
-                    <Button size="lg" asChild>
-                        <Link href="/sermons">Watch Now</Link>
-                    </Button>
-                </div>
-                <div className="mt-8 md:mt-0">
-                  <Link href="/sermons" className="block group">
-                    <Image 
-                      src="/sermon.png" 
-                      alt="Latest sermon series"
-                      width={600} 
-                      height={338} 
-                      className="rounded-lg object-cover w-full h-auto shadow-lg group-hover:shadow-xl transition-shadow"
-                    />
-                  </Link>
-                </div>
+              <div className="flex flex-col items-start gap-6">
+                <span className="text-primary font-semibold">CURRENT SERIES</span>
+                <h2 className="text-3xl sm:text-4xl font-heading font-bold">
+                  {homepageData.currentSeries.title}
+                </h2>
+                <p className="text-lg text-muted-foreground">
+                  {homepageData.currentSeries.description}
+                </p>
+                <Button size="lg" asChild>
+                  <Link href="/sermons">Watch Now</Link>
+                </Button>
+              </div>
+              <div className="mt-8 md:mt-0">
+                <Link href="/sermons" className="block group">
+                  <Image 
+                    src={homepageData.currentSeries.imageUrl || "/sermon.png"} 
+                    alt={homepageData.currentSeries.title}
+                    width={600} 
+                    height={338} 
+                    className="rounded-lg object-cover w-full h-auto shadow-lg group-hover:shadow-xl transition-shadow"
+                  />
+                </Link>
+              </div>
             </div>
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* Final CTA Section */}
       <section className="bg-primary text-white">

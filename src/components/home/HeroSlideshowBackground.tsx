@@ -4,15 +4,26 @@ import React from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
+export interface SlideshowItem {
+  id: number;
+  title: string;
+  subtitle: string;
+  imageUrl: string;
+  imageKey: string;
+  linkUrl: string;
+  linkText: string;
+  order: number;
+}
+
 export type HeroSlideshowBackgroundProps = {
-  images: string[];
+  slideshowItems: SlideshowItem[];
   intervalMs?: number;
   className?: string;
   overlayClassName?: string;
 };
 
 export function HeroSlideshowBackground({
-  images,
+  slideshowItems,
   intervalMs = 7000,
   className,
   overlayClassName,
@@ -20,28 +31,36 @@ export function HeroSlideshowBackground({
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
   React.useEffect((): (() => void) => {
-    if (!images || images.length === 0) return () => {};
+    if (!slideshowItems || slideshowItems.length === 0) return () => {};
     const id = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
+      setCurrentIndex((prev) => (prev + 1) % slideshowItems.length);
     }, intervalMs);
     return () => clearInterval(id);
-  }, [images, intervalMs]);
+  }, [slideshowItems, intervalMs]);
 
-  if (!images || images.length === 0) return null;
+  if (!slideshowItems || slideshowItems.length === 0) {
+    // Fallback to a default background
+    return (
+      <div className={cn("absolute inset-0 -z-10", className)} aria-hidden>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-purple-900" />
+        <div className={cn("absolute inset-0 bg-black/55", overlayClassName)} />
+      </div>
+    );
+  }
 
   return (
     <div className={cn("absolute inset-0 -z-10", className)} aria-hidden>
-      {images.map((src, index) => (
+      {slideshowItems.map((item, index) => (
         <div
-          key={src + index}
+          key={item.id}
           className={cn(
             "absolute inset-0 transition-opacity duration-1000 ease-in-out",
             index === currentIndex ? "opacity-100" : "opacity-0"
           )}
         >
           <Image
-            src={src}
-            alt=""
+            src={item.imageUrl}
+            alt={item.title || "Slideshow image"}
             fill
             priority={index === 0}
             sizes="100vw"

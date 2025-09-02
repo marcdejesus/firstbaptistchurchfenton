@@ -8,6 +8,7 @@ import { SessionProvider } from '@/components/auth/SessionProvider';
 import { ChurchStructuredData } from '@/components/seo/StructuredData';
 import { SkipLink } from '@/components/accessibility/FocusManager';
 import { ScrollToTop, MobilePerformanceProvider } from '@/components/mobile/MobileOptimizations';
+import { HomepageDataProvider } from '@/components/home/HomepageDataProvider';
 
 const cardo = Cardo({
   subsets: ['latin'],
@@ -109,17 +110,7 @@ export default function RootLayout({
         <MobilePerformanceProvider>
           <SessionProvider>
             <Header />
-            {/* Announcement Banner */}
-            <div className="relative z-30 bg-accent text-white">
-              <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center flex items-center justify-center">
-                <p className="text-sm text-white">
-                  <span className="inline-block animate-pulse">
-                    Welcome! Join us Sundays at 10:30 AM —
-                    <a href="/visit" className="underline font-semibold ml-1 text-white hover:text-white/80">Plan your visit</a>
-                  </span>
-                </p>
-              </div>
-            </div>
+            <HomepageDataProvider />
             <main id="main-content" className="flex-grow" tabIndex={-1}>
               {children}
             </main>
