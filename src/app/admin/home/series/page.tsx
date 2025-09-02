@@ -1,44 +1,123 @@
-import { Metadata } from 'next';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
-import { prisma } from '@/lib/prisma';
+"use client";
+
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Edit, Trash2, Eye, EyeOff, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useToast } from '@/hooks/use-toast';
 
-export const metadata: Metadata = {
-  title: 'Current Series | Admin Dashboard',
-  description: 'Manage current sermon series',
-  robots: 'noindex, nofollow',
-};
 
-async function getSeries() {
-  try {
-    const series = await prisma.currentSeries.findMany({
-      orderBy: { startDate: 'desc' }
-    });
-    return series;
-  } catch (error) {
-    console.error('Error fetching series:', error);
-    return [];
-  }
-}
 
-export default async function SeriesAdminPage() {
-  const session = await getServerSession(authOptions);
-  const series = await getSeries();
+export default function SeriesAdminPage() {
+  const { toast } = useToast();
+  const [series, setSeries] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchSeries();
+  }, []);
+
+  const fetchSeries = async () => {
+    try {
+      const response = await fetch('/api/admin/series');
+      if (response.ok) {
+        const data = await response.json();
+        setSeries(data);
+      } else {
+        throw new Error('Failed to fetch series');
+      }
+    } catch (error) {
+      console.error('Error fetching series:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load series data',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleToggleActive = async (id: number, newActiveStatus: boolean) => {
+    try {
+      const response = await fetch(`/api/admin/series/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...series.find(s => s.id === id),
+          isActive: newActiveStatus,
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: 'Status updated',
+          description: `Series ${newActiveStatus ? 'activated' : 'deactivated'} successfully`,
+        });
+        fetchSeries(); // Refresh the list
+      } else {
+        throw new Error('Failed to update series status');
+      }
+    } catch (error) {
+      console.error('Error updating series status:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to update series status',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleDeleteSeries = async (id: number) => {
+    if (!confirm('Are you sure you want to delete this series? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/admin/series/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        toast({
+          title: 'Series deleted',
+          description: 'The series has been removed successfully',
+        });
+        fetchSeries(); // Refresh the list
+      } else {
+        throw new Error('Failed to delete series');
+      }
+    } catch (error) {
+      console.error('Error deleting series:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to delete series',
+        variant: 'destructive',
+      });
+    }
+  };
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold">Current Series</h1>
-        <p className="text-muted-foreground">
-          Manage the current sermon series displayed on your homepage
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Current Series</h1>
+          <p className="text-muted-foreground">
+            Manage the current sermon series displayed on your homepage
+          </p>
+        </div>
+        <Button asChild>
+          <Link href="/admin/home/series/new">
+            <Calendar className="h-4 w-4 mr-2" />
+            New Series
+          </Link>
+        </Button>
       </div>
 
       {/* Stats */}
@@ -82,7 +161,12 @@ export default async function SeriesAdminPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {series.length > 0 ? (
+          {isLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+              <span className="ml-2 text-muted-foreground">Loading series...</span>
+            </div>
+          ) : series.length > 0 ? (
             <div className="space-y-4">
               {series.map((seriesItem) => (
                 <div
@@ -148,6 +232,7 @@ export default async function SeriesAdminPage() {
                       variant="ghost"
                       size="sm"
                       className={seriesItem.isActive ? "text-gray-500" : "text-green-600"}
+                      onClick={() => handleToggleActive(seriesItem.id, !seriesItem.isActive)}
                     >
                       {seriesItem.isActive ? (
                         <EyeOff className="h-4 w-4" />
@@ -155,7 +240,12 @@ export default async function SeriesAdminPage() {
                         <Eye className="h-4 w-4" />
                       )}
                     </Button>
-                    <Button variant="ghost" size="sm" className="text-red-600">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-red-600"
+                      onClick={() => handleDeleteSeries(seriesItem.id)}
+                    >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
