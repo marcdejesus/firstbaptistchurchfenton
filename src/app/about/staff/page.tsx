@@ -6,12 +6,7 @@ import { Mail, CalendarDays } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useStaff } from '@/hooks/useStaff';
-
-// Helper function to split description into paragraphs
-const splitDescriptionIntoParagraphs = (description: string): string[] => {
-  // Split by double line breaks or periods followed by spaces
-  return description.split(/(?<=\.)\s+/).filter(para => para.trim().length > 0);
-};
+import { formatDescription } from '@/lib/text-formatting';
 
 // Helper function to generate meeting link based on staff member
 const getMeetingLink = (name: string, email: string): string | null => {
@@ -121,7 +116,7 @@ export default function StaffPage() {
 
         <div className="space-y-16">
           {staffMembers.map((staff) => {
-            const bio = staff.description ? splitDescriptionIntoParagraphs(staff.description) : [];
+            const formattedBio = staff.description ? formatDescription(staff.description) : [];
             const meetingLink = getMeetingLink(staff.name, staff.email || '');
 
             return (
@@ -132,7 +127,7 @@ export default function StaffPage() {
                     <CardDescription className="font-semibold text-primary text-lg">{staff.position}</CardDescription>
                   </CardHeader>
                   <CardContent className="p-0 mt-6 space-y-4 text-muted-foreground">
-                    {bio.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+                    {formattedBio}
                   </CardContent>
                   <div className="mt-auto pt-6 flex items-center space-x-4">
                     {staff.email && (

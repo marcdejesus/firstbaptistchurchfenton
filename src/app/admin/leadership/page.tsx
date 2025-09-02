@@ -8,6 +8,7 @@ import { Plus, Edit, Trash2, Eye, EyeOff, Users, Mail, Loader2 } from 'lucide-re
 import Link from 'next/link';
 import Image from 'next/image';
 import { toast } from '@/hooks/use-toast';
+import { formatDescriptionAsPlainText } from '@/lib/text-formatting';
 
 interface StaffMember {
   id: number;
@@ -244,7 +245,7 @@ export default function LeadershipAdminPage() {
                     
                     {member.description && (
                       <p className="text-sm text-muted-foreground line-clamp-3">
-                        {member.description}
+                        {formatDescriptionAsPlainText(member.description, 150)}
                       </p>
                     )}
                     
