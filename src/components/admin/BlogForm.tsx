@@ -56,7 +56,7 @@ export function BlogForm({ post, isNew }: BlogFormProps) {
       .replace(/[^a-z0-9\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
-      .trim('-');
+      .replace(/^-+|-+$/g, '');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

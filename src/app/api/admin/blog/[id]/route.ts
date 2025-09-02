@@ -2,10 +2,9 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { utapi } from "@/utils/uploadthing";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(request: Request, { params }: Props) {
@@ -16,7 +15,8 @@ export async function GET(request: Request, { params }: Props) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const postId = parseInt(params.id);
+    const { id } = await params;
+    const postId = parseInt(id);
     if (isNaN(postId)) {
       return NextResponse.json({ error: "Invalid post ID" }, { status: 400 });
     }
@@ -51,7 +51,8 @@ export async function PUT(request: Request, { params }: Props) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const postId = parseInt(params.id);
+    const { id } = await params;
+    const postId = parseInt(id);
     if (isNaN(postId)) {
       return NextResponse.json({ error: "Invalid post ID" }, { status: 400 });
     }
@@ -85,7 +86,14 @@ export async function PUT(request: Request, { params }: Props) {
     // If the thumbnail has changed, delete the old one from UploadThing
     if (existingPost.thumbnailKey && thumbnailKey !== existingPost.thumbnailKey && existingPost.thumbnailKey) {
       try {
-        await utapi.deleteFiles([existingPost.thumbnailKey]);
+        const response = await fetch('/api/uploadthing/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fileKey: existingPost.thumbnailKey }),
+        });
+        if (!response.ok) {
+          console.error('Error deleting old thumbnail:', response.statusText);
+        }
       } catch (error) {
         console.error('Error deleting old thumbnail:', error);
         // Continue with update even if old thumbnail deletion fails
@@ -136,7 +144,8 @@ export async function DELETE(request: Request, { params }: Props) {
       return NextResponse.json({ error: "Admin access required" }, { status: 401 });
     }
 
-    const postId = parseInt(params.id);
+    const { id } = await params;
+    const postId = parseInt(id);
     if (isNaN(postId)) {
       return NextResponse.json({ error: "Invalid post ID" }, { status: 400 });
     }
@@ -153,7 +162,14 @@ export async function DELETE(request: Request, { params }: Props) {
     // Delete the thumbnail from UploadThing
     if (existingPost.thumbnailKey) {
       try {
-        await utapi.deleteFiles([existingPost.thumbnailKey]);
+        const response = await fetch('/api/uploadthing/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fileKey: existingPost.thumbnailKey }),
+        });
+        if (!response.ok) {
+          console.error('Error deleting thumbnail from UploadThing:', response.statusText);
+        }
       } catch (error) {
         console.error('Error deleting thumbnail from UploadThing:', error);
         // Continue with database deletion even if file deletion fails
