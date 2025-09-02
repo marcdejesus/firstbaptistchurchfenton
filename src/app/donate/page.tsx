@@ -5,12 +5,19 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import Link from "next/link";
 import { CreditCard, Mail } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
+import { useDonateSettings } from "@/hooks/useDonateSettings";
 
 export default function DonatePage() {
+  const { donateSettings, loading, error } = useDonateSettings();
+
+  // Fallback values if data is still loading or there's an error
+  const donateUrl = donateSettings?.donateUrl || "https://www.paypal.com/donate?token=6-wnb_Sj_MupmasvWZnxJSDO899HjDQcX5bp4X63zwZrAL0QI_VKxgXHkGaWENDHRxbNG4Yw5txQpqKA";
+  const description = donateSettings?.description || "We want giving to be simple, secure, and impactful. Your generosity helps us continue our mission of making disciples and serving our community.";
+
   return (
     <PageLayout
       title="Give to First Baptist Church"
-      subtitle="We want giving to be simple, secure, and impactful. Your generosity helps us continue our mission of making disciples and serving our community."
+      subtitle={description}
     >
       <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
         
@@ -26,7 +33,7 @@ export default function DonatePage() {
           </CardHeader>
           <CardContent className="flex-grow flex flex-col justify-center">
             <Button asChild size="lg">
-              <Link href="https://www.paypal.com/donate?token=6-wnb_Sj_MupmasvWZnxJSDO899HjDQcX5bp4X63zwZrAL0QI_VKxgXHkGaWENDHRxbNG4Yw5txQpqKA">
+              <Link href={donateUrl}>
                 Donate
               </Link>
             </Button>
