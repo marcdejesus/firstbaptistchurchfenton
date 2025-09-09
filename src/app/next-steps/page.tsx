@@ -98,9 +98,6 @@ export default function NextStepsPage() {
                             Learn More <ArrowRight className="ml-2 h-4 w-4" />
                         </Link>
                     </Button>
-                     <p className="text-sm text-muted-foreground mt-4">
-                        Or contact: <a href={`mailto:${program.contact}`} className="underline hover:text-primary">{program.contact}</a>
-                    </p>
                 </CardContent>
             </Card>
         ))}
