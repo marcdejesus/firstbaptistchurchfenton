@@ -1,4 +1,23 @@
 import nodemailer from 'nodemailer';
+import { prisma } from './prisma';
+
+// Helper function to get church settings from database
+async function getChurchSettings() {
+  try {
+    const settings = await prisma.churchSettings.findFirst();
+    return {
+      contactEmail: settings?.contactEmail || process.env.CHURCH_CONTACT_EMAIL || 'info@fbfenton.org',
+      prayerEmail: settings?.prayerEmail || process.env.CHURCH_PRAYER_EMAIL || 'prayer@fbfenton.org',
+    };
+  } catch (error) {
+    console.error('Error fetching church settings:', error);
+    // Fallback to environment variables
+    return {
+      contactEmail: process.env.CHURCH_CONTACT_EMAIL || 'info@fbfenton.org',
+      prayerEmail: process.env.CHURCH_PRAYER_EMAIL || 'prayer@fbfenton.org',
+    };
+  }
+}
 
 export interface EmailConfig {
   service?: string;
@@ -93,7 +112,7 @@ export class EmailService {
     phone?: string;
     submissionId?: number;
   }): Promise<{ success: boolean; messageId?: string; error?: string }> {
-    const churchEmail = process.env.CHURCH_CONTACT_EMAIL || 'info@fbfenton.org';
+    const { contactEmail: churchEmail } = await getChurchSettings();
     
     const htmlContent = `
       <!DOCTYPE html>
@@ -176,7 +195,7 @@ Reply to this email to respond directly to ${formData.name}.
     isPublic: boolean;
     submissionId?: number;
   }): Promise<{ success: boolean; messageId?: string; error?: string }> {
-    const prayerEmail = process.env.CHURCH_PRAYER_EMAIL || 'prayer@fbfenton.org';
+    const { prayerEmail } = await getChurchSettings();
     
     const confidentialLabel = requestData.isPublic ? '' : '🔒 CONFIDENTIAL ';
     const privacyNote = requestData.isPublic 
@@ -269,7 +288,7 @@ ${requestData.email ? `Reply to this email to contact ${requestData.name} direct
   async sendAutoReply(type: 'contact' | 'prayer', recipientEmail: string, recipientName: string): Promise<{ success: boolean; messageId?: string; error?: string }> {
     const churchName = process.env.CHURCH_NAME || 'First Baptist Church Fenton';
     const churchPhone = process.env.CHURCH_PHONE || '(810) 629-9425';
-    const churchEmail = process.env.CHURCH_CONTACT_EMAIL || 'info@fbfenton.org';
+    const { contactEmail: churchEmail } = await getChurchSettings();
 
     let subject: string;
     let htmlContent: string;

@@ -10,6 +10,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { Send, Heart, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { useChurchSettings } from '@/hooks/useChurchSettings';
 
 interface PrayerFormData {
   name: string;
@@ -20,6 +21,7 @@ interface PrayerFormData {
 }
 
 export default function PrayerPage() {
+  const { settings } = useChurchSettings();
   const [formData, setFormData] = useState<PrayerFormData>({
     name: '',
     email: '',
@@ -82,7 +84,7 @@ export default function PrayerPage() {
           <CardHeader>
             <CardTitle>Submit a Prayer Request</CardTitle>
             <CardDescription>
-              All requests sent to <a href="mailto:prayer@fbfenton.org" className="underline text-primary">prayer@fbfenton.org</a> will be shared with our pastoral and prayer teams.
+              All requests sent to <a href={`mailto:${settings?.prayerEmail || "prayer@fbfenton.org"}`} className="underline text-primary">{settings?.prayerEmail || "prayer@fbfenton.org"}</a> will be shared with our pastoral and prayer teams.
             </CardDescription>
           </CardHeader>
           <CardContent>

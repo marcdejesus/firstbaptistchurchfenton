@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     // Send auto-reply to user if email provided
     let autoReplyResult = { success: true };
     if (cleanedData.email) {
-      autoReplyResult = await emailService.sendPrayerRequestConfirmation(cleanedData.email, cleanedData.name);
+      autoReplyResult = await emailService.sendAutoReply('prayer', cleanedData.email, cleanedData.name);
     }
 
     if (!notificationResult.success) {

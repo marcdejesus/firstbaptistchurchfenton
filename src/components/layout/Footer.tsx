@@ -1,15 +1,20 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Facebook, Youtube, Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { useChurchSettings } from '@/hooks/useChurchSettings';
 
 export function Footer() {
+  const { settings } = useChurchSettings();
+  
   const footerSections = [
     {
       title: 'Contact Information',
       items: [
         { icon: MapPin, text: '860 N. Leroy St., Fenton, MI 48430', href: 'https://goo.gl/maps/example' },
         { icon: Phone, text: '810.629.9427', href: 'tel:810-629-9427' },
-        { icon: Mail, text: 'hello@firstbaptistchurch.org', href: 'mailto:hello@firstbaptistchurch.org' },
+        { icon: Mail, text: settings?.contactEmail || 'hello@firstbaptistchurch.org', href: `mailto:${settings?.contactEmail || 'hello@firstbaptistchurch.org'}` },
       ],
     },
     {

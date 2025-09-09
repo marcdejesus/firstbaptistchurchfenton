@@ -10,6 +10,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MapPin, Phone, Mail, Clock, Send, Facebook, Instagram, Youtube, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import Link from "next/link";
+import { useChurchSettings } from '@/hooks/useChurchSettings';
 
 interface FormData {
   name: string;
@@ -21,6 +22,7 @@ interface FormData {
 
 export default function ContactPage() {
   const mapUrl = "https://www.google.com/maps/search/?api=1&query=860%20N%20Leroy%20St%2C%20Fenton%2C%20MI%2048430";
+  const { settings } = useChurchSettings();
   
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -85,7 +87,7 @@ export default function ContactPage() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <InfoItem icon={Phone} label="Phone" value="(810) 629-6641" href="tel:810-629-6641" />
-                        <InfoItem icon={Mail} label="Email" value="info@fbfenton.org" href="mailto:info@fbfenton.org" />
+                        <InfoItem icon={Mail} label="Email" value={settings?.contactEmail || "info@fbfenton.org"} href={`mailto:${settings?.contactEmail || "info@fbfenton.org"}`} />
                         <InfoItem icon={MapPin} label="Address" value="860 N. Leroy Street, Fenton, MI 48430" href={mapUrl} />
                         <div className="flex space-x-2 pt-2">
                             <SocialLink href="https://www.facebook.com/pg/FBCfenton" icon={Facebook} label="Facebook" />

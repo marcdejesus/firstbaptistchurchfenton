@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Settings, Database, Shield, Upload, Mail, Calendar, Globe, Server } from 'lucide-react';
+import { ChurchSettingsForm } from '@/components/admin/ChurchSettingsForm';
 
 export const metadata: Metadata = {
   title: 'System Settings | Admin Dashboard',
@@ -118,10 +119,10 @@ export default async function SettingsPage() {
       description: 'Email sending and notification settings',
       icon: Mail,
       items: [
-        { label: 'Email Provider', value: 'Not Configured', status: 'warning' },
-        { label: 'SMTP Status', value: 'Not Connected', status: 'warning' },
-        { label: 'Contact Form', value: 'Working (Basic)', status: 'info' },
-        { label: 'Notifications', value: 'Disabled', status: 'warning' }
+        { label: 'Email Provider', value: 'Google SMTP', status: 'configured' },
+        { label: 'SMTP Status', value: 'Connected', status: 'healthy' },
+        { label: 'Contact Form', value: 'Working', status: 'healthy' },
+        { label: 'Prayer Requests', value: 'Working', status: 'healthy' }
       ]
     },
     {
@@ -203,6 +204,9 @@ export default async function SettingsPage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Church Email Settings */}
+      <ChurchSettingsForm />
 
       {/* Settings Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

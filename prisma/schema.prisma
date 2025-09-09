@@ -219,3 +219,13 @@ enum MissionType {
   LOCAL
   INTERNATIONAL
 }
+
+model ChurchSettings {
+  id                Int      @id @default(autoincrement())
+  contactEmail      String   @default("info@fbfenton.org") @map("contact_email")
+  prayerEmail       String   @default("prayer@fbfenton.org") @map("prayer_email")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@map("church_settings")
+}
