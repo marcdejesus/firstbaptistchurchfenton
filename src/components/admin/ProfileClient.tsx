@@ -228,14 +228,6 @@ export function ProfileClient({ user }: ProfileClientProps) {
                   {getUserInitials(user.name)}
                 </AvatarFallback>
               </Avatar>
-              <Button
-                size="sm"
-                variant="outline"
-                className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0"
-                disabled
-              >
-                <Camera className="h-4 w-4" />
-              </Button>
             </div>
             <div className="space-y-1">
               <h3 className="text-xl font-semibold">{user.name}</h3>
