@@ -99,15 +99,6 @@ export function AdminLayout({ children, user }: AdminLayoutProps) {
     },
 
     {
-      title: 'Communications',
-      href: '/admin/communications',
-      icon: FileText,
-      children: [
-        { title: 'Contact Submissions', href: '/admin/communications/contact', icon: FileText },
-        { title: 'Prayer Requests', href: '/admin/communications/prayer', icon: FileText }
-      ]
-    },
-    {
       title: 'Users',
       href: '/admin/users',
       icon: Users,

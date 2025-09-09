@@ -22,9 +22,7 @@ async function getDashboardStats() {
       totalStaffMembers,
       totalMinistries,
       totalMissionPartners,
-      activeAnnouncement,
-      recentContactSubmissions,
-      recentPrayerRequests
+      activeAnnouncement
     ] = await Promise.all([
       prisma.blogPost.count(),
       prisma.blogPost.count({ where: { status: 'PUBLISHED' } }),
@@ -34,29 +32,8 @@ async function getDashboardStats() {
       prisma.staffMember.count({ where: { isActive: true } }),
       prisma.ministry.count({ where: { isActive: true } }),
       prisma.missionPartner.count({ where: { isActive: true } }),
-      prisma.announcementBanner.findFirst({ where: { isActive: true } }),
-      prisma.contactSubmission.findMany({
-        take: 5,
-        orderBy: { createdAt: 'desc' },
-        include: { user: { select: { name: true } } }
-      }),
-      prisma.prayerRequest.findMany({
-        take: 3,
-        orderBy: { createdAt: 'desc' },
-        where: { isPublic: true }
-      })
+      prisma.announcementBanner.findFirst({ where: { isActive: true } })
     ]);
-
-    // Format recent activity from contact submissions
-    const recentActivity = recentContactSubmissions.map((submission, index) => ({
-      id: submission.id,
-      userId: submission.createdBy || 0,
-      userName: submission.user?.name || 'Anonymous',
-      action: 'submitted',
-      resourceType: 'contact form',
-      resourceId: submission.id,
-      createdAt: submission.createdAt,
-    }));
 
     return {
       totalBlogPosts,
@@ -68,9 +45,7 @@ async function getDashboardStats() {
       totalMinistries,
       totalMissionPartners,
       activeAnnouncement,
-      recentActivity,
-      recentContactSubmissions,
-      recentPrayerRequests,
+      recentActivity: [], // Empty array since we no longer track form submissions
       storageUsed: 0, // Would calculate from UploadThing if needed
       storageLimit: 1024 * 1024 * 1024, // 1GB
     };
@@ -86,9 +61,7 @@ async function getDashboardStats() {
       totalStaffMembers: 0,
       totalMinistries: 0,
       totalMissionPartners: 0,
-      recentActivity: [],
-      recentContactSubmissions: [],
-      recentPrayerRequests: [],
+      recentActivity: [], // Empty array for error fallback
       storageUsed: 0,
       storageLimit: 1024 * 1024 * 1024,
     };

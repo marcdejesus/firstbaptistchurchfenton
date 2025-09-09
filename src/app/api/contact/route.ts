@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
 import { emailService } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
@@ -16,50 +15,45 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Please provide a valid email address.' }, { status: 400 });
     }
 
-    // Save contact submission to database
-    const savedSubmission = await prisma.contactSubmission.create({
-      data: {
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        subject: submittedSubject?.trim() || 'General Inquiry',
-        message: message.trim(),
-        phone: phone?.trim() || null,
-      },
-    });
+    // Prepare cleaned data (no database storage)
+    const cleanedData = {
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      subject: submittedSubject?.trim() || 'General Inquiry',
+      message: message.trim(),
+      phone: phone?.trim() || null,
+    };
 
-    console.log(`Contact form submission saved to database with ID: ${savedSubmission.id}`);
+    console.log(`Processing contact form submission from: ${cleanedData.email}`);
 
     // Check if email service is configured
     if (!emailService.isConfigured()) {
       console.error("Email service not configured. Check GOOGLE_SMTP_USER/MAIL_USER and GOOGLE_SMTP_PASSWORD/MAIL_PASS environment variables.");
       return NextResponse.json({ 
-        message: 'Your message has been saved, but email notifications are not configured. Please contact the church directly.',
-        id: savedSubmission.id,
+        message: 'Email notifications are not configured. Please contact the church directly.',
         warning: 'Email not sent - service not configured'
       }, { status: 202 });
     }
 
     // Send notification email to church
     const notificationResult = await emailService.sendContactFormNotification({
-      name: savedSubmission.name,
-      email: savedSubmission.email,
-      subject: savedSubmission.subject,
-      message: savedSubmission.message,
-      phone: savedSubmission.phone,
-      submissionId: savedSubmission.id,
+      name: cleanedData.name,
+      email: cleanedData.email,
+      subject: cleanedData.subject,
+      message: cleanedData.message,
+      phone: cleanedData.phone,
+      submissionId: Date.now(), // Generate timestamp-based ID for email tracking
     });
 
     // Send auto-reply to user
-    const autoReplyResult = await emailService.sendAutoReply('contact', savedSubmission.email, savedSubmission.name);
+    const autoReplyResult = await emailService.sendAutoReply('contact', cleanedData.email, cleanedData.name);
 
     if (!notificationResult.success) {
       console.error('Failed to send notification email:', notificationResult.error);
-      // Still return success since the form was saved to database
       return NextResponse.json({ 
-        message: 'Your message has been received and saved. However, there was an issue sending the notification email.',
-        id: savedSubmission.id,
+        message: 'There was an issue sending the notification email. Please try contacting the church directly.',
         warning: 'Notification email failed'
-      }, { status: 202 });
+      }, { status: 500 });
     }
 
     if (!autoReplyResult.success) {
@@ -70,7 +64,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ 
       message: 'Thank you for your message! We have received it and will get back to you within 24-48 hours.',
-      id: savedSubmission.id,
       emailSent: true
     });
 

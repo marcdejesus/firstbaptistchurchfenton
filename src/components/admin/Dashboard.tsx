@@ -23,8 +23,6 @@ interface DashboardStats {
   totalMissionPartners?: number;
   activeAnnouncement?: any;
   recentActivity: any[];
-  recentContactSubmissions?: any[];
-  recentPrayerRequests?: any[];
   storageUsed: number;
   storageLimit: number;
 }
@@ -145,41 +143,6 @@ export function Dashboard({ stats, userRole }: DashboardProps) {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Prayer Requests</CardTitle>
-            <CardDescription>
-              Latest prayer requests from church members
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {stats.recentPrayerRequests && stats.recentPrayerRequests.length > 0 ? (
-                stats.recentPrayerRequests.slice(0, 3).map((request, index) => (
-                  <div key={request.id || index} className="flex items-start space-x-3">
-                    <Calendar className="h-4 w-4 text-muted-foreground mt-1" />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium">{request.name}</p>
-                      <p className="text-xs text-muted-foreground line-clamp-2">
-                        {request.message?.substring(0, 100)}...
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {new Date(request.createdAt).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <Link href="/admin/communications/prayer">
-                      <Button variant="ghost" size="sm">
-                        View
-                      </Button>
-                    </Link>
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm text-muted-foreground">No recent prayer requests</p>
-              )}
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Help Section */}
