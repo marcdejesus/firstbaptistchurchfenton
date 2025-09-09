@@ -1,147 +1,60 @@
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Loader2, Calendar, User, ArrowLeft } from 'lucide-react';
-import { PageLayout } from '@/components/layout/PageLayout';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import Image from 'next/image';
-import type { BlogPost } from '@/hooks/useBlogPosts';
+import { generateBlogPostMetadata } from '@/lib/seo';
+import { prisma } from '@/lib/prisma';
+import BlogPostClient from './BlogPostClient';
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const [post, setPost] = useState<BlogPost | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface BlogPostPageProps {
+  params: Promise<{ slug: string }>;
+}
 
-  useEffect(() => {
-    async function fetchPost() {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/blog/${slug}`);
-        
-        if (!response.ok) {
-          if (response.status === 404) {
-            notFound();
-          }
-          throw new Error('Failed to fetch blog post');
-        }
-        
-        const data = await response.json();
-        setPost(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-        console.error('Error fetching blog post:', err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    if (slug) {
-      fetchPost();
-    }
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <PageLayout>
-        <div className="text-center py-24">
-          <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-          <p className="text-muted-foreground">Loading blog post...</p>
-        </div>
-      </PageLayout>
-    );
-  }
-
-  if (error || !post) {
-    return (
-      <PageLayout>
-        <div className="text-center py-24">
-          <h1 className="text-3xl font-bold mb-4">Error</h1>
-          <p className="text-muted-foreground mb-6">
-            {error || 'Blog post not found'}
-          </p>
-          <Button asChild>
-            <Link href="/blog">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Blog
-            </Link>
-          </Button>
-        </div>
-      </PageLayout>
-    );
-  }
-
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+async function getBlogPost(slug: string) {
+  try {
+    const post = await prisma.blogPost.findUnique({
+      where: { slug },
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
-  };
+    return post;
+  } catch (error) {
+    console.error('Error fetching blog post:', error);
+    return null;
+  }
+}
 
-  return (
-    <PageLayout>
-      <div className="max-w-4xl mx-auto">
-        {/* Back button */}
-        <div className="mb-6">
-          <Button variant="ghost" asChild>
-            <Link href="/blog">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to Blog
-            </Link>
-          </Button>
-        </div>
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const post = await getBlogPost(resolvedParams.slug);
+  
+  if (!post) {
+    return {
+      title: 'Blog Post Not Found - First Baptist Church Fenton',
+      description: 'The requested blog post could not be found.',
+    };
+  }
 
-        {/* Article header */}
-        <article className="prose prose-lg max-w-none">
-          <header className="mb-8">
-            <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
-            
-            {post.excerpt && (
-              <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
-                {post.excerpt}
-              </p>
-            )}
+  return generateBlogPostMetadata({
+    title: post.title,
+    excerpt: post.excerpt || undefined,
+    thumbnailUrl: post.thumbnailUrl || undefined,
+    publishedAt: post.publishedAt?.toISOString() || undefined,
+    author: post.author ? { name: post.author.name } : undefined,
+    slug: post.slug,
+  });
+}
 
-            <div className="flex items-center space-x-6 text-sm text-muted-foreground mb-6">
-              <span className="flex items-center">
-                <User className="h-4 w-4 mr-2" />
-                {post.author.name}
-              </span>
-              <span className="flex items-center">
-                <Calendar className="h-4 w-4 mr-2" />
-                {formatDate(post.publishedAt || post.createdAt)}
-              </span>
-            </div>
-          </header>
+export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const resolvedParams = await params;
+  const post = await getBlogPost(resolvedParams.slug);
+  
+  if (!post) {
+    notFound();
+  }
 
-          {/* Featured image */}
-          {post.thumbnailUrl && (
-            <div className="mb-8">
-              <Image
-                src={post.thumbnailUrl}
-                alt={post.title}
-                width={800}
-                height={400}
-                className="w-full h-auto rounded-lg shadow-lg"
-              />
-            </div>
-          )}
-
-          {/* Article content */}
-          <div className="prose prose-lg max-w-none">
-            {post.content.split('\n').map((paragraph, index) => (
-              <p key={index} className="mb-4">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </article>
-      </div>
-    </PageLayout>
-  );
+  return <BlogPostClient post={post} />;
 }

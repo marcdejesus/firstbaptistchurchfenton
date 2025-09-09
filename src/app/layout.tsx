@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-image.jpg',
+        url: '/church.png',
         width: 1200,
         height: 630,
         alt: 'First Baptist Church Fenton - Welcome Home',
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'First Baptist Church of Fenton',
     description: 'Growing in Faith, Sharing God\'s Love - Join us Sundays at 10 AM',
-    images: ['/og-image.jpg'],
+    images: ['/church.png'],
     creator: '@FBCFenton',
   },
   robots: {
