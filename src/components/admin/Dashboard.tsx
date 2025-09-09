@@ -144,52 +144,6 @@ export function Dashboard({ stats, userRole }: DashboardProps) {
         </Card>
 
       </div>
-
-      {/* Help Section */}
-      <Card className="bg-blue-50 border-blue-200">
-        <CardHeader>
-          <CardTitle className="text-blue-900">Need Help?</CardTitle>
-          <CardDescription className="text-blue-700">
-            Resources to help you manage your website effectively
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Button variant="outline" asChild className="h-auto p-4 text-left">
-              <Link href="/admin/help/getting-started">
-                <div>
-                  <h4 className="font-semibold">Getting Started Guide</h4>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Learn the basics of managing your website
-                  </p>
-                </div>
-              </Link>
-            </Button>
-            
-            <Button variant="outline" asChild className="h-auto p-4 text-left">
-              <Link href="/admin/help/video-tutorials">
-                <div>
-                  <h4 className="font-semibold">Video Tutorials</h4>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Step-by-step video guides for common tasks
-                  </p>
-                </div>
-              </Link>
-            </Button>
-            
-            <Button variant="outline" asChild className="h-auto p-4 text-left">
-              <Link href="/admin/help/contact-support">
-                <div>
-                  <h4 className="font-semibold">Contact Support</h4>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Get help when you need it most
-                  </p>
-                </div>
-              </Link>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }

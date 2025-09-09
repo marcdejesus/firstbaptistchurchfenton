@@ -11,7 +11,6 @@ import {
   Calendar,
   Users,
   Settings,
-  HelpCircle,
   LogOut,
   Menu,
   X,
@@ -71,7 +70,7 @@ export function AdminLayout({ children, user }: AdminLayoutProps) {
       href: '/admin/content',
       icon: FileText,
       children: [
-        { title: 'FAQ', href: '/admin/faq', icon: HelpCircle },
+        { title: 'FAQ', href: '/admin/faq', icon: FileText },
         { title: 'Homepage Slideshow', href: '/admin/home/slideshow', icon: Image },
         { title: 'Current Series', href: '/admin/home/series', icon: FileText },
         { title: 'Announcement Banner', href: '/admin/announcement', icon: FileText },
@@ -112,12 +111,6 @@ export function AdminLayout({ children, user }: AdminLayoutProps) {
     }
   ];
 
-  const helpItems = [
-    { title: 'Getting Started', href: '/admin/help/getting-started' },
-    { title: 'Video Tutorials', href: '/admin/help/tutorials' },
-    { title: 'User Guide', href: '/admin/help/user-guide' },
-    { title: 'Contact Support', href: '/admin/help/support' }
-  ];
 
   const toggleSection = (title: string) => {
     setExpandedSections(prev => 
@@ -244,25 +237,6 @@ export function AdminLayout({ children, user }: AdminLayoutProps) {
         })}
       </nav>
 
-      {/* Help Section */}
-      <div className="p-4 border-t border-gray-200">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="w-full justify-start">
-              <HelpCircle className="h-5 w-5 mr-3" />
-              Help & Support
-              <ChevronDown className="h-4 w-4 ml-auto" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="start" className="w-56">
-            {helpItems.map((item) => (
-              <DropdownMenuItem key={item.href} asChild>
-                <Link href={item.href}>{item.title}</Link>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
 
       {/* User Profile */}
       <div className="p-4 border-t border-gray-200">
