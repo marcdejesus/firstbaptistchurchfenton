@@ -39,10 +39,17 @@ export function HeroSlideshowBackground({
   }, [slideshowItems, intervalMs]);
 
   if (!slideshowItems || slideshowItems.length === 0) {
-    // Fallback to a default background
+    // Fallback to church.png placeholder
     return (
       <div className={cn("absolute inset-0 -z-10", className)} aria-hidden>
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900 to-purple-900" />
+        <Image
+          src="/church.png"
+          alt="First Baptist Church Fenton"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
         <div className={cn("absolute inset-0 bg-black/55", overlayClassName)} />
       </div>
     );

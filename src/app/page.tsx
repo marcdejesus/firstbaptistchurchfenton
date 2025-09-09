@@ -42,14 +42,24 @@ export default function Home() {
       {/* Hero Section - Centered with background slideshow */}
       <section className="relative">
         {homepageLoading ? (
-          // Loading state for slideshow
-          <div className="absolute inset-0 -z-10 bg-gray-800">
+          // Loading state with church.png placeholder
+          <div className="absolute inset-0 -z-10">
+            <Image
+              src="/church.png"
+              alt="First Baptist Church Fenton"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover transition-opacity duration-500"
+            />
             <div className="absolute inset-0 bg-black/55" />
           </div>
         ) : (
-          <HeroSlideshowBackground 
-            slideshowItems={homepageData.slideshow} 
-          />
+          <div className="absolute inset-0 -z-10 transition-opacity duration-500">
+            <HeroSlideshowBackground 
+              slideshowItems={homepageData.slideshow} 
+            />
+          </div>
         )}
         <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36">
           <div className="max-w-3xl mx-auto text-center text-white">
