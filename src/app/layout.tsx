@@ -29,53 +29,12 @@ export const metadata: Metadata = {
     default: 'First Baptist Church of Fenton - Growing in Faith, Sharing God\'s Love',
     template: '%s | First Baptist Church Fenton'
   },
-  description: 'Join First Baptist Church Fenton, a welcoming community in Fenton, Michigan. Sunday services at 10 AM. Experience authentic worship, biblical teaching, and genuine fellowship. All are welcome!',
-  keywords: [
-    'First Baptist Church',
-    'Fenton Michigan',
-    'Baptist Church',
-    'Christian Community',
-    'Sunday Service',
-    'Bible Study',
-    'Youth Ministry',
-    'Family Church',
-    'Worship',
-    'Faith Community'
-  ],
-  authors: [{ name: 'First Baptist Church Fenton' }],
-  creator: 'First Baptist Church Fenton',
-  publisher: 'First Baptist Church Fenton',
+  description: 'Join First Baptist Church Fenton, a welcoming community in Fenton, Michigan. Sunday services at 10:30 AM. Experience authentic worship, biblical teaching, and genuine fellowship. All are welcome!',
+  metadataBase: new URL('https://fbcfenton.org'),
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
-  },
-  metadataBase: new URL('https://fbcfenton.org'),
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    title: 'First Baptist Church of Fenton - Growing in Faith, Sharing God\'s Love',
-    description: 'Join our welcoming community in Fenton, Michigan. Sunday services at 10 AM. Experience authentic worship, biblical teaching, and genuine fellowship.',
-    url: 'https://fbcfenton.org',
-    siteName: 'First Baptist Church Fenton',
-    locale: 'en_US',
-    type: 'website',
-    images: [
-      {
-        url: '/church.png',
-        width: 1200,
-        height: 630,
-        alt: 'First Baptist Church Fenton - Welcome Home',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'First Baptist Church of Fenton',
-    description: 'Growing in Faith, Sharing God\'s Love - Join us Sundays at 10 AM',
-    images: ['/church.png'],
-    creator: '@FBCFenton',
   },
   robots: {
     index: true,

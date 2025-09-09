@@ -1,7 +1,11 @@
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { PageLayout } from '@/components/layout/PageLayout';
 import { fetchLatestYoutubeVideosByChannelId } from '@/lib/youtube';
+import { sermonsPageMetadata } from '@/lib/seo';
+
+export const metadata: Metadata = sermonsPageMetadata;
 
 export const revalidate = 1800;
 
