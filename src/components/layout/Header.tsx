@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -164,7 +164,6 @@ export function Header() {
             <div className="p-4 border-t">
                <div className="flex items-center mb-4">
                  <Avatar className="h-10 w-10 mr-3">
-                   <AvatarImage src={`https://placehold.co/100x100.png`} alt={user.name} />
                    <AvatarFallback>{user.name.substring(0, 1).toUpperCase()}</AvatarFallback>
                  </Avatar>
                  <div>
@@ -253,7 +252,6 @@ export function Header() {
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                     <Avatar className="h-9 w-9">
-                      <AvatarImage src={`https://placehold.co/100x100.png`} alt={user.name} />
                       <AvatarFallback>{user.name.substring(0, 1).toUpperCase()}</AvatarFallback>
                     </Avatar>
                   </Button>
