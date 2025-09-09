@@ -31,7 +31,7 @@ export default function BeliefsPage() {
 
           <div>
             <h2 className="text-4xl font-heading font-bold text-center mb-8">Statement of Faith</h2>
-            <Accordion type="single" collapsible className="w-full" defaultValue='core-beliefs'>
+            <Accordion type="multiple" className="w-full" defaultValue={['core-beliefs']}>
               {beliefsData.map((belief) => (
                 <AccordionItem key={belief.id} value={belief.id}>
                   <AccordionTrigger className="text-2xl font-semibold hover:no-underline">

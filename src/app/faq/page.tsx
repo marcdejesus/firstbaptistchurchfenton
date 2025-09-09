@@ -66,7 +66,7 @@ export default function FAQPage() {
         subtitle="Find answers to common questions about our church, services, and how to get involved."
     >
         <div className="max-w-3xl mx-auto">
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="multiple" className="w-full">
             {faqs.map((faq, index) => (
                 <AccordionItem key={faq.id} value={`item-${faq.id}`}>
                 <AccordionTrigger className="text-left font-heading">{faq.question}</AccordionTrigger>
