@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Edit, Trash2, Eye, EyeOff, Users, Shield, UserCheck, Calendar } from 'lucide-react';
-import Link from 'next/link';
 import { AddUserDialog } from '@/components/admin/AddUserDialog';
+import { EditUserDialog } from '@/components/admin/EditUserDialog';
 import { useToast } from '@/hooks/use-toast';
 
 interface User {
@@ -183,11 +183,11 @@ export function UsersClient({ initialUsers, currentUserEmail }: UsersClientProps
 
                     {/* Actions */}
                     <div className="flex items-center space-x-2">
-                      <Button variant="ghost" size="sm" asChild>
-                        <Link href={`/admin/users/${user.id}`}>
-                          <Edit className="h-4 w-4" />
-                        </Link>
-                      </Button>
+                      <EditUserDialog 
+                        user={user} 
+                        currentUserEmail={currentUserEmail}
+                        onUserUpdated={refreshUsers}
+                      />
                       <Button
                         variant="ghost"
                         size="sm"

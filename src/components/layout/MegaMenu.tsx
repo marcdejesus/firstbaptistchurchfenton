@@ -195,7 +195,7 @@ export const userNavigation = {
   authenticated: [
     {
       title: "Profile",
-      href: "/profile",
+      href: "/admin/profile",
       icon: UserCircle
     },
     {
