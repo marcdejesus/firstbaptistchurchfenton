@@ -29,7 +29,7 @@ interface DashboardStats {
 
 interface DashboardProps {
   stats: DashboardStats;
-  userRole: 'ADMIN' | 'EDITOR' | 'VIEWER';
+  userRole: 'ADMIN' | 'EDITOR';
 }
 
 export function Dashboard({ stats, userRole }: DashboardProps) {

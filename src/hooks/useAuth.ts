@@ -6,7 +6,7 @@ interface User {
   id: string;
   name: string;
   email: string;
-  role: 'ADMIN' | 'EDITOR' | 'VIEWER'; 
+  role: 'ADMIN' | 'EDITOR'; 
 }
 
 interface AuthState {
@@ -21,7 +21,7 @@ export const useAuth = (): AuthState => {
     id: session.user.id,
     name: session.user.name || '',
     email: session.user.email || '',
-    role: session.user.role as 'ADMIN' | 'EDITOR' | 'VIEWER',
+    role: session.user.role as 'ADMIN' | 'EDITOR',
   } : null;
 
   return {

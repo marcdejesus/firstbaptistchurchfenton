@@ -26,7 +26,7 @@ export const ourFileRouter = {
         });
         
         // Check if user is authenticated and has permission to upload
-        if (!session?.user || session.user.role === 'VIEWER') {
+        if (!session?.user || !['ADMIN', 'EDITOR'].includes(session.user.role)) {
           console.log("❌ [UPLOADTHING] Authorization failed:", { 
             hasUser: !!session?.user, 
             userRole: session?.user?.role 

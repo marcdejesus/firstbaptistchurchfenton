@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const session = await getServerSession(authOptions)
     
     // Check authentication and permissions
-    if (!session?.user || session.user.role === 'VIEWER') {
+    if (!session?.user || !['ADMIN', 'EDITOR'].includes(session.user.role)) {
       return NextResponse.json(
         { error: "Unauthorized - You must be logged in with appropriate permissions" }, 
         { status: 401 }

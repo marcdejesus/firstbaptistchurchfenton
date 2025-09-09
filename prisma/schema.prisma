@@ -207,7 +207,6 @@ model AnnouncementBanner {
 enum Role {
   ADMIN
   EDITOR
-  VIEWER
 }
 
 enum PostStatus {

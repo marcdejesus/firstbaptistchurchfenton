@@ -35,7 +35,7 @@ interface User {
   uuid: string;
   email: string;
   name: string;
-  role: 'ADMIN' | 'EDITOR' | 'VIEWER';
+  role: 'ADMIN' | 'EDITOR';
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -52,7 +52,7 @@ interface NavigationItem {
   icon: React.ComponentType<{ className?: string }>;
   badge?: string;
   children?: NavigationItem[];
-  requiredRole?: 'ADMIN' | 'EDITOR' | 'VIEWER';
+  requiredRole?: 'ADMIN' | 'EDITOR';
 }
 
 export function AdminLayout({ children, user }: AdminLayoutProps) {
@@ -134,10 +134,10 @@ export function AdminLayout({ children, user }: AdminLayoutProps) {
     return pathname.startsWith(href);
   };
 
-  const hasPermission = (requiredRole?: 'ADMIN' | 'EDITOR' | 'VIEWER'): boolean => {
+  const hasPermission = (requiredRole?: 'ADMIN' | 'EDITOR'): boolean => {
     if (!requiredRole) return true;
     
-    const roleHierarchy = { ADMIN: 3, EDITOR: 2, VIEWER: 1 };
+    const roleHierarchy = { ADMIN: 2, EDITOR: 1 };
     return roleHierarchy[user.role] >= roleHierarchy[requiredRole];
   };
 
