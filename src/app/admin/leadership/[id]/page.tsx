@@ -36,7 +36,8 @@ export default async function EditStaffPage({ params }: EditStaffPageProps) {
     redirect('/login');
   }
 
-  const staffMember = await getStaffMember(params.id);
+  const resolvedParams = await params;
+  const staffMember = await getStaffMember(resolvedParams.id);
   
   if (!staffMember) {
     notFound();

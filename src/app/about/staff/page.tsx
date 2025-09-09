@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useStaff } from '@/hooks/useStaff';
 import { formatDescription } from '@/lib/text-formatting';
+import Image from 'next/image';
 
 // Helper function to generate meeting link based on staff member
 const getMeetingLink = (name: string, email: string): string | null => {
@@ -122,11 +123,29 @@ export default function StaffPage() {
             return (
               <Card key={staff.id} className="overflow-hidden shadow-lg border-2 border-gray-100">
                 <div className="p-6 md:p-8 flex flex-col">
-                  <CardHeader className="p-0">
-                    <CardTitle className="text-3xl font-heading font-bold">{staff.name}</CardTitle>
-                    <CardDescription className="font-semibold text-primary text-lg">{staff.position}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-0 mt-6 space-y-4 text-muted-foreground">
+                  {/* Profile Picture and Header */}
+                  <div className="flex items-start space-x-6 mb-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                        <Image
+                          src={staff.photoUrl || '/placeholder.jpg'}
+                          alt={staff.name}
+                          width={128}
+                          height={128}
+                          className="w-full h-full object-cover"
+                          priority
+                        />
+                      </div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <CardHeader className="p-0">
+                        <CardTitle className="text-3xl font-heading font-bold">{staff.name}</CardTitle>
+                        <CardDescription className="font-semibold text-primary text-lg">{staff.position}</CardDescription>
+                      </CardHeader>
+                    </div>
+                  </div>
+                  
+                  <CardContent className="p-0 space-y-4 text-muted-foreground">
                     {formattedBio}
                   </CardContent>
                   <div className="mt-auto pt-6 flex items-center space-x-4">
@@ -134,13 +153,6 @@ export default function StaffPage() {
                       <Button asChild variant="outline">
                         <Link href={`mailto:${staff.email}`} className="flex items-center">
                           <Mail className="h-4 w-4 mr-2" /> Email
-                        </Link>
-                      </Button>
-                    )}
-                    {meetingLink && (
-                      <Button asChild>
-                        <Link href={meetingLink} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                          <CalendarDays className="h-4 w-4 mr-2" /> Schedule a Meeting
                         </Link>
                       </Button>
                     )}

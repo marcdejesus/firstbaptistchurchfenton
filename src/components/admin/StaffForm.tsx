@@ -74,11 +74,11 @@ export function StaffForm({ staffMember, isEditing = false }: StaffFormProps) {
     }));
   };
 
-  const handleImageUpload = (url: string, key: string) => {
+  const handleImageChange = (image: { url: string; key: string } | null) => {
     setFormData(prev => ({
       ...prev,
-      photoUrl: url,
-      photoKey: key,
+      photoUrl: image?.url || '',
+      photoKey: image?.key || '',
     }));
   };
 
@@ -158,16 +158,15 @@ export function StaffForm({ staffMember, isEditing = false }: StaffFormProps) {
               </CardHeader>
               <CardContent>
                 <ImageUpload
-                  currentImageUrl={formData.photoUrl}
-                  currentImageKey={formData.photoKey}
-                  onImageUpload={handleImageUpload}
-                  aspectRatio="square"
-                  placeholder={
-                    <div className="flex flex-col items-center justify-center h-full text-muted-foreground">
-                      <Users className="h-12 w-12 mb-2" />
-                      <p className="text-sm">Upload Photo</p>
-                    </div>
-                  }
+                  title="Profile Photo"
+                  description="Upload a professional headshot for this staff member"
+                  uploadType="imageUploader"
+                  currentImage={formData.photoUrl ? {
+                    url: formData.photoUrl,
+                    key: formData.photoKey
+                  } : null}
+                  onImageChange={handleImageChange}
+                  maxFileSize="4MB"
                 />
                 <p className="text-xs text-muted-foreground mt-2">
                   Recommended: Square image, at least 400x400px
