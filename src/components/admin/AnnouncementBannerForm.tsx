@@ -59,10 +59,15 @@ export function AnnouncementBannerForm({ announcement }: AnnouncementBannerFormP
       });
 
       if (response.ok) {
+        const result = await response.json();
         toast({
           title: 'Announcement updated!',
-          description: 'Your announcement banner has been updated successfully.',
+          description: formData.isActive 
+            ? 'Your announcement banner is now active and visible on the website.'
+            : 'The announcement banner has been hidden from the website.',
         });
+        
+        // Refresh admin page
         router.refresh();
       } else {
         const error = await response.json();
@@ -118,15 +123,23 @@ export function AnnouncementBannerForm({ announcement }: AnnouncementBannerFormP
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div 
-            className="p-4 rounded-lg text-center"
-            style={{
-              backgroundColor: formData.backgroundColor,
-              color: formData.textColor,
-            }}
-          >
-            {formData.message || 'Your announcement message will appear here...'}
-          </div>
+          {formData.isActive ? (
+            <div 
+              className="p-4 rounded-lg text-center"
+              style={{
+                backgroundColor: formData.backgroundColor,
+                color: formData.textColor,
+              }}
+            >
+              {formData.message || 'Your announcement message will appear here...'}
+            </div>
+          ) : (
+            <div className="p-4 rounded-lg text-center bg-gray-100 text-gray-500 border-2 border-dashed border-gray-300">
+              <EyeOff className="h-6 w-6 mx-auto mb-2" />
+              <p>Announcement banner is hidden</p>
+              <p className="text-sm">Toggle "Show Announcement" to display the banner</p>
+            </div>
+          )}
         </CardContent>
       </Card>
 

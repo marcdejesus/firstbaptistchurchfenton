@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { message, backgroundColor, textColor } = body;
+    const { message, backgroundColor, textColor, isActive } = body;
 
     if (!message) {
       return NextResponse.json({ error: "Message is required" }, { status: 400 });
@@ -52,7 +52,15 @@ export async function POST(request: Request) {
       data: { isActive: false }
     });
 
-    // Create new active announcement
+    // If isActive is false, just return success - no active announcement
+    if (!isActive) {
+      return NextResponse.json({ 
+        message: "Announcement banner hidden successfully",
+        isActive: false 
+      });
+    }
+
+    // Create new active announcement only if isActive is true
     const announcement = await prisma.announcementBanner.create({
       data: {
         message: message.trim(),
